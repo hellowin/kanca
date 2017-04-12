@@ -29,5 +29,5 @@ window.fbAsyncInit = function() {
   if (d.getElementById(id)) {return;}
   js = d.createElement(s); js.id = id;
   js.src = "//connect.facebook.net/en_US/sdk.js";
-  (fjs.parentNode || {}).insertBefore(js, fjs);
+  (fjs.parentNode || {}).appendChild(js);
 }(document, 'script', 'facebook-jssdk'));
