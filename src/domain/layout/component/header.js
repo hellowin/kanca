@@ -54,9 +54,6 @@ class Header extends Component {
           <li className="nav-item px-1">
             <Link className="nav-link" to="/dashboard">Dashboard</Link>
           </li>
-          <li className="nav-item px-1">
-            <Link className="nav-link" to="/profile">Profile</Link>
-          </li>
         </ul>
         <ul className="nav navbar-nav ml-auto">
           <li className="nav-item">
@@ -69,7 +66,7 @@ class Header extends Component {
               <DropdownMenu className="dropdown-menu-right">
                 <DropdownItem header className="text-center"><strong>Account</strong></DropdownItem>
 
-                <DropdownItem onClick={() => browserHistory('/profile')}><i className="fa fa-user"></i> Profile</DropdownItem>
+                <DropdownItem onClick={() => browserHistory.push('/profile')}><i className="fa fa-user"></i> Profile</DropdownItem>
                 <DropdownItem onClick={() => userRepo.logout()}><i className="fa fa-lock"></i> Logout</DropdownItem>
 
               </DropdownMenu>
