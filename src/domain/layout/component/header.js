@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
 import { Dropdown, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Link, browserHistory } from 'react-router';
+import { connect } from 'react-redux';
+import userRepo from 'infra/repo/user';
+
+const mapStateToProps = state => ({
+  profile: state.user.profile,
+});
 
 class Header extends Component {
 
@@ -34,6 +41,7 @@ class Header extends Component {
   }
 
   render() {
+    const { profile } = this.props;
     return (
       <header className="app-header navbar">
         <button className="navbar-toggler mobile-sidebar-toggler hidden-lg-up" onClick={this.mobileSidebarToggle} type="button">&#9776;</button>
@@ -43,49 +51,25 @@ class Header extends Component {
             <a className="nav-link navbar-toggler sidebar-toggler" onClick={this.sidebarToggle} href="#">&#9776;</a>
           </li>
           <li className="nav-item px-1">
-            <a className="nav-link" href="#">Dashboard</a>
+            <Link className="nav-link" to="/dashboard">Dashboard</Link>
           </li>
           <li className="nav-item px-1">
-            <a className="nav-link" href="#">Users</a>
-          </li>
-          <li className="nav-item px-1">
-            <a className="nav-link" href="#">Settings</a>
+            <Link className="nav-link" to="/profile">Profile</Link>
           </li>
         </ul>
         <ul className="nav navbar-nav ml-auto">
-          <li className="nav-item hidden-md-down">
-            <a className="nav-link" href="#"><i className="icon-bell"></i><span className="badge badge-pill badge-danger">5</span></a>
-          </li>
-          <li className="nav-item hidden-md-down">
-            <a className="nav-link" href="#"><i className="icon-list"></i></a>
-          </li>
-          <li className="nav-item hidden-md-down">
-            <a className="nav-link" href="#"><i className="icon-location-pin"></i></a>
-          </li>
           <li className="nav-item">
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
               <a onClick={this.toggle} className="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
-                <img src={'img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com"/>
-                <span className="hidden-md-down">admin</span>
+                <img src={'img/avatars/6.jpg'} className="img-avatar" alt={profile.name}/>
+                <span className="hidden-md-down">{profile.name}</span>
               </a>
 
               <DropdownMenu className="dropdown-menu-right">
                 <DropdownItem header className="text-center"><strong>Account</strong></DropdownItem>
 
-                <DropdownItem><i className="fa fa-bell-o"></i> Updates<span className="badge badge-info">42</span></DropdownItem>
-                <DropdownItem><i className="fa fa-envelope-o"></i> Messages<span className="badge badge-success">42</span></DropdownItem>
-                <DropdownItem><i className="fa fa-tasks"></i> Tasks<span className="badge badge-danger">42</span></DropdownItem>
-                <DropdownItem><i className="fa fa-comments"></i> Comments<span className="badge badge-warning">42</span></DropdownItem>
-
-                <DropdownItem header className="text-center"><strong>Settings</strong></DropdownItem>
-
-                <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>
-                <DropdownItem><i className="fa fa-wrench"></i> Settings</DropdownItem>
-                <DropdownItem><i className="fa fa-usd"></i> Payments<span className="badge badge-default">42</span></DropdownItem>
-                <DropdownItem><i className="fa fa-file"></i> Projects<span className="badge badge-primary">42</span></DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem><i className="fa fa-shield"></i> Lock Account</DropdownItem>
-                <DropdownItem><i className="fa fa-lock"></i> Logout</DropdownItem>
+                <DropdownItem onClick={() => browserHistory('/profile')}><i className="fa fa-user"></i> Profile</DropdownItem>
+                <DropdownItem onClick={() => userRepo.logout()}><i className="fa fa-lock"></i> Logout</DropdownItem>
 
               </DropdownMenu>
             </Dropdown>
@@ -99,4 +83,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default connect(mapStateToProps)(Header);
