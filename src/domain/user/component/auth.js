@@ -1,7 +1,7 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import userRepo from 'infra/repo/user';
+import loc from 'infra/service/location';
 
 const mapStateToProps = state => ({
   loggedIn: state.user.loggedIn,
@@ -16,7 +16,7 @@ class Auth extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { loggedIn } = nextProps;
 
-    if (!loggedIn) browserHistory.push('/login');
+    if (!loggedIn) loc.push('/login');
   }
 
   render() {
