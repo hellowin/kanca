@@ -15,11 +15,14 @@
   },
   "dependencies": {
     "office-ui-fabric-react": "^1.9.1",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
+    "react": "^15.5.4",
+    "react-addons-css-transition-group": "^15.5.2",
+    "react-addons-transition-group": "^15.5.2",
+    "react-dom": "^15.5.4",
     "react-redux": "^5.0.2",
     "react-router": "^3.0.2",
     "react-router-redux": "^4.0.8",
+    "reactstrap": "^4.5.0",
     "redux": "^3.6.0",
     "store": "^2.0.4",
     "whatwg-fetch": "^2.0.2"
@@ -33,5 +36,5 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://hellowin.github.io/kanca"
+  "homepage": "https://hellowin.github.io/kanca/"
 }

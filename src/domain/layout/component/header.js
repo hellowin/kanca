@@ -1,33 +1,84 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { Dropdown, DropdownMenu, DropdownItem } from 'reactstrap';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
-import 'office-ui-fabric-react/dist/css/fabric.css';
-import Button from 'infra/component/Button';
 import userRepo from 'infra/repo/user';
 
 const mapStateToProps = state => ({
   profile: state.user.profile,
 });
 
-const Header = props => {
-  const { profile } = props;
-  const name = profile.name;
-  const namePlaceholder = name ? <span>Welcome, <b>{name}</b></span> : '';
+class Header extends Component {
 
-  return (
-    <div>
-      <div className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h2>Welcome to Facebook Group Analytics</h2>
-      </div>
-      <div className="ms-Grid-row">
-        <div className="ms-Grid-col ms-u-md12" style={{ textAlign: 'right', height: '55px', padding: '10px', backgroundColor: '#eee' }}>
-          {namePlaceholder}
-          &nbsp;<Button onClick={() => userRepo.logout()}>Logout</Button>
-        </div>
-      </div>
-    </div>
-  );
+  constructor(props) {
+    super(props);
+
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      dropdownOpen: false
+    };
+  }
+
+  toggle() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
+  }
+
+  sidebarToggle(e) {
+    e.preventDefault();
+    document.body.classList.toggle('sidebar-hidden');
+  }
+
+  mobileSidebarToggle(e) {
+    e.preventDefault();
+    document.body.classList.toggle('sidebar-mobile-show');
+  }
+
+  asideToggle(e) {
+    e.preventDefault();
+    document.body.classList.toggle('aside-menu-hidden');
+  }
+
+  render() {
+    const { profile } = this.props;
+
+    return (
+      <header className="app-header navbar">
+        <button className="navbar-toggler mobile-sidebar-toggler hidden-lg-up" onClick={this.mobileSidebarToggle} type="button">&#9776;</button>
+        <a className="navbar-brand" href="#"></a>
+        <ul className="nav navbar-nav hidden-md-down">
+          <li className="nav-item">
+            <a className="nav-link navbar-toggler sidebar-toggler" onClick={this.sidebarToggle} href="#">&#9776;</a>
+          </li>
+          <li className="nav-item px-1">
+            <Link className="nav-link" to="/dashboard">Dashboard</Link>
+          </li>
+        </ul>
+        <ul className="nav navbar-nav ml-auto">
+          <li className="nav-item">
+            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+              <a onClick={this.toggle} className="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
+                <img src={profile.picture} className="img-avatar" alt={profile.name}/>
+                <span className="hidden-md-down">{profile.name}</span>
+              </a>
+
+              <DropdownMenu className="dropdown-menu-right">
+                <DropdownItem header className="text-center"><strong>Account</strong></DropdownItem>
+
+                <DropdownItem onClick={() => browserHistory.push('/profile')}><i className="fa fa-user"></i> Profile</DropdownItem>
+                <DropdownItem onClick={() => userRepo.logout()}><i className="fa fa-lock"></i> Logout</DropdownItem>
+
+              </DropdownMenu>
+            </Dropdown>
+          </li>
+          <li className="nav-item hidden-md-down">
+            <a className="nav-link navbar-toggler aside-menu-toggler" onClick={this.asideToggle} href="#">&#9776;</a>
+          </li>
+        </ul>
+      </header>
+    )
+  }
 }
 
 export default connect(mapStateToProps)(Header);

@@ -1,7 +1,9 @@
 import React from 'react';
 import './app.css';
-import Header from 'domain/layout/component/header';
-import Sidebar from 'domain/layout/component/sidebar';
+import Header from 'domain/layout/component/Header';
+import Sidebar from 'domain/layout/component/Sidebar';
+import Aside from 'domain/layout/component/Aside';
+import Footer from 'domain/layout/component/Footer';
 import 'office-ui-fabric-react/dist/css/fabric.css';
 import { connect } from 'react-redux';
 import Auth from 'domain/user/component/auth';
@@ -11,28 +13,25 @@ const mapStateToProps = state => ({
   pathname: state.routing.locationBeforeTransitions.pathname,
 });
 
-
 class App extends React.Component {
 
   render() {
     const children = this.props.children;
 
-    const content = (
-      <div className="ms-Grid-row">
-        <div className="ms-Grid-col ms-u-md2">
-          <Sidebar />
-        </div>
-        <div className="ms-Grid-col ms-u-md10">
-          {children}
-        </div>
-      </div>
-    );
-
     return (
       <Auth>
-        <div className="App ms-Grid">
+        <div className="app">
           <Header />
-          {content}
+          <div className="app-body">
+            <Sidebar />
+            <main className="main">
+              <div className="container-fluid">
+                {children}
+              </div>
+            </main>
+            <Aside />
+          </div>
+          <Footer />
         </div>
       </Auth>
     );
