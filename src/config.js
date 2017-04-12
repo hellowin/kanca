@@ -3,4 +3,5 @@ export default {
   FBAppID: process.env.REACT_APP_FB_APP_ID,
   FBAppToken: process.env.REACT_APP_FB_APP_TOKEN,
   homepage: 'https://hellowin.github.io/kanca/',
+  urlPrefix: process.env.REACT_APP_URL_PREFIX,
 };

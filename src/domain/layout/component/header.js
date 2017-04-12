@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Dropdown, DropdownMenu, DropdownItem } from 'reactstrap';
-import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import userRepo from 'infra/repo/user';
+import loc from 'infra/service/location';
 
 const mapStateToProps = state => ({
   profile: state.user.profile,
@@ -52,7 +52,7 @@ class Header extends Component {
             <a className="nav-link navbar-toggler sidebar-toggler" onClick={this.sidebarToggle} href="#">&#9776;</a>
           </li>
           <li className="nav-item px-1">
-            <Link className="nav-link" to="/dashboard">Dashboard</Link>
+            <a className="nav-link" onClick={() => loc.push('/dashboard')}>Dashboard</a>
           </li>
         </ul>
         <ul className="nav navbar-nav ml-auto">
@@ -66,7 +66,7 @@ class Header extends Component {
               <DropdownMenu className="dropdown-menu-right">
                 <DropdownItem header className="text-center"><strong>Account</strong></DropdownItem>
 
-                <DropdownItem onClick={() => browserHistory.push('/profile')}><i className="fa fa-user"></i> Profile</DropdownItem>
+                <DropdownItem onClick={() => loc.push('/profile')}><i className="fa fa-user"></i> Profile</DropdownItem>
                 <DropdownItem onClick={() => userRepo.logout()}><i className="fa fa-lock"></i> Logout</DropdownItem>
 
               </DropdownMenu>
