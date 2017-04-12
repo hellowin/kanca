@@ -1,33 +1,102 @@
-import React from 'react';
-import logo from './logo.svg';
-import { connect } from 'react-redux';
-import 'office-ui-fabric-react/dist/css/fabric.css';
-import Button from 'infra/component/Button';
-import userRepo from 'infra/repo/user';
+import React, { Component } from 'react';
+import { Dropdown, DropdownMenu, DropdownItem } from 'reactstrap';
 
-const mapStateToProps = state => ({
-  profile: state.user.profile,
-});
+class Header extends Component {
 
-const Header = props => {
-  const { profile } = props;
-  const name = profile.name;
-  const namePlaceholder = name ? <span>Welcome, <b>{name}</b></span> : '';
+  constructor(props) {
+    super(props);
 
-  return (
-    <div>
-      <div className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h2>Welcome to Facebook Group Analytics</h2>
-      </div>
-      <div className="ms-Grid-row">
-        <div className="ms-Grid-col ms-u-md12" style={{ textAlign: 'right', height: '55px', padding: '10px', backgroundColor: '#eee' }}>
-          {namePlaceholder}
-          &nbsp;<Button onClick={() => userRepo.logout()}>Logout</Button>
-        </div>
-      </div>
-    </div>
-  );
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+      dropdownOpen: false
+    };
+  }
+
+  toggle() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
+  }
+
+  sidebarToggle(e) {
+    e.preventDefault();
+    document.body.classList.toggle('sidebar-hidden');
+  }
+
+  mobileSidebarToggle(e) {
+    e.preventDefault();
+    document.body.classList.toggle('sidebar-mobile-show');
+  }
+
+  asideToggle(e) {
+    e.preventDefault();
+    document.body.classList.toggle('aside-menu-hidden');
+  }
+
+  render() {
+    return (
+      <header className="app-header navbar">
+        <button className="navbar-toggler mobile-sidebar-toggler hidden-lg-up" onClick={this.mobileSidebarToggle} type="button">&#9776;</button>
+        <a className="navbar-brand" href="#"></a>
+        <ul className="nav navbar-nav hidden-md-down">
+          <li className="nav-item">
+            <a className="nav-link navbar-toggler sidebar-toggler" onClick={this.sidebarToggle} href="#">&#9776;</a>
+          </li>
+          <li className="nav-item px-1">
+            <a className="nav-link" href="#">Dashboard</a>
+          </li>
+          <li className="nav-item px-1">
+            <a className="nav-link" href="#">Users</a>
+          </li>
+          <li className="nav-item px-1">
+            <a className="nav-link" href="#">Settings</a>
+          </li>
+        </ul>
+        <ul className="nav navbar-nav ml-auto">
+          <li className="nav-item hidden-md-down">
+            <a className="nav-link" href="#"><i className="icon-bell"></i><span className="badge badge-pill badge-danger">5</span></a>
+          </li>
+          <li className="nav-item hidden-md-down">
+            <a className="nav-link" href="#"><i className="icon-list"></i></a>
+          </li>
+          <li className="nav-item hidden-md-down">
+            <a className="nav-link" href="#"><i className="icon-location-pin"></i></a>
+          </li>
+          <li className="nav-item">
+            <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+              <a onClick={this.toggle} className="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
+                <img src={'img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com"/>
+                <span className="hidden-md-down">admin</span>
+              </a>
+
+              <DropdownMenu className="dropdown-menu-right">
+                <DropdownItem header className="text-center"><strong>Account</strong></DropdownItem>
+
+                <DropdownItem><i className="fa fa-bell-o"></i> Updates<span className="badge badge-info">42</span></DropdownItem>
+                <DropdownItem><i className="fa fa-envelope-o"></i> Messages<span className="badge badge-success">42</span></DropdownItem>
+                <DropdownItem><i className="fa fa-tasks"></i> Tasks<span className="badge badge-danger">42</span></DropdownItem>
+                <DropdownItem><i className="fa fa-comments"></i> Comments<span className="badge badge-warning">42</span></DropdownItem>
+
+                <DropdownItem header className="text-center"><strong>Settings</strong></DropdownItem>
+
+                <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>
+                <DropdownItem><i className="fa fa-wrench"></i> Settings</DropdownItem>
+                <DropdownItem><i className="fa fa-usd"></i> Payments<span className="badge badge-default">42</span></DropdownItem>
+                <DropdownItem><i className="fa fa-file"></i> Projects<span className="badge badge-primary">42</span></DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem><i className="fa fa-shield"></i> Lock Account</DropdownItem>
+                <DropdownItem><i className="fa fa-lock"></i> Logout</DropdownItem>
+
+              </DropdownMenu>
+            </Dropdown>
+          </li>
+          <li className="nav-item hidden-md-down">
+            <a className="nav-link navbar-toggler aside-menu-toggler" onClick={this.asideToggle} href="#">&#9776;</a>
+          </li>
+        </ul>
+      </header>
+    )
+  }
 }
 
-export default connect(mapStateToProps)(Header);
+export default Header;
