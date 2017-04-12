@@ -32,12 +32,13 @@ const getLoginStatus = () => new Promise((resolve, reject) => {
   });
 })
 
-const getUser = () => get('/me?fields=id,name,email')
+const getUser = () => get('/me?fields=id,name,email,picture')
   .then(res => {
     const user: UserProfile = {
       facebookId: res.id,
       name: res.name,
       email: res.email,
+      picture: res.picture.data.url,
     };
     return user;
   });

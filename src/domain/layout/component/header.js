@@ -42,6 +42,7 @@ class Header extends Component {
 
   render() {
     const { profile } = this.props;
+
     return (
       <header className="app-header navbar">
         <button className="navbar-toggler mobile-sidebar-toggler hidden-lg-up" onClick={this.mobileSidebarToggle} type="button">&#9776;</button>
@@ -61,7 +62,7 @@ class Header extends Component {
           <li className="nav-item">
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
               <a onClick={this.toggle} className="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
-                <img src={'img/avatars/6.jpg'} className="img-avatar" alt={profile.name}/>
+                <img src={profile.picture} className="img-avatar" alt={profile.name}/>
                 <span className="hidden-md-down">{profile.name}</span>
               </a>
 

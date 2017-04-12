@@ -8,6 +8,7 @@ const user = (state = {
     id: '',
     name: '',
     email: '',
+    picture: '',
   },
 }, action) => {
   switch (action.type) {
