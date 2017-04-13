@@ -5,7 +5,7 @@ import graph from 'infra/service/graph';
 
 const userRepo = {
 
-  fetchGroup(groupId: string) {
+  setGroup(groupId: string): Promise<any> {
     store.dispatch(action.groupSet({ loading: true }));
     let group;
     return graph.getGroup(groupId)
@@ -14,6 +14,19 @@ const userRepo = {
         store.dispatch(action.groupSet({ ...group, loading: false }));
       });
   },
+
+  fetchFeatures(groupIds: string[]): Promise<any> {
+    store.dispatch(action.groupSet({ loading: true }));
+    const features = [];
+    const promises = groupIds.map(id => graph.getGroup(id)
+      .then(res => features.push(res))
+      .catch(console.log));
+    
+    return Promise.all(promises)
+      .then(() => {
+        store.dispatch(action.groupSet({ features, loading: false }));
+      });
+  }
 
 };
 

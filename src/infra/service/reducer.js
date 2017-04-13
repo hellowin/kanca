@@ -25,6 +25,7 @@ const group = (state = {
   id: '',
   name: '',
   privacy: '',
+  features: [],
 }, action) => {
   switch (action.type) {
     case 'GROUP_SET':

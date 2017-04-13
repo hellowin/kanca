@@ -53,6 +53,9 @@ class Header extends Component {
             <a className="nav-link navbar-toggler sidebar-toggler" onClick={this.sidebarToggle} href="#">&#9776;</a>
           </li>
           <li className="nav-item px-1">
+            <a className="nav-link" onClick={() => loc.push('/group/selection')} style={{ cursor: 'pointer' }}>Group Selection</a>
+          </li>
+          <li className="nav-item px-1">
             <a className="nav-link" onClick={() => loc.push('/dashboard')} style={{ cursor: 'pointer' }}>Dashboard</a>
           </li>
         </ul>
