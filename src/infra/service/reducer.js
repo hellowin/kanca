@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
 const user = (state = {
+  loading: false,
   loggedIn: false,
   login: {},
   profile: {
@@ -19,7 +20,23 @@ const user = (state = {
   }
 };
 
+const group = (state = {
+  loading: false,
+  id: '',
+  name: '',
+  privacy: '',
+  features: [],
+}, action) => {
+  switch (action.type) {
+    case 'GROUP_SET':
+      return { ...state, ...action.data };
+    default:
+      return { ...state };
+  }
+};
+
 export default combineReducers({
   user,
+  group,
   routing: routerReducer,
 });

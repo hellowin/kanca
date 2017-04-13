@@ -29,6 +29,7 @@ const userRepo = {
   },
 
   checkLoginStatus() {
+    store.dispatch(action.userSet({ loading: true }));
     let login;
     let profile;
     const emptyProfile = {
@@ -40,8 +41,8 @@ const userRepo = {
       .then(res => (login = res))
       .then(() => graph.getUser())
       .then(res => (profile = res))
-      .then(() => store.dispatch(action.userSet({ profile, login, loggedIn: true })))
-      .catch(err => store.dispatch(action.userSet({ profile: emptyProfile, login: {}, loggedIn: false })));
+      .then(() => store.dispatch(action.userSet({ profile, login, loggedIn: true, loading: false })))
+      .catch(err => store.dispatch(action.userSet({ profile: emptyProfile, login: {}, loggedIn: false, loading: false })));
   },
 
 };

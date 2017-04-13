@@ -43,9 +43,26 @@ const getUser = () => get('/me?fields=id,name,email,picture')
     return user;
   });
 
+const getGroup = (groupId: string) => get(`/${groupId}?fields=id,name,privacy,cover,description,owner`)
+  .then(res => {
+    const group: Group = {
+      id: res.id,
+      name: res.name,
+      privacy: res.privacy,
+      cover: res.cover.source,
+      description: res.description,
+      owner: {
+        id: res.owner.id,
+        name: res.owner.name,
+      },
+    }
+    return group;
+  });
+
 export default {
   login,
   logout,
   getLoginStatus,
   getUser,
+  getGroup,
 };
