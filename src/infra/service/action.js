@@ -5,6 +5,11 @@ const action = {
     data,
   }),
 
+  groupSet: (data) => ({
+    type: 'GROUP_SET',
+    data,
+  })
+
 };
 
 export default action;

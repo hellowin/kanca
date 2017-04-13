@@ -5,6 +5,7 @@ import userRepo from 'infra/repo/user';
 import loc from 'infra/service/location';
 
 const mapStateToProps = state => ({
+  loading: state.user.loading,
   profile: state.user.profile,
 });
 
@@ -41,7 +42,7 @@ class Header extends Component {
   }
 
   render() {
-    const { profile } = this.props;
+    const { profile, loading } = this.props;
 
     return (
       <header className="app-header navbar">
@@ -55,7 +56,7 @@ class Header extends Component {
             <a className="nav-link" onClick={() => loc.push('/dashboard')} style={{ cursor: 'pointer' }}>Dashboard</a>
           </li>
         </ul>
-        <ul className="nav navbar-nav ml-auto">
+        {!loading ? (<ul className="nav navbar-nav ml-auto">
           <li className="nav-item">
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
               <a onClick={this.toggle} className="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
@@ -75,7 +76,7 @@ class Header extends Component {
           <li className="nav-item hidden-md-down">
             <a className="nav-link navbar-toggler aside-menu-toggler" onClick={this.asideToggle} href="#">&#9776;</a>
           </li>
-        </ul>
+        </ul>) : '' }
       </header>
     )
   }

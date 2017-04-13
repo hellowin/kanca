@@ -6,3 +6,9 @@ declare type UserProfile = {
   email: string,
   picture: string,
 }
+
+declare type Group = {
+  id: string,
+  name: string,
+  privacy: string,
+}
