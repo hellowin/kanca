@@ -2,6 +2,7 @@
 import React from 'react';
 import groupRepo from 'infra/repo/group';
 import { connect } from 'react-redux';
+import GroupInfo from '../component/GroupInfo';
 
 const groupIds = [
   '1920036621597031',
@@ -23,7 +24,7 @@ class GroupSelection extends React.Component {
     return (
       <div>
         {features.map((feature, id) => (
-          <div key={id}>{feature.name}</div>
+          <GroupInfo key={id} {...feature} />
         ))}
       </div>
     )
