@@ -7,7 +7,8 @@ import config from 'config';
 // containers
 import App from './app';
 import Login from 'domain/user/container/login';
-import Profile from 'domain/user/container/profile';
+import UserProfile from 'domain/user/container/profile';
+import GroupWelcome from 'domain/group/container/Welcome';
 import GroupSelection from 'domain/group/container/Selection';
 import GroupFeed from 'domain/group/container/Feed';
 import ChartDashboard from 'domain/chart/container/dashboard';
@@ -19,9 +20,10 @@ const prefix = config.urlPrefix;
 const RouterComp = props => (
   <Router history={history}>
     <Route path={prefix} component={App}>
-      <IndexRedirect to="dashboard" />
-      <Route path="profile" component={Profile} />
-      <Route path="dashboard" component={ChartDashboard} />
+      <IndexRedirect to="welcome" />
+      <Route path="welcome" component={GroupWelcome} />
+      <Route path="chart/dashboard" component={ChartDashboard} />
+      <Route path="user/profile" component={UserProfile} />
       <Route path="group/selection" component={GroupSelection} />
       <Route path="group/feed" component={GroupFeed} />
     </Route>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import userRepo from 'infra/repo/user';
-import Button from 'infra/component/Button';
 import loc from 'infra/service/location';
 
 const mapStateToProps = state => ({
@@ -24,8 +23,22 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div style={{ padding: '30px 0px' }}>
-        <Button onClick={() => userRepo.login()}>Login</Button>
+      <div className="container" style={{ marginTop: '100px' }}>
+        <div className="row justify-content-center">
+          <div className="col-md-5">
+            <div className="card-group mb-0">
+              <div className="card card-inverse card-primary py-3 hidden-md-down">
+                <div className="card-block text-center">
+                  <div>
+                    <h2>Login</h2>
+                    <p>Welcome to Kanca. Open source Facebook Group Analytics.</p>
+                    <button type="button" className="btn btn-primary active mt-1" onClick={() => userRepo.login()} style={{ cursor: 'pointer' }}>Login by Facebook</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

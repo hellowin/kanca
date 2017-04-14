@@ -4,6 +4,8 @@ import groupRepo from 'infra/repo/group';
 import { connect } from 'react-redux';
 import Post from '../component/Post';
 import loc from 'infra/service/location';
+import Loading from 'infra/component/Loading';
+import config from 'config';
 
 const mapStateToProps = state => ({
   loading: state.group.loading,
@@ -13,7 +15,7 @@ const mapStateToProps = state => ({
 
 const fetchFeeds = (loading, groupId, feeds) => {
   if (!groupId) loc.push('/group/selection');
-  if (!loading && feeds.length === 0) groupRepo.fetchFeeds(groupId);
+  if (!loading && feeds.length === 0) groupRepo.fetchFeeds(groupId, config.feedPages);
 }
 
 class GroupFeed extends React.Component {
@@ -29,16 +31,23 @@ class GroupFeed extends React.Component {
   }
 
   render() {
-    const { feeds } = this.props;
+    const { loading, feeds } = this.props;
 
-    return (
+    return !loading ? (
       <div>
         <h1 className="h3">Group Feed</h1>
         {feeds.map((post, id) => (
           <Post key={id} {...post} />
         ))}
       </div>
-    )
+    ) : (
+      <div className="row">
+        <div className="col-md-12" style={{ textAlign: 'center' }}>
+          <p>Please wait. The engine is fetching {config.feedPages} {config.feedPages > 1 ? 'pages' : 'page'} of group feed.</p>
+          <Loading />
+        </div>
+      </div>
+    );
   }
 
 }
