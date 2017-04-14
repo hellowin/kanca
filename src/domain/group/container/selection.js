@@ -18,11 +18,16 @@ class GroupSelection extends React.Component {
     groupRepo.fetchFeatures(groupIds);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.features.length === 0) groupRepo.fetchFeatures(groupIds);
+  }
+
   render() {
     const { features } = this.props;
 
     return (
       <div>
+        <h1 className="h3">Featured Groups</h1>
         {features.map((feature, id) => (
           <GroupInfo key={id} {...feature} />
         ))}

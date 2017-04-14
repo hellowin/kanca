@@ -5,13 +5,13 @@ import graph from 'infra/service/graph';
 
 const userRepo = {
 
-  setGroup(groupId: string): Promise<any> {
+  selectGroup(groupId: string): Promise<any> {
     store.dispatch(action.groupSet({ loading: true }));
     let group;
     return graph.getGroup(groupId)
       .then(res => (group = res))
       .then(() => {
-        store.dispatch(action.groupSet({ ...group, loading: false }));
+        store.dispatch(action.groupSet({ selected: group, loading: false }));
       });
   },
 
@@ -25,6 +25,16 @@ const userRepo = {
     return Promise.all(promises)
       .then(() => {
         store.dispatch(action.groupSet({ features, loading: false }));
+      });
+  },
+
+  fetchFeeds(groupId: string, pages: number): Promise<any> {
+    store.dispatch(action.groupSet({ loading: true, feeds: [] }));
+    let feeds;
+    return graph.getGroupFeed(groupId, pages)
+      .then(res => (feeds = res))
+      .then(() => {
+        store.dispatch(action.groupSet({ feeds, loading: false }));
       });
   }
 

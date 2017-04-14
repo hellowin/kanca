@@ -22,9 +22,8 @@ const user = (state = {
 
 const group = (state = {
   loading: false,
-  id: '',
-  name: '',
-  privacy: '',
+  selected: {},
+  feeds: [],
   features: [],
 }, action) => {
   switch (action.type) {
