@@ -19,7 +19,7 @@ class Dashboard extends React.Component {
     return (
       <div className="row">
         <div className="col-md-12" style={{ textAlign: 'center' }}>
-          <h1 class="display-4">Welcome to Kanca</h1>
+          <h1 className="display-4">Welcome to Kanca</h1>
         </div>
         <div className="col-md-6 offset-md-3">
           <p>Welcome {profile.name}, Kanca is open sourced application to analyze Facebook Group.</p>
