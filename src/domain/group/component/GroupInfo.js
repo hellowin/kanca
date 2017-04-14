@@ -1,4 +1,10 @@
 import React from 'react';
+import groupRepo from 'infra/repo/group';
+
+const selectGroup = groupId => e => {
+  e.preventDefault();
+  groupRepo.selectGroup(groupId);
+}
 
 const Card = props => {
   const { id, name, cover, description, owner, privacy } = props;
@@ -20,7 +26,9 @@ const Card = props => {
         <li className="list-group-item">Owner: {owner.name}</li>
       </ul>
       <div className="card-block" style={{ textAlign: 'right' }}>
-        <a href={`https://www.facebook.com/groups/${id}/`} target="_blank" className="btn btn-primary">Go To</a>
+        <a href={`https://www.facebook.com/groups/${id}/`} target="_blank" className="btn btn-primary">Open in FB</a>
+        &nbsp;
+        <a href="#" onClick={selectGroup(id)} className="btn btn-primary">Select</a>
       </div>
     </div>
   );
