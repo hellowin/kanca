@@ -32,11 +32,11 @@ class GraphList {
       });
   }
 
-  fetchForward(page: number = 10, currentPage: number = 0) {
+  fetchForward(pages: number = 10, currentPage: number = 0) {
     return this.fetch(this.url)
       .then(() => {
-        if (this.next && currentPage < 10) {
-          return this.fetchForward(page, currentPage + 1);
+        if (this.next && currentPage < pages) {
+          return this.fetchForward(pages, currentPage + 1);
         } else {
           return this.data;
         }
@@ -97,8 +97,8 @@ const getGroup = (groupId: string) => get(`/${groupId}?fields=id,name,privacy,co
     return group;
   });
 
-const getGroupFeed = (groupId: string, pages: number = 10): Promise<any> => {
-  const url = `/${groupId}/feed?fields=created_time,id,message,updated_time,caption,story,description,from,link,name,picture,status_type,type,shares,permalink_url&limit=100`;
+const getGroupFeed = (groupId: string, pages: number): Promise<any> => {
+  const url = `/${groupId}/feed?fields=created_time,id,message,updated_time,caption,story,description,from,link,name,picture,status_type,type,shares,permalink_url,likes.limit(100)&limit=100`;
   const list = new GraphList(url);
   return list.fetchForward(pages);
 };

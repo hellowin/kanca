@@ -28,10 +28,10 @@ const userRepo = {
       });
   },
 
-  fetchFeeds(groupId: string): Promise<any> {
+  fetchFeeds(groupId: string, pages: number): Promise<any> {
     store.dispatch(action.groupSet({ loading: true, feeds: [] }));
     let feeds;
-    return graph.getGroupFeed(groupId)
+    return graph.getGroupFeed(groupId, pages)
       .then(res => (feeds = res))
       .then(() => {
         store.dispatch(action.groupSet({ feeds, loading: false }));

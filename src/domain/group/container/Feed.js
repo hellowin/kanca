@@ -2,6 +2,7 @@
 import React from 'react';
 import groupRepo from 'infra/repo/group';
 import { connect } from 'react-redux';
+import Post from '../component/Post';
 import loc from 'infra/service/location';
 
 const mapStateToProps = state => ({
@@ -32,9 +33,9 @@ class GroupFeed extends React.Component {
 
     return (
       <div>
-        <h1 className="h3">Feeds</h1>
-        {feeds.map((feed, id) => (
-          <pre key={id}>{JSON.stringify(feed, null, 2)}</pre>
+        <h1 className="h3">Group Feed</h1>
+        {feeds.map((post, id) => (
+          <Post key={id} {...post} />
         ))}
       </div>
     )
