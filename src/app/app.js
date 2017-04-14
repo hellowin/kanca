@@ -7,7 +7,6 @@ import Footer from 'domain/layout/component/Footer';
 import 'office-ui-fabric-react/dist/css/fabric.css';
 import { connect } from 'react-redux';
 import Auth from 'domain/user/component/auth';
-import Breadcrumbs from 'react-breadcrumbs';
 
 const mapStateToProps = state => ({
   profile: state.user.profile,
@@ -25,15 +24,7 @@ class App extends React.Component {
           <Header />
           <div className="app-body">
             <Sidebar />
-            <main className="main">
-              <Breadcrumbs
-                wrapperElement="ol"
-                wrapperClass="breadcrumb"
-                itemClass="breadcrumb-item"
-                separator=""
-                routes={this.props.routes}
-                params={this.props.params}
-              />
+            <main className="main" style={{ paddingTop: '20px' }}>
               <div className="container-fluid">
                 {children}
               </div>
