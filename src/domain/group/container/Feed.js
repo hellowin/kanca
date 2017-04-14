@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Post from '../component/Post';
 import loc from 'infra/service/location';
 import Loading from 'infra/component/Loading';
+import config from 'config';
 
 const mapStateToProps = state => ({
   loading: state.group.loading,
@@ -39,7 +40,14 @@ class GroupFeed extends React.Component {
           <Post key={id} {...post} />
         ))}
       </div>
-    ) : <Loading />;
+    ) : (
+      <div className="row">
+        <div className="col-md-12" style={{ textAlign: 'center' }}>
+          <p>Please wait. The engine is fetching {config.feedPages} {config.feedPages > 1 ? 'pages' : 'page'} of group feed.</p>
+          <Loading />
+        </div>
+      </div>
+    );
   }
 
 }

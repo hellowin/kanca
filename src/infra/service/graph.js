@@ -2,7 +2,7 @@
 
 const get = (url: string): Promise<any> => new Promise((resolve, reject) => {
   window.FB.api(url, fbRes => {
-    if (fbRes.error) return reject(new Error(fbRes.error.message || fbRes.error));
+    if (fbRes.error) return reject(new Error(`${fbRes.error.code} - ${fbRes.error.message}` || fbRes.error));
     return resolve(fbRes);
   });
 });
