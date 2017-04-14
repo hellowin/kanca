@@ -52,12 +52,6 @@ class Header extends Component {
           <li className="nav-item">
             <a className="nav-link navbar-toggler sidebar-toggler" onClick={this.sidebarToggle} href="#">&#9776;</a>
           </li>
-          <li className="nav-item px-1">
-            <a className="nav-link" onClick={() => loc.push('/group/selection')} style={{ cursor: 'pointer' }}>Group Selection</a>
-          </li>
-          <li className="nav-item px-1">
-            <a className="nav-link" onClick={() => loc.push('/dashboard')} style={{ cursor: 'pointer' }}>Dashboard</a>
-          </li>
         </ul>
         {!loading ? (<ul className="nav navbar-nav ml-auto">
           <li className="nav-item">
@@ -70,7 +64,7 @@ class Header extends Component {
               <DropdownMenu className="dropdown-menu-right">
                 <DropdownItem header className="text-center"><strong>Account</strong></DropdownItem>
 
-                <DropdownItem onClick={() => loc.push('/profile')}><i className="fa fa-user"></i> Profile</DropdownItem>
+                <DropdownItem onClick={() => loc.push('/user/profile')}><i className="fa fa-user"></i> Profile</DropdownItem>
                 <DropdownItem onClick={() => userRepo.logout()}><i className="fa fa-lock"></i> Logout</DropdownItem>
 
               </DropdownMenu>

@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
 
 const fetchFeeds = (loading, groupId, feeds) => {
   if (!groupId) loc.push('/group/selection');
-  if (!loading && feeds.length === 0) groupRepo.fetchFeeds(groupId);
+  if (!loading && feeds.length === 0) groupRepo.fetchFeeds(groupId, config.feedPages);
 }
 
 class GroupFeed extends React.Component {
