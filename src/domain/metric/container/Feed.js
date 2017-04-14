@@ -1,17 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-const mapStateToProps = state => ({
-  feeds: state.group.feeds,
-});
+import UserActivity from '../component/UserActivity';
 
-class Dashboard extends React.Component {
+class MetricFeed extends React.Component {
 
   render() {
     return (
       <div className="row">
         <div className="col-md-12">
           <h1 className="h3">Feed Metric</h1>
+          <UserActivity />
         </div>
       </div>
     );
@@ -19,4 +17,4 @@ class Dashboard extends React.Component {
 
 }
 
-export default connect(mapStateToProps)(Dashboard);
+export default MetricFeed;
