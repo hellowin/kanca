@@ -45,7 +45,7 @@ class Header extends Component {
     const { profile, loading } = this.props;
 
     return (
-      <header className="app-header navbar">
+      <header className="app-header navbar" style={{ paddingRight: '15px' }}>
         <button className="navbar-toggler mobile-sidebar-toggler hidden-lg-up" onClick={this.mobileSidebarToggle} type="button">&#9776;</button>
         <a className="navbar-brand" href="#"></a>
         <ul className="nav navbar-nav hidden-md-down">
@@ -70,9 +70,9 @@ class Header extends Component {
               </DropdownMenu>
             </Dropdown>
           </li>
-          <li className="nav-item hidden-md-down">
+          {/*<li className="nav-item hidden-md-down">
             <a className="nav-link navbar-toggler aside-menu-toggler" onClick={this.asideToggle} href="#">&#9776;</a>
-          </li>
+          </li>*/}
         </ul>) : '' }
       </header>
     )
