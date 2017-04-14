@@ -8,7 +8,8 @@ import config from 'config';
 import App from './app';
 import Login from 'domain/user/container/login';
 import Profile from 'domain/user/container/profile';
-import GroupSelection from 'domain/group/container/selection';
+import GroupSelection from 'domain/group/container/Selection';
+import GroupFeed from 'domain/group/container/Feed';
 import ChartDashboard from 'domain/chart/container/dashboard';
 
 const history = syncHistoryWithStore(browserHistory, store);
@@ -22,6 +23,7 @@ const RouterComp = props => (
       <Route path="profile" component={Profile} />
       <Route path="dashboard" component={ChartDashboard} />
       <Route path="group/selection" component={GroupSelection} />
+      <Route path="group/feed" component={GroupFeed} />
     </Route>
     <Route path={prefix + '/login'} component={Login} />
     <Redirect from="*" to={prefix} />

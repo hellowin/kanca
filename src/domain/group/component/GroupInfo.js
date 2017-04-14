@@ -1,9 +1,11 @@
 import React from 'react';
 import groupRepo from 'infra/repo/group';
+import loc from 'infra/service/location';
 
 const selectGroup = groupId => e => {
   e.preventDefault();
-  groupRepo.selectGroup(groupId);
+  groupRepo.selectGroup(groupId)
+    .then(() => loc.push('/group/feed'));
 }
 
 const Card = props => {

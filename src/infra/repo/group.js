@@ -26,6 +26,16 @@ const userRepo = {
       .then(() => {
         store.dispatch(action.groupSet({ features, loading: false }));
       });
+  },
+
+  fetchFeeds(groupId: string): Promise<any> {
+    store.dispatch(action.groupSet({ loading: true, feeds: [] }));
+    let feeds;
+    return graph.getGroupFeed(groupId)
+      .then(res => (feeds = res))
+      .then(() => {
+        store.dispatch(action.groupSet({ feeds, loading: false }));
+      });
   }
 
 };

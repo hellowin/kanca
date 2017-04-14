@@ -23,6 +23,7 @@ const user = (state = {
 const group = (state = {
   loading: false,
   selected: {},
+  feeds: [],
   features: [],
 }, action) => {
   switch (action.type) {
