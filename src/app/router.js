@@ -11,7 +11,7 @@ import UserProfile from 'domain/user/container/profile';
 import GroupWelcome from 'domain/group/container/Welcome';
 import GroupSelection from 'domain/group/container/Selection';
 import GroupFeed from 'domain/group/container/Feed';
-import ChartDashboard from 'domain/chart/container/dashboard';
+import MetricFeed from 'domain/metric/container/Feed';
 
 const history = syncHistoryWithStore(browserHistory, store);
 
@@ -22,7 +22,7 @@ const RouterComp = props => (
     <Route path={prefix} component={App}>
       <IndexRedirect to="welcome" />
       <Route path="welcome" component={GroupWelcome} />
-      <Route path="chart/dashboard" component={ChartDashboard} />
+      <Route path="metric/feed" component={MetricFeed} />
       <Route path="user/profile" component={UserProfile} />
       <Route path="group/selection" component={GroupSelection} />
       <Route path="group/feed" component={GroupFeed} />

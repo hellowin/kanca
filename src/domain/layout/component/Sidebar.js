@@ -31,6 +31,7 @@ class Sidebar extends Component {
       <div className="sidebar">
         <nav className="sidebar-nav">
           <ul className="nav">
+            
             <li className={this.activeRoute("/group")}>
               <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-people"></i> Group</a>
               <ul className="nav-dropdown-items">
@@ -42,6 +43,16 @@ class Sidebar extends Component {
                 </li> : ''}
               </ul>
             </li>
+
+            {feeds.length > 0 ? <li className={this.activeRoute("/metric")}>
+              <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-graph"></i> Metric</a>
+              <ul className="nav-dropdown-items">
+                <li className="nav-item">
+                  <a href="" className="nav-link" activeClassName="active" onClick={goTo('/metric/feed')}>Feed</a>
+                </li>
+              </ul>
+            </li> : ''}
+
           </ul>
         </nav>
       </div>
