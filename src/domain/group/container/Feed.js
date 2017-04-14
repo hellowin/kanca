@@ -4,6 +4,7 @@ import groupRepo from 'infra/repo/group';
 import { connect } from 'react-redux';
 import Post from '../component/Post';
 import loc from 'infra/service/location';
+import Loading from 'infra/component/Loading';
 
 const mapStateToProps = state => ({
   loading: state.group.loading,
@@ -29,16 +30,16 @@ class GroupFeed extends React.Component {
   }
 
   render() {
-    const { feeds } = this.props;
+    const { loading, feeds } = this.props;
 
-    return (
+    return !loading ? (
       <div>
         <h1 className="h3">Group Feed</h1>
         {feeds.map((post, id) => (
           <Post key={id} {...post} />
         ))}
       </div>
-    )
+    ) : <Loading />;
   }
 
 }
