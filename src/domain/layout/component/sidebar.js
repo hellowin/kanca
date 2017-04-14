@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router'
 import { connect } from 'react-redux';
+import loc from 'infra/service/location';
 
 const mapStateToProps = state => ({
   location: state.routing.locationBeforeTransitions,
+  feeds: state.group.feeds,
 });
+
+const goTo = path => e => {
+  e.preventDefault();
+  loc.push(path);
+}
 
 class Sidebar extends Component {
 
@@ -22,82 +28,25 @@ class Sidebar extends Component {
   // }
 
   render() {
+    const { feeds } = this.props;
+
     return (
 
       <div className="sidebar">
         <nav className="sidebar-nav">
           <ul className="nav">
-            <li className="nav-item">
-              <Link to={'/dashboard'} className="nav-link" activeClassName="active"><i className="icon-speedometer"></i> Dashboard <span className="badge badge-info">NEW</span></Link>
-            </li>
             <li className="nav-title">
-              UI Elements
+              Group
             </li>
-            <li className={this.activeRoute("/components")}>
-              <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-puzzle"></i> Components</a>
+            <li className={this.activeRoute("/group")}>
+              <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-people"></i> Group</a>
               <ul className="nav-dropdown-items">
                 <li className="nav-item">
-                  <Link to={'/components/buttons'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Buttons</Link>
+                  <a href="" className="nav-link" activeClassName="active" onClick={goTo('/group/selection')}><i className="icon-layers"></i> Selection</a>
                 </li>
-                <li className="nav-item">
-                  <Link to={'/components/social-buttons'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Social Buttons</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={'/components/cards'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Cards</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={'/components/forms'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Forms</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={'/components/modals'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Modals</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={'/components/switches'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Switches</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={'/components/tables'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Tables</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={'/components/tabs'} className="nav-link" activeClassName="active"><i className="icon-puzzle"></i> Tabs</Link>
-                </li>
-              </ul>
-            </li>
-            <li className={this.activeRoute("/icons")}>
-              <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-star"></i> Icons</a>
-              <ul className="nav-dropdown-items">
-                <li className="nav-item">
-                  <Link to={'/icons/font-awesome'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Font Awesome</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={'/icons/simple-line-icons'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Simple Line Icons</Link>
-                </li>
-              </ul>
-            </li>
-            <li className="nav-item">
-              <Link to={'/widgets'} className="nav-link" activeClassName="active"><i className="icon-calculator"></i> Widgets <span className="badge badge-info">NEW</span></Link>
-            </li>
-            <li className="nav-item">
-              <Link to={'/charts'} className="nav-link" activeClassName="active"><i className="icon-pie-chart"></i> Charts</Link>
-            </li>
-            <li className="divider"></li>
-            <li className="nav-title">
-              Extras
-            </li>
-            <li className="nav-item nav-dropdown">
-              <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-star"></i> Pages</a>
-              <ul className="nav-dropdown-items">
-                <li className="nav-item">
-                  <Link to={'/pages/login'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Login</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={'/pages/register'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Register</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={'/pages/404'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Error 404</Link>
-                </li>
-                <li className="nav-item">
-                  <Link to={'/pages/500'} className="nav-link" activeClassName="active"><i className="icon-star"></i> Error 500</Link>
-                </li>
+                {feeds.length > 0 ? <li className="nav-item">
+                  <a href="" className="nav-link" activeClassName="active" onClick={goTo('/group/feed')}><i className="icon-layers"></i> Feed</a>
+                </li> : ''}
               </ul>
             </li>
           </ul>
