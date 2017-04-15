@@ -33,7 +33,7 @@ class GraphList {
   }
 
   fetchForward(pages: number = 10, currentPage: number = 1) {
-    return this.fetch(this.url)
+    return this.fetch(currentPage === 1 ? this.url : this.next)
       .then(() => {
         if (this.next && currentPage < pages) {
           return this.fetchForward(pages, currentPage + 1);

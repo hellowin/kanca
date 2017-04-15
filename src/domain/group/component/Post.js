@@ -6,7 +6,7 @@ const Post = props => {
   return (
     <div className="card">
       <div className="card-block row">
-        {picture ? <div className="col-md-2"><img src={picture} className="rounded float-left" alt="Post pic" /></div> : ''}
+        {picture ? <div className="col-md-2"><img src={picture} className="rounded float-left" alt="Post pic" style={{ width: '100%' }} /></div> : ''}
         <div className={picture ? 'col-md-10' : 'col-md-12'}>
           <p className="card-text">{message}</p>
           {description ? (
