@@ -22,9 +22,10 @@ const user = (state = {
 
 const group = (state = {
   loading: false,
+  inputs: [],
+  features: [],
   selected: {},
   feeds: [],
-  features: [],
 }, action) => {
   switch (action.type) {
     case 'GROUP_SET':
