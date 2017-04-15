@@ -31,11 +31,31 @@ const userRepo = {
   fetchFeeds(groupId: string, pages: number): Promise<any> {
     store.dispatch(action.groupSet({ loading: true, feeds: [] }));
     let feeds;
+  
     return graph.getGroupFeed(groupId, pages)
       .then(res => (feeds = res))
       .then(() => {
+        userRepo.fetchComments(feeds);
+      })
+      .then(() => {
         store.dispatch(action.groupSet({ feeds, loading: false }));
       });
+  },
+  
+  fetchComments(feeds: Object[]): void {
+    store.dispatch(action.groupSet({ loading: true }));
+    const { user } = store.getState();
+    
+    feeds.forEach((feed: Object) => {
+      graph.getFeedComments(feed.id, user.login.authResponse.accessToken)
+        .then(comments => {
+          store.dispatch(action.commentSet({
+            postId: feed.id,
+            comments,
+            loading: false
+          }));
+        });
+    });
   }
 
 };

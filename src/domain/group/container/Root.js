@@ -12,7 +12,7 @@ const checkValidity = props => {
   const loggedIn = user.loggedIn;
 
   if (!loggedIn) loc.push('/welcome');
-}
+};
 
 class Group extends React.Component {
 

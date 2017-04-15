@@ -8,7 +8,12 @@ const action = {
   groupSet: (data) => ({
     type: 'GROUP_SET',
     data,
-  })
+  }),
+  
+  commentSet: (data) => ({
+    type: 'GROUP_COMMENT_SET',
+    data,
+  }),
 
 };
 

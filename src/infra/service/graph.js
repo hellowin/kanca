@@ -7,6 +7,13 @@ const get = (url: string): Promise<any> => new Promise((resolve, reject) => {
   });
 });
 
+const getWithToken = (url: string, accessToken: string): Promise<any> => new Promise((resolve, reject) => {
+  window.FB.api(url, fbRes => {
+    if (fbRes.error) return reject(new Error(`${fbRes.error.code} - ${fbRes.error.message}` || fbRes.error));
+    return resolve(fbRes);
+  }, { access_token: accessToken });
+});
+
 class GraphList {
 
   url: string;
@@ -14,11 +21,7 @@ class GraphList {
   next: string = '';
   previous: string = '';
 
-  constructor(url: string) {
-    this.url = url;
-  }
-
-  fetch(url) {
+  fetch(url: string) {
     return get(url)
       .then(res => {
         this.data = [...this.data, ...res.data];
@@ -31,16 +34,41 @@ class GraphList {
         }
       });
   }
+  
+  fetchWithToken(url: string, accessToken: string) {
+    return getWithToken(url, accessToken)
+      .then(res => {
+        this.data = [...this.data, ...res.data];
+        if (res.paging) {
+          this.previous = res.paging.previous;
+          this.next = res.paging.next;
+        } else {
+          this.previous = '';
+          this.next = '';
+        }
+      });
+  }
 
-  fetchForward(pages: number = 10, currentPage: number = 1) {
-    return this.fetch(currentPage === 1 ? this.url : this.next)
+  fetchForward(url: string, accessToken: string = '', pages: number = 10, currentPage: number = 1) {
+    if (accessToken) {
+      return this.fetchWithToken(currentPage === 1 ? url : this.next, accessToken)
+        .then(() => {
+          if (this.next && currentPage < pages) {
+            return this.fetchForward(url, accessToken, pages, currentPage + 1);
+          } else {
+            return this.data;
+          }
+        });
+    }
+    
+    return this.fetch(currentPage === 1 ? url : this.next)
       .then(() => {
         if (this.next && currentPage < pages) {
-          return this.fetchForward(pages, currentPage + 1);
+          return this.fetchForward(url, '', pages, currentPage + 1);
         } else {
           return this.data;
         }
-      })
+      });
   }
 
 }
@@ -58,7 +86,7 @@ const login = () => new Promise((resolve, reject) => {
 const logout = () => new Promise((resolve) => {
   window.FB.logout();
   resolve(true);
-})
+});
 
 const getLoginStatus = () => new Promise((resolve, reject) => {
   window.FB.getLoginStatus((response) => {
@@ -68,7 +96,7 @@ const getLoginStatus = () => new Promise((resolve, reject) => {
       reject(new Error('User not connected.'))
     }
   });
-})
+});
 
 const getUser = () => get('/me?fields=id,name,email,picture')
   .then(res => {
@@ -99,8 +127,15 @@ const getGroup = (groupId: string) => get(`/${groupId}?fields=id,name,privacy,co
 
 const getGroupFeed = (groupId: string, pages: number): Promise<any> => {
   const url = `/${groupId}/feed?fields=created_time,id,message,updated_time,caption,story,description,from,link,name,picture,status_type,type,shares,permalink_url,likes.limit(100)&limit=100`;
-  const list = new GraphList(url);
-  return list.fetchForward(pages);
+  const list = new GraphList();
+  return list.fetchForward(url, '', pages);
+};
+
+const getFeedComments = (commentId: string, accessToken: string): Promise<any> => {
+  const url = `/${commentId}/comments`;
+  const list = new GraphList();
+  
+  return list.fetchForward(url, accessToken);
 };
 
 export default {
@@ -110,4 +145,5 @@ export default {
   getUser,
   getGroup,
   getGroupFeed,
+  getFeedComments,
 };

@@ -2,7 +2,20 @@ import React from 'react';
 import moment from 'moment-timezone';
 
 const Post = props => {
-  const { created_time, message, description, from, name, picture, type, shares, permalink_url, likes, story } = props;
+  const {
+    created_time,
+    message,
+    description,
+    from,
+    name,
+    picture,
+    type,
+    shares,
+    permalink_url,
+    likes,
+    story
+  } = props;
+  
   return (
     <div className="card">
       <div className="card-block row">
