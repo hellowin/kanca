@@ -40,5 +40,9 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://hellowin.github.io/kanca/"
+  "homepage": "https://hellowin.github.io/kanca/",
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
+  }
 }
