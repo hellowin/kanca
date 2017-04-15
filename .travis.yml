@@ -7,7 +7,7 @@ cache:
 install:
   - npm install -g codecov
 script:
-  - npm test && codecov
+  - npm test -- --coverage && codecov
   - npm run flow
   - npm run build
 deploy:
