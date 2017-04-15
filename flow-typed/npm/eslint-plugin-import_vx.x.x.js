@@ -1,4 +1,4 @@
-// flow-typed signature: dc19b9c11fbcc1e8122c7f8174192d32
+// flow-typed signature: f9b164975b817a86ee472363ca9d77a9
 // flow-typed version: <<STUB>>/eslint-plugin-import_v^2.0.1/flow_v0.43.1
 
 /**
@@ -86,6 +86,10 @@ declare module 'eslint-plugin-import/lib/rules/first' {
   declare module.exports: any;
 }
 
+declare module 'eslint-plugin-import/lib/rules/imports-first' {
+  declare module.exports: any;
+}
+
 declare module 'eslint-plugin-import/lib/rules/max-dependencies' {
   declare module.exports: any;
 }
@@ -143,6 +147,10 @@ declare module 'eslint-plugin-import/lib/rules/no-named-as-default-member' {
 }
 
 declare module 'eslint-plugin-import/lib/rules/no-named-as-default' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-import/lib/rules/no-named-default' {
   declare module.exports: any;
 }
 
@@ -235,6 +243,9 @@ declare module 'eslint-plugin-import/lib/rules/extensions.js' {
 declare module 'eslint-plugin-import/lib/rules/first.js' {
   declare module.exports: $Exports<'eslint-plugin-import/lib/rules/first'>;
 }
+declare module 'eslint-plugin-import/lib/rules/imports-first.js' {
+  declare module.exports: $Exports<'eslint-plugin-import/lib/rules/imports-first'>;
+}
 declare module 'eslint-plugin-import/lib/rules/max-dependencies.js' {
   declare module.exports: $Exports<'eslint-plugin-import/lib/rules/max-dependencies'>;
 }
@@ -279,6 +290,9 @@ declare module 'eslint-plugin-import/lib/rules/no-named-as-default-member.js' {
 }
 declare module 'eslint-plugin-import/lib/rules/no-named-as-default.js' {
   declare module.exports: $Exports<'eslint-plugin-import/lib/rules/no-named-as-default'>;
+}
+declare module 'eslint-plugin-import/lib/rules/no-named-default.js' {
+  declare module.exports: $Exports<'eslint-plugin-import/lib/rules/no-named-default'>;
 }
 declare module 'eslint-plugin-import/lib/rules/no-namespace.js' {
   declare module.exports: $Exports<'eslint-plugin-import/lib/rules/no-namespace'>;

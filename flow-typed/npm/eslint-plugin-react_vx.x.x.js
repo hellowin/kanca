@@ -1,4 +1,4 @@
-// flow-typed signature: df7de462087518aac0698da520aaaa5a
+// flow-typed signature: 47753c9b3a49a58767e366be6983d061
 // flow-typed version: <<STUB>>/eslint-plugin-react_v^6.4.1/flow_v0.43.1
 
 /**
@@ -27,6 +27,14 @@ declare module 'eslint-plugin-react/lib/rules/display-name' {
 }
 
 declare module 'eslint-plugin-react/lib/rules/forbid-component-props' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-react/lib/rules/forbid-elements' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-react/lib/rules/forbid-foreign-prop-types' {
   declare module.exports: any;
 }
 
@@ -114,6 +122,10 @@ declare module 'eslint-plugin-react/lib/rules/jsx-space-before-closing' {
   declare module.exports: any;
 }
 
+declare module 'eslint-plugin-react/lib/rules/jsx-tag-spacing' {
+  declare module.exports: any;
+}
+
 declare module 'eslint-plugin-react/lib/rules/jsx-uses-react' {
   declare module.exports: any;
 }
@@ -123,6 +135,10 @@ declare module 'eslint-plugin-react/lib/rules/jsx-uses-vars' {
 }
 
 declare module 'eslint-plugin-react/lib/rules/jsx-wrap-multilines' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-react/lib/rules/no-array-index-key' {
   declare module.exports: any;
 }
 
@@ -210,6 +226,10 @@ declare module 'eslint-plugin-react/lib/rules/react-in-jsx-scope' {
   declare module.exports: any;
 }
 
+declare module 'eslint-plugin-react/lib/rules/require-default-props' {
+  declare module.exports: any;
+}
+
 declare module 'eslint-plugin-react/lib/rules/require-extension' {
   declare module.exports: any;
 }
@@ -238,11 +258,23 @@ declare module 'eslint-plugin-react/lib/rules/style-prop-object' {
   declare module.exports: any;
 }
 
+declare module 'eslint-plugin-react/lib/rules/void-dom-elements-no-children' {
+  declare module.exports: any;
+}
+
 declare module 'eslint-plugin-react/lib/rules/wrap-multilines' {
   declare module.exports: any;
 }
 
+declare module 'eslint-plugin-react/lib/util/annotations' {
+  declare module.exports: any;
+}
+
 declare module 'eslint-plugin-react/lib/util/Components' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-react/lib/util/getTokenBeforeClosingBracket' {
   declare module.exports: any;
 }
 
@@ -270,6 +302,12 @@ declare module 'eslint-plugin-react/lib/rules/display-name.js' {
 }
 declare module 'eslint-plugin-react/lib/rules/forbid-component-props.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/forbid-component-props'>;
+}
+declare module 'eslint-plugin-react/lib/rules/forbid-elements.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/forbid-elements'>;
+}
+declare module 'eslint-plugin-react/lib/rules/forbid-foreign-prop-types.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/forbid-foreign-prop-types'>;
 }
 declare module 'eslint-plugin-react/lib/rules/forbid-prop-types.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/forbid-prop-types'>;
@@ -334,6 +372,9 @@ declare module 'eslint-plugin-react/lib/rules/jsx-sort-props.js' {
 declare module 'eslint-plugin-react/lib/rules/jsx-space-before-closing.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/jsx-space-before-closing'>;
 }
+declare module 'eslint-plugin-react/lib/rules/jsx-tag-spacing.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/jsx-tag-spacing'>;
+}
 declare module 'eslint-plugin-react/lib/rules/jsx-uses-react.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/jsx-uses-react'>;
 }
@@ -342,6 +383,9 @@ declare module 'eslint-plugin-react/lib/rules/jsx-uses-vars.js' {
 }
 declare module 'eslint-plugin-react/lib/rules/jsx-wrap-multilines.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/jsx-wrap-multilines'>;
+}
+declare module 'eslint-plugin-react/lib/rules/no-array-index-key.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/no-array-index-key'>;
 }
 declare module 'eslint-plugin-react/lib/rules/no-children-prop.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/no-children-prop'>;
@@ -406,6 +450,9 @@ declare module 'eslint-plugin-react/lib/rules/prop-types.js' {
 declare module 'eslint-plugin-react/lib/rules/react-in-jsx-scope.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/react-in-jsx-scope'>;
 }
+declare module 'eslint-plugin-react/lib/rules/require-default-props.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/require-default-props'>;
+}
 declare module 'eslint-plugin-react/lib/rules/require-extension.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/require-extension'>;
 }
@@ -427,11 +474,20 @@ declare module 'eslint-plugin-react/lib/rules/sort-prop-types.js' {
 declare module 'eslint-plugin-react/lib/rules/style-prop-object.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/style-prop-object'>;
 }
+declare module 'eslint-plugin-react/lib/rules/void-dom-elements-no-children.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/rules/void-dom-elements-no-children'>;
+}
 declare module 'eslint-plugin-react/lib/rules/wrap-multilines.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/rules/wrap-multilines'>;
 }
+declare module 'eslint-plugin-react/lib/util/annotations.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/util/annotations'>;
+}
 declare module 'eslint-plugin-react/lib/util/Components.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/util/Components'>;
+}
+declare module 'eslint-plugin-react/lib/util/getTokenBeforeClosingBracket.js' {
+  declare module.exports: $Exports<'eslint-plugin-react/lib/util/getTokenBeforeClosingBracket'>;
 }
 declare module 'eslint-plugin-react/lib/util/pragma.js' {
   declare module.exports: $Exports<'eslint-plugin-react/lib/util/pragma'>;
