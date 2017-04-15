@@ -11,6 +11,7 @@ import UserProfile from 'domain/user/container/profile';
 import GroupWelcome from 'domain/group/container/Welcome';
 import GroupSelection from 'domain/group/container/Selection';
 import GroupFeed from 'domain/group/container/Feed';
+import Metric from 'domain/metric/container/Root';
 import MetricSummary from 'domain/metric/container/Summary';
 
 const history = syncHistoryWithStore(browserHistory, store);
@@ -22,10 +23,13 @@ const RouterComp = props => (
     <Route path={prefix} component={App}>
       <IndexRedirect to="welcome" />
       <Route path="welcome" component={GroupWelcome} />
-      <Route path="metric/summary" component={MetricSummary} />
       <Route path="user/profile" component={UserProfile} />
       <Route path="group/selection" component={GroupSelection} />
       <Route path="group/feed" component={GroupFeed} />
+
+      <Route path="metric" component={Metric}>
+        <Route path="summary" component={MetricSummary} />
+      </Route>
     </Route>
     <Route path={prefix + '/login'} component={Login} />
     <Redirect from="*" to={prefix} />

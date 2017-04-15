@@ -21,8 +21,6 @@ class MetricSummary extends React.Component {
     const totalPostsShares = postCounted.map(post => (post || {}).sharesCount).reduce((pre, cur) => pre + cur, 0);
     const totalPostsLikes = postCounted.map(post => (post || {}).likesCount).reduce((pre, cur) => pre + cur, 0);
 
-    console.log(postCounted);
-
     return (
       <div className="row">
 
