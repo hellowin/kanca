@@ -1,0 +1,7 @@
+{
+  "ignore": [
+    "**/node_modules/**",
+    "flow-typed/**",
+    "**/**.test.js"
+  ]
+}
