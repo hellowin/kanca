@@ -14,8 +14,10 @@
     "react-scripts": "0.9.5"
   },
   "dependencies": {
+    "immutability-helper": "^2.1.2",
     "lodash": "^4.17.4",
     "moment-timezone": "^0.5.13",
+    "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-addons-css-transition-group": "^15.5.2",
     "react-addons-transition-group": "^15.5.2",
