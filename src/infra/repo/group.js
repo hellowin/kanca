@@ -15,6 +15,11 @@ const userRepo = {
       });
   },
 
+  addInput(group: {}) {
+    const inputs = [...store.getState().group.inputs, group];
+    store.dispatch(action.groupSet({ inputs }));
+  },
+
   fetchFeatures(groupIds: string[]): Promise<any> {
     store.dispatch(action.groupSet({ loading: true }));
     const features = [];
