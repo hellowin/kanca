@@ -1,4 +1,4 @@
-// flow-typed signature: f446f0db9c2c7edaa4336bd1733a3e61
+// flow-typed signature: f4ebd6d26949f3d7ec1ebb5f31bf881a
 // flow-typed version: <<STUB>>/eslint_v^3.8.1/flow_v0.43.1
 
 /**
@@ -35,6 +35,10 @@ declare module 'eslint/conf/environments' {
 }
 
 declare module 'eslint/conf/eslint-all' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/conf/eslint-recommended' {
   declare module.exports: any;
 }
 
@@ -127,6 +131,10 @@ declare module 'eslint/lib/file-finder' {
 }
 
 declare module 'eslint/lib/formatters/checkstyle' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/formatters/codeframe' {
   declare module.exports: any;
 }
 
@@ -243,6 +251,10 @@ declare module 'eslint/lib/rules/callback-return' {
 }
 
 declare module 'eslint/lib/rules/camelcase' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/rules/capitalized-comments' {
   declare module.exports: any;
 }
 
@@ -446,6 +458,10 @@ declare module 'eslint/lib/rules/no-array-constructor' {
   declare module.exports: any;
 }
 
+declare module 'eslint/lib/rules/no-await-in-loop' {
+  declare module.exports: any;
+}
+
 declare module 'eslint/lib/rules/no-bitwise' {
   declare module.exports: any;
 }
@@ -463,6 +479,10 @@ declare module 'eslint/lib/rules/no-catch-shadow' {
 }
 
 declare module 'eslint/lib/rules/no-class-assign' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/rules/no-compare-neg-zero' {
   declare module.exports: any;
 }
 
@@ -670,6 +690,10 @@ declare module 'eslint/lib/rules/no-mixed-spaces-and-tabs' {
   declare module.exports: any;
 }
 
+declare module 'eslint/lib/rules/no-multi-assign' {
+  declare module.exports: any;
+}
+
 declare module 'eslint/lib/rules/no-multi-spaces' {
   declare module.exports: any;
 }
@@ -791,6 +815,10 @@ declare module 'eslint/lib/rules/no-restricted-syntax' {
 }
 
 declare module 'eslint/lib/rules/no-return-assign' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/rules/no-return-await' {
   declare module.exports: any;
 }
 
@@ -934,6 +962,10 @@ declare module 'eslint/lib/rules/no-useless-rename' {
   declare module.exports: any;
 }
 
+declare module 'eslint/lib/rules/no-useless-return' {
+  declare module.exports: any;
+}
+
 declare module 'eslint/lib/rules/no-var' {
   declare module.exports: any;
 }
@@ -951,6 +983,10 @@ declare module 'eslint/lib/rules/no-whitespace-before-property' {
 }
 
 declare module 'eslint/lib/rules/no-with' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/rules/nonblock-statement-body-position' {
   declare module.exports: any;
 }
 
@@ -998,7 +1034,15 @@ declare module 'eslint/lib/rules/prefer-const' {
   declare module.exports: any;
 }
 
+declare module 'eslint/lib/rules/prefer-destructuring' {
+  declare module.exports: any;
+}
+
 declare module 'eslint/lib/rules/prefer-numeric-literals' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/rules/prefer-promise-reject-errors' {
   declare module.exports: any;
 }
 
@@ -1027,6 +1071,10 @@ declare module 'eslint/lib/rules/quotes' {
 }
 
 declare module 'eslint/lib/rules/radix' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/rules/require-await' {
   declare module.exports: any;
 }
 
@@ -1098,6 +1146,10 @@ declare module 'eslint/lib/rules/template-curly-spacing' {
   declare module.exports: any;
 }
 
+declare module 'eslint/lib/rules/template-tag-spacing' {
+  declare module.exports: any;
+}
+
 declare module 'eslint/lib/rules/unicode-bom' {
   declare module.exports: any;
 }
@@ -1146,11 +1198,63 @@ declare module 'eslint/lib/timing' {
   declare module.exports: any;
 }
 
-declare module 'eslint/lib/token-store' {
+declare module 'eslint/lib/token-store/backward-token-comment-cursor' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/token-store/backward-token-cursor' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/token-store/cursor' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/token-store/cursors' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/token-store/decorative-cursor' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/token-store/filter-cursor' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/token-store/forward-token-comment-cursor' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/token-store/forward-token-cursor' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/token-store/index' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/token-store/limit-cursor' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/token-store/padded-token-cursor' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/token-store/skip-cursor' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/token-store/utils' {
   declare module.exports: any;
 }
 
 declare module 'eslint/lib/util/comment-event-generator' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/util/fix-tracker' {
   declare module.exports: any;
 }
 
@@ -1183,6 +1287,10 @@ declare module 'eslint/lib/util/npm-util' {
 }
 
 declare module 'eslint/lib/util/path-util' {
+  declare module.exports: any;
+}
+
+declare module 'eslint/lib/util/patterns/letters' {
   declare module.exports: any;
 }
 
@@ -1222,6 +1330,9 @@ declare module 'eslint/conf/environments.js' {
 }
 declare module 'eslint/conf/eslint-all.js' {
   declare module.exports: $Exports<'eslint/conf/eslint-all'>;
+}
+declare module 'eslint/conf/eslint-recommended.js' {
+  declare module.exports: $Exports<'eslint/conf/eslint-recommended'>;
 }
 declare module 'eslint/lib/api.js' {
   declare module.exports: $Exports<'eslint/lib/api'>;
@@ -1291,6 +1402,9 @@ declare module 'eslint/lib/file-finder.js' {
 }
 declare module 'eslint/lib/formatters/checkstyle.js' {
   declare module.exports: $Exports<'eslint/lib/formatters/checkstyle'>;
+}
+declare module 'eslint/lib/formatters/codeframe.js' {
+  declare module.exports: $Exports<'eslint/lib/formatters/codeframe'>;
 }
 declare module 'eslint/lib/formatters/compact.js' {
   declare module.exports: $Exports<'eslint/lib/formatters/compact'>;
@@ -1378,6 +1492,9 @@ declare module 'eslint/lib/rules/callback-return.js' {
 }
 declare module 'eslint/lib/rules/camelcase.js' {
   declare module.exports: $Exports<'eslint/lib/rules/camelcase'>;
+}
+declare module 'eslint/lib/rules/capitalized-comments.js' {
+  declare module.exports: $Exports<'eslint/lib/rules/capitalized-comments'>;
 }
 declare module 'eslint/lib/rules/class-methods-use-this.js' {
   declare module.exports: $Exports<'eslint/lib/rules/class-methods-use-this'>;
@@ -1529,6 +1646,9 @@ declare module 'eslint/lib/rules/no-alert.js' {
 declare module 'eslint/lib/rules/no-array-constructor.js' {
   declare module.exports: $Exports<'eslint/lib/rules/no-array-constructor'>;
 }
+declare module 'eslint/lib/rules/no-await-in-loop.js' {
+  declare module.exports: $Exports<'eslint/lib/rules/no-await-in-loop'>;
+}
 declare module 'eslint/lib/rules/no-bitwise.js' {
   declare module.exports: $Exports<'eslint/lib/rules/no-bitwise'>;
 }
@@ -1543,6 +1663,9 @@ declare module 'eslint/lib/rules/no-catch-shadow.js' {
 }
 declare module 'eslint/lib/rules/no-class-assign.js' {
   declare module.exports: $Exports<'eslint/lib/rules/no-class-assign'>;
+}
+declare module 'eslint/lib/rules/no-compare-neg-zero.js' {
+  declare module.exports: $Exports<'eslint/lib/rules/no-compare-neg-zero'>;
 }
 declare module 'eslint/lib/rules/no-cond-assign.js' {
   declare module.exports: $Exports<'eslint/lib/rules/no-cond-assign'>;
@@ -1697,6 +1820,9 @@ declare module 'eslint/lib/rules/no-mixed-requires.js' {
 declare module 'eslint/lib/rules/no-mixed-spaces-and-tabs.js' {
   declare module.exports: $Exports<'eslint/lib/rules/no-mixed-spaces-and-tabs'>;
 }
+declare module 'eslint/lib/rules/no-multi-assign.js' {
+  declare module.exports: $Exports<'eslint/lib/rules/no-multi-assign'>;
+}
 declare module 'eslint/lib/rules/no-multi-spaces.js' {
   declare module.exports: $Exports<'eslint/lib/rules/no-multi-spaces'>;
 }
@@ -1789,6 +1915,9 @@ declare module 'eslint/lib/rules/no-restricted-syntax.js' {
 }
 declare module 'eslint/lib/rules/no-return-assign.js' {
   declare module.exports: $Exports<'eslint/lib/rules/no-return-assign'>;
+}
+declare module 'eslint/lib/rules/no-return-await.js' {
+  declare module.exports: $Exports<'eslint/lib/rules/no-return-await'>;
 }
 declare module 'eslint/lib/rules/no-script-url.js' {
   declare module.exports: $Exports<'eslint/lib/rules/no-script-url'>;
@@ -1895,6 +2024,9 @@ declare module 'eslint/lib/rules/no-useless-escape.js' {
 declare module 'eslint/lib/rules/no-useless-rename.js' {
   declare module.exports: $Exports<'eslint/lib/rules/no-useless-rename'>;
 }
+declare module 'eslint/lib/rules/no-useless-return.js' {
+  declare module.exports: $Exports<'eslint/lib/rules/no-useless-return'>;
+}
 declare module 'eslint/lib/rules/no-var.js' {
   declare module.exports: $Exports<'eslint/lib/rules/no-var'>;
 }
@@ -1909,6 +2041,9 @@ declare module 'eslint/lib/rules/no-whitespace-before-property.js' {
 }
 declare module 'eslint/lib/rules/no-with.js' {
   declare module.exports: $Exports<'eslint/lib/rules/no-with'>;
+}
+declare module 'eslint/lib/rules/nonblock-statement-body-position.js' {
+  declare module.exports: $Exports<'eslint/lib/rules/nonblock-statement-body-position'>;
 }
 declare module 'eslint/lib/rules/object-curly-newline.js' {
   declare module.exports: $Exports<'eslint/lib/rules/object-curly-newline'>;
@@ -1943,8 +2078,14 @@ declare module 'eslint/lib/rules/prefer-arrow-callback.js' {
 declare module 'eslint/lib/rules/prefer-const.js' {
   declare module.exports: $Exports<'eslint/lib/rules/prefer-const'>;
 }
+declare module 'eslint/lib/rules/prefer-destructuring.js' {
+  declare module.exports: $Exports<'eslint/lib/rules/prefer-destructuring'>;
+}
 declare module 'eslint/lib/rules/prefer-numeric-literals.js' {
   declare module.exports: $Exports<'eslint/lib/rules/prefer-numeric-literals'>;
+}
+declare module 'eslint/lib/rules/prefer-promise-reject-errors.js' {
+  declare module.exports: $Exports<'eslint/lib/rules/prefer-promise-reject-errors'>;
 }
 declare module 'eslint/lib/rules/prefer-reflect.js' {
   declare module.exports: $Exports<'eslint/lib/rules/prefer-reflect'>;
@@ -1966,6 +2107,9 @@ declare module 'eslint/lib/rules/quotes.js' {
 }
 declare module 'eslint/lib/rules/radix.js' {
   declare module.exports: $Exports<'eslint/lib/rules/radix'>;
+}
+declare module 'eslint/lib/rules/require-await.js' {
+  declare module.exports: $Exports<'eslint/lib/rules/require-await'>;
 }
 declare module 'eslint/lib/rules/require-jsdoc.js' {
   declare module.exports: $Exports<'eslint/lib/rules/require-jsdoc'>;
@@ -2018,6 +2162,9 @@ declare module 'eslint/lib/rules/symbol-description.js' {
 declare module 'eslint/lib/rules/template-curly-spacing.js' {
   declare module.exports: $Exports<'eslint/lib/rules/template-curly-spacing'>;
 }
+declare module 'eslint/lib/rules/template-tag-spacing.js' {
+  declare module.exports: $Exports<'eslint/lib/rules/template-tag-spacing'>;
+}
 declare module 'eslint/lib/rules/unicode-bom.js' {
   declare module.exports: $Exports<'eslint/lib/rules/unicode-bom'>;
 }
@@ -2054,11 +2201,50 @@ declare module 'eslint/lib/testers/rule-tester.js' {
 declare module 'eslint/lib/timing.js' {
   declare module.exports: $Exports<'eslint/lib/timing'>;
 }
-declare module 'eslint/lib/token-store.js' {
-  declare module.exports: $Exports<'eslint/lib/token-store'>;
+declare module 'eslint/lib/token-store/backward-token-comment-cursor.js' {
+  declare module.exports: $Exports<'eslint/lib/token-store/backward-token-comment-cursor'>;
+}
+declare module 'eslint/lib/token-store/backward-token-cursor.js' {
+  declare module.exports: $Exports<'eslint/lib/token-store/backward-token-cursor'>;
+}
+declare module 'eslint/lib/token-store/cursor.js' {
+  declare module.exports: $Exports<'eslint/lib/token-store/cursor'>;
+}
+declare module 'eslint/lib/token-store/cursors.js' {
+  declare module.exports: $Exports<'eslint/lib/token-store/cursors'>;
+}
+declare module 'eslint/lib/token-store/decorative-cursor.js' {
+  declare module.exports: $Exports<'eslint/lib/token-store/decorative-cursor'>;
+}
+declare module 'eslint/lib/token-store/filter-cursor.js' {
+  declare module.exports: $Exports<'eslint/lib/token-store/filter-cursor'>;
+}
+declare module 'eslint/lib/token-store/forward-token-comment-cursor.js' {
+  declare module.exports: $Exports<'eslint/lib/token-store/forward-token-comment-cursor'>;
+}
+declare module 'eslint/lib/token-store/forward-token-cursor.js' {
+  declare module.exports: $Exports<'eslint/lib/token-store/forward-token-cursor'>;
+}
+declare module 'eslint/lib/token-store/index.js' {
+  declare module.exports: $Exports<'eslint/lib/token-store/index'>;
+}
+declare module 'eslint/lib/token-store/limit-cursor.js' {
+  declare module.exports: $Exports<'eslint/lib/token-store/limit-cursor'>;
+}
+declare module 'eslint/lib/token-store/padded-token-cursor.js' {
+  declare module.exports: $Exports<'eslint/lib/token-store/padded-token-cursor'>;
+}
+declare module 'eslint/lib/token-store/skip-cursor.js' {
+  declare module.exports: $Exports<'eslint/lib/token-store/skip-cursor'>;
+}
+declare module 'eslint/lib/token-store/utils.js' {
+  declare module.exports: $Exports<'eslint/lib/token-store/utils'>;
 }
 declare module 'eslint/lib/util/comment-event-generator.js' {
   declare module.exports: $Exports<'eslint/lib/util/comment-event-generator'>;
+}
+declare module 'eslint/lib/util/fix-tracker.js' {
+  declare module.exports: $Exports<'eslint/lib/util/fix-tracker'>;
 }
 declare module 'eslint/lib/util/glob-util.js' {
   declare module.exports: $Exports<'eslint/lib/util/glob-util'>;
@@ -2083,6 +2269,9 @@ declare module 'eslint/lib/util/npm-util.js' {
 }
 declare module 'eslint/lib/util/path-util.js' {
   declare module.exports: $Exports<'eslint/lib/util/path-util'>;
+}
+declare module 'eslint/lib/util/patterns/letters.js' {
+  declare module.exports: $Exports<'eslint/lib/util/patterns/letters'>;
 }
 declare module 'eslint/lib/util/rule-fixer.js' {
   declare module.exports: $Exports<'eslint/lib/util/rule-fixer'>;
