@@ -1,6 +1,11 @@
 # Kanca
 
 [![Build Status](https://travis-ci.org/hellowin/kanca.svg?branch=master)](https://travis-ci.org/hellowin/kanca)
+[![Known Vulnerabilities](https://snyk.io/test/github/hellowin/kanca/badge.svg)](https://snyk.io/test/github/hellowin/kanca)
+[![bitHound Overall Score](https://www.bithound.io/github/hellowin/kanca/badges/score.svg)](https://www.bithound.io/github/hellowin/kanca)
+[![bitHound Dependencies](https://www.bithound.io/github/hellowin/kanca/badges/dependencies.svg)](https://www.bithound.io/github/hellowin/kanca/master/dependencies/npm)
+[![bitHound Dev Dependencies](https://www.bithound.io/github/hellowin/kanca/badges/devDependencies.svg)](https://www.bithound.io/github/hellowin/kanca/master/dependencies/npm)
+[![bitHound Code](https://www.bithound.io/github/hellowin/kanca/badges/code.svg)](https://www.bithound.io/github/hellowin/kanca)
 
 Kanca is an application to analyze `Facebook Group` activity. Its key features are:
 
