@@ -48,7 +48,7 @@ class Sidebar extends Component {
               <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-graph"></i> Metric</a>
               <ul className="nav-dropdown-items">
                 <li className="nav-item">
-                  <a href="" className="nav-link" activeClassName="active" onClick={goTo('/metric/feed')}>Feed</a>
+                  <a href="" className="nav-link" activeClassName="active" onClick={goTo('/metric/summary')}>Summary</a>
                 </li>
               </ul>
             </li> : ''}

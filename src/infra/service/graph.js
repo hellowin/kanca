@@ -32,7 +32,7 @@ class GraphList {
       });
   }
 
-  fetchForward(pages: number = 10, currentPage: number = 0) {
+  fetchForward(pages: number = 10, currentPage: number = 1) {
     return this.fetch(this.url)
       .then(() => {
         if (this.next && currentPage < pages) {
