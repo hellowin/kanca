@@ -1,4 +1,3 @@
-// @flow
 import _ from 'lodash';
 
 export default (feeds: {}[]): { id: string, name: string, postsCount: number, postsSharesCount: number, postsLikesCount: number }[] => {

@@ -1,10 +1,10 @@
+// @flow
 import React from 'react';
 import './app.css';
 import Header from 'domain/layout/component/Header';
 import Sidebar from 'domain/layout/component/Sidebar';
 import Aside from 'domain/layout/component/Aside';
 import Footer from 'domain/layout/component/Footer';
-import 'office-ui-fabric-react/dist/css/fabric.css';
 import { connect } from 'react-redux';
 import Auth from 'domain/user/component/auth';
 
