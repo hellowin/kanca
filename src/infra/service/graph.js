@@ -7,13 +7,6 @@ const get = (url: string): Promise<any> => new Promise((resolve, reject) => {
   });
 });
 
-const getWithToken = (url: string, accessToken: string): Promise<any> => new Promise((resolve, reject) => {
-  window.FB.api(url, fbRes => {
-    if (fbRes.error) return reject(new Error(`${fbRes.error.code} - ${fbRes.error.message}` || fbRes.error));
-    return resolve(fbRes);
-  }, { access_token: accessToken });
-});
-
 class GraphList {
 
   url: string;
@@ -35,40 +28,42 @@ class GraphList {
       });
   }
   
-  fetchWithToken(url: string, accessToken: string) {
-    return getWithToken(url, accessToken)
-      .then(res => {
-        this.data = [...this.data, ...res.data];
-        if (res.paging) {
-          this.previous = res.paging.previous;
-          this.next = res.paging.next;
-        } else {
-          this.previous = '';
-          this.next = '';
-        }
-      });
-  }
-
-  fetchForward(url: string, accessToken: string = '', pages: number = 10, currentPage: number = 1) {
-    if (accessToken) {
-      return this.fetchWithToken(currentPage === 1 ? url : this.next, accessToken)
-        .then(() => {
-          if (this.next && currentPage < pages) {
-            return this.fetchForward(url, accessToken, pages, currentPage + 1);
-          } else {
-            return this.data;
-          }
-        });
-    }
-    
+  fetchForward(url: string, pages: number = 10, currentPage: number = 1) {
     return this.fetch(currentPage === 1 ? url : this.next)
       .then(() => {
         if (this.next && currentPage < pages) {
-          return this.fetchForward(url, '', pages, currentPage + 1);
+          return this.fetchForward(url, pages, currentPage + 1);
         } else {
           return this.data;
         }
       });
+  }
+  
+  getCommentBatch(postIds: string[], accessToken: string) {
+    const commentUrl = postIds.map(id => ({
+      method: 'GET',
+      relative_url: `${id}/comments?summary=1&filter=toplevel&fields=parent.fields(id),comments.summary(true),message,from,likes`,
+    }));
+    
+    return fetch('https://graph.facebook.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          batch: commentUrl,
+          access_token: accessToken,
+        }),
+      })
+      .then(res => res.json())
+      .then(data => {
+        const comments = {};
+        data.forEach((datum, index) => {
+          comments[postIds[index]] = JSON.parse(datum.body).data;
+        });
+
+        return comments;
+      })
   }
 
 }
@@ -126,17 +121,23 @@ const getGroup = (groupId: string) => get(`/${groupId}?fields=id,name,privacy,co
   });
 
 const getGroupFeed = (groupId: string, pages: number): Promise<any> => {
-  const url = `/${groupId}/feed?fields=created_time,id,message,updated_time,caption,story,description,from,link,name,picture,status_type,type,shares,permalink_url,likes.limit(100)&limit=100`;
+  const url = `/${groupId}/feed?fields=created_time,id,message,updated_time,caption,story,description,from,link,name,picture,status_type,type,shares,permalink_url,likes.limit(10)&limit=10`;
   const list = new GraphList();
-  return list.fetchForward(url, '', pages);
+  return list.fetchForward(url, pages);
 };
 
 const getFeedComments = (commentId: string, accessToken: string): Promise<any> => {
-  const url = `/${commentId}/comments`;
+  const url = `/${commentId}/comments?summary=1&filter=stream`;
   const list = new GraphList();
   
-  return list.fetchForward(url, accessToken);
+  return list.fetchForward(url);
 };
+
+const batchComments = (postIds: string[], accessToken: string) => {
+  const list = new GraphList();
+
+  return list.getCommentBatch(postIds, accessToken);
+}
 
 export default {
   login,
@@ -146,4 +147,5 @@ export default {
   getGroup,
   getGroupFeed,
   getFeedComments,
+  batchComments,
 };

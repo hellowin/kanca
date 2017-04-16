@@ -42,12 +42,12 @@ const group = (state = {
       return update(state, {
         comments: {
           [state.selected.id]: {
-            $apply : currentGroupId => update(currentGroupId, {
-              [action.data.postId]: {
-                $set: action.data.comments
+            $apply: currentGroupId => update(currentGroupId, {
+              data: {
+                $set: action.data.comments,
               }
             })
-          },
+          }
         }
       });
     default:

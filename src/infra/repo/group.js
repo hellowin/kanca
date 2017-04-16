@@ -47,20 +47,18 @@ const userRepo = {
       });
   },
   
-  fetchComments(feeds: Object[]): void {
+  fetchComments(feeds: Object[]): Promise<any> {
     store.dispatch(action.groupSet({ loading: true }));
     const { user } = store.getState();
-    
-    feeds.forEach((feed: Object) => {
-      graph.getFeedComments(feed.id, user.login.authResponse.accessToken)
-        .then(comments => {
-          store.dispatch(action.commentSet({
-            postId: feed.id,
-            comments,
-            loading: false
-          }));
-        });
-    });
+    const postIds = feeds.map(feed => feed.id);
+
+    return graph.batchComments(postIds, user.login.authResponse.accessToken)
+      .then(comments => {
+        store.dispatch(action.commentSet({
+          comments,
+          loading: false
+        }));
+      });
   }
 
 };
