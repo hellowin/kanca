@@ -54,7 +54,7 @@ const userRepo = {
 
     return graph.batchComments(postIds, user.login.authResponse.accessToken)
       .then(comments => {
-        store.dispatch(action.commentSet({
+        store.dispatch(action.groupSet({
           comments: {
             [group.selected.id]: comments,
           },

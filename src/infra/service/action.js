@@ -10,11 +10,6 @@ const action = {
     data,
   }),
   
-  commentSet: (data) => ({
-    type: 'GROUP_SET',
-    data,
-  }),
-
 };
 
 export default action;
