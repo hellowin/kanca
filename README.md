@@ -38,6 +38,7 @@ Kanca is an application to analyze `Facebook Group` activity. Its key features a
 - `REACT_APP_FB_APP_ID` it's Facebook Developer's Application ID, look at your application dashboard on https://developers.facebook.com.
 - `REACT_APP_URL_PREFIX` default is `/kanca`, it's used as a `url prefix`, mostly used if we published as project page at GitHub pages.
 - `REACT_APP_FEED_PAGES` default is `10`, it's used to set how many pages of group feed do we want to fetch by default.
+- `REACT_APP_GROUP_IDS` Facebook Group IDs to be shown at `featured groups` on group selection, eg. `1920036621597031` for `Facebook Developer Circle: Malang` group. Separated by commas `,`.
 
 # Roadmap
 

@@ -5,4 +5,5 @@ export default {
   homepage: 'https://hellowin.github.io/kanca/',
   urlPrefix: process.env.REACT_APP_URL_PREFIX,
   feedPages: process.env.REACT_APP_FEED_PAGES || 10,
+  groupIds: process.env.REACT_APP_GROUP_IDS || '1920036621597031',
 };
