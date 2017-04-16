@@ -63,7 +63,7 @@ class GraphList {
         });
 
         return comments;
-      })
+      });
   }
 
 }

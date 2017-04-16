@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-// $FlowFixMe
 import PropTypes from 'prop-types';
 import './app.css';
 import Header from 'domain/layout/component/Header';
