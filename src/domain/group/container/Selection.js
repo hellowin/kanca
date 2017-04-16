@@ -5,10 +5,9 @@ import { connect } from 'react-redux';
 import GroupInfo from '../component/GroupInfo';
 import InputGroup from '../component/InputGroup';
 import Loading from 'infra/component/Loading';
+import config from 'config';
 
-const groupIds = [
-  '1920036621597031',
-];
+const groupIds = config.groupIds.split(',');
 
 const mapStateToProps = state => ({
   loading: state.group.loading,
@@ -37,7 +36,7 @@ class GroupSelection extends React.Component {
         {inputs.map((input, id) => (
           <GroupInfo key={id} {...input} />
         ))}
-        <h1 className="h3">Featured Groups</h1>
+        <h1 className="h3 mb-1">Featured Groups</h1>
         {features.map((feature, id) => (
           <GroupInfo key={id} {...feature} />
         ))}
