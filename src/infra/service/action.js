@@ -11,7 +11,7 @@ const action = {
   }),
   
   commentSet: (data) => ({
-    type: 'GROUP_COMMENT_SET',
+    type: 'GROUP_SET',
     data,
   }),
 

@@ -49,13 +49,15 @@ const userRepo = {
   
   fetchComments(feeds: Object[]): Promise<any> {
     store.dispatch(action.groupSet({ loading: true }));
-    const { user } = store.getState();
+    const { user, group } = store.getState();
     const postIds = feeds.map(feed => feed.id);
 
     return graph.batchComments(postIds, user.login.authResponse.accessToken)
       .then(comments => {
         store.dispatch(action.commentSet({
-          comments,
+          comments: {
+            [group.selected.id]: comments,
+          },
           loading: false
         }));
       });

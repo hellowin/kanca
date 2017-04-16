@@ -32,24 +32,6 @@ const group = (state = {
   switch (action.type) {
     case 'GROUP_SET':
       return { ...state, ...action.data };
-    case 'GROUP_COMMENT_SET':
-      // Little hack! Immutable can't update undefined key
-      // Need to refactor it later
-      if (!state.comments[state.selected.id]) {
-        state.comments[state.selected.id] = {};
-      }
-      
-      return update(state, {
-        comments: {
-          [state.selected.id]: {
-            $apply: currentGroupId => update(currentGroupId, {
-              data: {
-                $set: action.data.comments,
-              }
-            })
-          }
-        }
-      });
     default:
       return { ...state };
   }
