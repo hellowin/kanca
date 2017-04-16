@@ -5,12 +5,12 @@ cache:
   directories:
     - node_modules
 install:
-  - npm install -g codecov
+  - yarn global add codecov
 script:
   - yarn install
-  - npm test -- --coverage && codecov
-  - npm run flow
-  - npm run build
+  - yarn test -- --coverage && codecov
+  - yarn run flow
+  - yarn run build
 deploy:
   provider: pages
   skip_cleanup: true
