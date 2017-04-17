@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import PropTypes from 'prop-types';
 import './app.css';
 import Header from 'domain/layout/component/Header';
 import Sidebar from 'domain/layout/component/Sidebar';
@@ -40,9 +41,9 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  profile: React.PropTypes.object,
-  pathname: React.PropTypes.string,
-  children: React.PropTypes.node,
+  profile: PropTypes.object,
+  pathname: PropTypes.string,
+  children: PropTypes.node,
 };
 
 export default connect(mapStateToProps)(App);

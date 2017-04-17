@@ -11,12 +11,13 @@ const mapStateToProps = state => ({
   loading: state.group.loading,
   groupId: state.group.selected.id,
   feeds: state.group.feeds,
+  comments: state.group.comments[state.group.selected.id],
 });
 
 const fetchFeeds = (loading, groupId, feeds) => {
   if (!groupId) loc.push('/group/selection');
   if (!loading && feeds.length === 0) groupRepo.fetchFeeds(groupId, config.feedPages);
-}
+};
 
 class GroupFeed extends React.Component {
 
@@ -31,13 +32,13 @@ class GroupFeed extends React.Component {
   }
 
   render() {
-    const { loading, feeds } = this.props;
+    const { loading, feeds, comments } = this.props;
 
     return !loading ? (
       <div>
         <h1 className="h3">Group Feed</h1>
-        {feeds.map((post, id) => (
-          <Post key={id} {...post} />
+        {comments && feeds.map((post, id) => (
+          <Post key={id} {...post} comments={comments[post.id]} />
         ))}
       </div>
     ) : (

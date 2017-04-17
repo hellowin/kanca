@@ -8,8 +8,8 @@ const action = {
   groupSet: (data) => ({
     type: 'GROUP_SET',
     data,
-  })
-
+  }),
+  
 };
 
 export default action;

@@ -26,6 +26,7 @@ const group = (state = {
   features: [],
   selected: {},
   feeds: [],
+  comments: {},
 }, action) => {
   switch (action.type) {
     case 'GROUP_SET':
