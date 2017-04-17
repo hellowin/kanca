@@ -40,7 +40,7 @@ const Post = props => {
       </div>
       <div className="card-block row">
         <div className="col-md-12">
-          <p className="card-text">Comments ({comments.comments.data.length})</p>
+          <p className="card-text">Comments ({(((comments || {}).comments || {}).data || []).length})</p>
           <div>
             <Comment children={comments} />
           </div>
