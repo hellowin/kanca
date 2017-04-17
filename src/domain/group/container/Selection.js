@@ -44,7 +44,7 @@ class GroupSelection extends React.Component {
     ) : (
       <div className="row">
         <div className="col-md-12" style={{ textAlign: 'center' }}>
-          <p>Please wait. The engine is fetching {config.feedPages} {config.feedPages > 1 ? 'pages' : 'page'} of group feed.</p>
+          <p>Please wait. The engine is fetching {config.feedPages} {config.feedPages > 1 ? 'pages' : 'page'} of group feed and members.</p>
           <Loading />
         </div>
       </div>
