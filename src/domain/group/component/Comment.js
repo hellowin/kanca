@@ -2,24 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment-timezone';
 
-const Comment = ({ children, style }) => {
-  if (!(((children || {}).comments || {}).data || []).length) {
-    return <null />;
-  }
-  
+const Comment = props => {
+  const { message, from, created_time, likes, comments, order } = props;
+  const validComments = ((comments || {}).data || []);
+  const validOrder = order || 0;
+
   return (
-    <div>
-      {children.comments.data.map(comment => {
-        return (
-          <div key={comment.id} style={style ? Object.assign({}, style) : {}}>
-            <span><b>{comment.from.name}</b> {comment.message}</span><br/>
-            <p className="text-muted">{moment(comment.created_time).format('YYYY-MM-DD HH:mm:ss')} {' '} <i className="fa fa-thumbs-up"></i> {' '} {comment.likes ? comment.likes.data.length : 0}</p>
-            {(comment.comments && comment.comments.data.length)
-              ? <Comment children={comment} style={{ paddingLeft: '10px' }} />
-              : <null />}
-          </div>
-        );
-      })}
+    <div style={{ paddingLeft: `${validOrder * 10}px`}}>
+      <span><b>{from.name}</b> {message}</span><br/>
+      <p className="text-muted">{moment(created_time).format('YYYY-MM-DD HH:mm:ss')} {' '} <i className="fa fa-thumbs-up"></i> {' '} {likes ? likes.data.length : 0}</p>
+      {validComments.map((comment, key) => <Comment key={key} {...comment} order={1} />)}
     </div>
   );
 };

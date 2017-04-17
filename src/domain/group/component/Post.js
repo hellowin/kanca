@@ -17,6 +17,8 @@ const Post = props => {
     story,
     comments,
   } = props;
+
+  const validComments = ((comments || {}).data || []);
   
   return (
     <div className="card">
@@ -40,10 +42,7 @@ const Post = props => {
       </div>
       <div className="card-block row">
         <div className="col-md-12">
-          <p className="card-text">Comments ({(((comments || {}).comments || {}).data || []).length})</p>
-          <div>
-            <Comment children={comments} />
-          </div>
+          {validComments.map((comment, key) => <Comment key={key} {...comment} />)}
         </div>
       </div>
       <div className="card-block" style={{ textAlign: 'right' }}>
