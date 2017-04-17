@@ -123,7 +123,7 @@ const getGroup = (groupId: string) => get(`/${groupId}?fields=id,name,privacy,co
   });
 
 const getGroupFeed = (groupId: string, pages: number): Promise<any> => {
-  const url = `/${groupId}/feed?fields=created_time,id,message,updated_time,caption,story,description,from,link,name,picture,status_type,type,shares,permalink_url,likes.limit(10)&limit=10`;
+  const url = `/${groupId}/feed?fields=created_time,id,message,updated_time,caption,story,description,from,link,name,picture,status_type,type,shares,permalink_url,likes.limit(10)&limit=5`;
   const list = new GraphList();
   return list.fetchForward(url, pages);
 };
