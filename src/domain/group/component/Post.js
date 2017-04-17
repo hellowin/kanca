@@ -19,7 +19,6 @@ const Post = props => {
   } = props;
 
   const validComments = ((comments || {}).data || []);
-  const totalComments = validComments.length;
   
   return (
     <div className="card">
@@ -43,7 +42,6 @@ const Post = props => {
       </div>
       <div className="card-block row">
         <div className="col-md-12">
-          <p className="card-text">Total comments: {totalComments}</p>
           {validComments.map((comment, key) => <Comment key={key} {...comment} />)}
         </div>
       </div>
