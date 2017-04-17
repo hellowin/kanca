@@ -40,28 +40,9 @@ const userRepo = {
     return graph.getGroupFeed(groupId, pages)
       .then(res => (feeds = res))
       .then(() => {
-        userRepo.fetchComments(feeds);
-      })
-      .then(() => {
         store.dispatch(action.groupSet({ feeds, loading: false }));
       });
   },
-  
-  fetchComments(feeds: Object[]): Promise<any> {
-    store.dispatch(action.groupSet({ loading: true }));
-    const { user, group } = store.getState();
-    const postIds = feeds.map(feed => feed.id);
-
-    return graph.batchComments(postIds, user.login.authResponse.accessToken)
-      .then(comments => {
-        store.dispatch(action.groupSet({
-          comments: {
-            [group.selected.id]: comments,
-          },
-          loading: false
-        }));
-      });
-  }
 
 };
 
