@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment-timezone';
 
 const Comment = ({ children, style }) => {
-  if (!children.comments.data.length) {
+  if (!(((children || {}).comments || {}).data || []).length) {
     return <null />;
   }
   

@@ -38,7 +38,7 @@ class GroupFeed extends React.Component {
       <div>
         <h1 className="h3">Group Feed</h1>
         {comments && feeds.map((post, id) => (
-          <Post key={id} {...post} comments={comments[post.id]} />
+          <Post key={id} {...post} comments={(comments[post.id] || {})} />
         ))}
       </div>
     ) : (
