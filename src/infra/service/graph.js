@@ -42,7 +42,7 @@ class GraphList {
   getCommentBatch(postIds: string[], accessToken: string) {
     const commentUrl = postIds.map(id => ({
       method: 'GET',
-      relative_url: `${id}/comments?summary=1&filter=toplevel&fields=parent.fields(id),comments.summary(true),message,from,likes`,
+      relative_url: `${id}/comments?summary=1&filter=toplevel&fields=parent.fields(id),comments.summary(true),message,from,likes,created_time`,
     }));
     
     return fetch('https://graph.facebook.com', {
@@ -59,7 +59,9 @@ class GraphList {
       .then(data => {
         const comments = {};
         data.forEach((datum, index) => {
-          comments[postIds[index]] = JSON.parse(datum.body).data;
+          comments[postIds[index]] = {
+            comments: JSON.parse(datum.body),
+          };
         });
 
         return comments;

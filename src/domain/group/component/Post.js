@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment-timezone';
+import Comment from './Comment';
 
 const Post = props => {
   const {
@@ -13,7 +14,8 @@ const Post = props => {
     shares,
     permalink_url,
     likes,
-    story
+    story,
+    comments,
   } = props;
   
   return (
@@ -34,6 +36,14 @@ const Post = props => {
           {type ? <span><i className="fa fa-tag"></i> {type} </span> : ''}
           {shares ? <span><i className="fa fa-share"></i> {shares.count} </span> : ''}
           {likes ? <span><i className="fa fa-thumbs-up"></i> {likes.data.length} </span> : ''}
+        </div>
+      </div>
+      <div className="card-block row">
+        <div className="col-md-12">
+          <p className="card-text">Comments ({comments.comments.data.length})</p>
+          <div>
+            <Comment children={comments} />
+          </div>
         </div>
       </div>
       <div className="card-block" style={{ textAlign: 'right' }}>
