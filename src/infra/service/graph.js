@@ -58,7 +58,7 @@ class GraphList {
       .then(res => res.json())
       .then(data => {
         const comments = {};
-        data.forEach((datum, index) => {
+        (data || []).forEach((datum, index) => {
           comments[postIds[index]] = {
             comments: JSON.parse(datum.body),
           };
