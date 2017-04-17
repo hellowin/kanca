@@ -9,7 +9,6 @@ const get = (url: string): Promise<any> => new Promise((resolve, reject) => {
 
 class GraphList {
 
-  url: string;
   data: {}[] = [];
   next: string = '';
   previous: string = '';
@@ -99,6 +98,12 @@ const getGroupFeed = (groupId: string, pages: number): Promise<any> => {
   return list.fetchForward(url, pages);
 };
 
+const getGroupMembers = (groupId: string, pages: number): Promise<any> => {
+  const url = `/${groupId}/members?fields=id,name,administrator,picture&limit=100`;
+  const list = new GraphList();
+  return list.fetchForward(url, pages);
+};
+
 export default {
   login,
   logout,
@@ -106,4 +111,5 @@ export default {
   getUser,
   getGroup,
   getGroupFeed,
+  getGroupMembers,
 };

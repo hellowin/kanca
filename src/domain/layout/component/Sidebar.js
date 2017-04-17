@@ -36,10 +36,10 @@ class Sidebar extends Component {
               <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-people"></i> Group</a>
               <ul className="nav-dropdown-items">
                 <li className="nav-item">
-                  <a href="" className="nav-link" activeClassName="active" onClick={goTo('/group/selection')}>Selection</a>
+                  <a href="" className="nav-link" onClick={goTo('/group/selection')}>Selection</a>
                 </li>
                 {feeds.length > 0 ? <li className="nav-item">
-                  <a href="" className="nav-link" activeClassName="active" onClick={goTo('/group/feed')}>Feed</a>
+                  <a href="" className="nav-link" onClick={goTo('/group/feed')}>Feed</a>
                 </li> : ''}
               </ul>
             </li>
@@ -48,7 +48,7 @@ class Sidebar extends Component {
               <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-graph"></i> Metric</a>
               <ul className="nav-dropdown-items">
                 <li className="nav-item">
-                  <a href="" className="nav-link" activeClassName="active" onClick={goTo('/metric/summary')}>Summary</a>
+                  <a href="" className="nav-link" onClick={goTo('/metric/summary')}>Summary</a>
                 </li>
               </ul>
             </li> : ''}

@@ -2,17 +2,17 @@
 import store from 'infra/service/store';
 import action from 'infra/service/action';
 import graph from 'infra/service/graph';
+import config from 'config';
 
 const userRepo = {
 
   selectGroup(groupId: string): Promise<any> {
-    store.dispatch(action.groupSet({ loading: true }));
+    store.dispatch(action.groupSet({ loading: true, selected: {} }));
     let group;
     return graph.getGroup(groupId)
       .then(res => (group = res))
-      .then(() => {
-        store.dispatch(action.groupSet({ selected: group, loading: false }));
-      });
+      .then(() => store.dispatch(action.groupSet({ selected: group })))
+      .then(() => userRepo.fetchFeeds(group.id, config.feedPages));
   },
 
   addInput(group: {}) {
@@ -36,12 +36,11 @@ const userRepo = {
   fetchFeeds(groupId: string, pages: number): Promise<any> {
     store.dispatch(action.groupSet({ loading: true, feeds: [] }));
     let feeds;
+    let members;
   
-    return graph.getGroupFeed(groupId, pages)
-      .then(res => (feeds = res))
-      .then(() => {
-        store.dispatch(action.groupSet({ feeds, loading: false }));
-      });
+    return graph.getGroupFeed(groupId, pages).then(res => (feeds = res))
+      .then(() => graph.getGroupMembers(groupId, pages)).then(res => (members = res))
+      .then(() => store.dispatch(action.groupSet({ feeds, members, loading: false })));
   },
 
 };
