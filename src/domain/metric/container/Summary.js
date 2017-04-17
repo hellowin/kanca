@@ -8,18 +8,21 @@ import Post from 'domain/group/component/Post';
 
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
+  members: state.group.members,
 });
 
 class MetricSummary extends React.Component {
 
   render() {
-    const { feeds } = this.props;
+    const { feeds, members } = this.props;
     const userCounted = userCount(feeds);
     const postCounted = postCount(feeds);
 
     const totalPosts = feeds.length;
     const totalPostsShares = postCounted.map(post => (post || {}).sharesCount).reduce((pre, cur) => pre + cur, 0);
     const totalPostsLikes = postCounted.map(post => (post || {}).likesCount).reduce((pre, cur) => pre + cur, 0);
+    
+    const totalMembers = members.length;
 
     return (
       <div className="row">
@@ -35,6 +38,7 @@ class MetricSummary extends React.Component {
               <p>Total posts: {totalPosts}</p>
               <p>Total posts shares: {totalPostsShares}</p>
               <p>Total posts likes: {totalPostsLikes}</p>
+              <p>Total members: {totalMembers}</p>
             </div>
           </div>
         </div>
