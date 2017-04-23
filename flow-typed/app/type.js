@@ -64,3 +64,15 @@ declare type Post = {
   },
   comments: List<Comment>,
 }
+
+declare type Member = {
+  id: string,
+  name: string,
+  picture: {
+    data: {
+      is_silhouette: boolean,
+      url: string,
+    }
+  },
+  administrator: boolean,
+}

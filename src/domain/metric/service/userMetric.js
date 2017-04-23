@@ -17,7 +17,7 @@ export default (feeds: Post[]): UserMetric[] => {
 
     // create empty user posts mapping
     if (!users[userId] && feed.from) users[userId] = { id: feed.from.id, name: feed.from.name, posts: [] };
-    users[userId].posts.push(feed);
+    if (feed.from) users[userId].posts.push(feed);
   });
 
   // calculate per user basis
