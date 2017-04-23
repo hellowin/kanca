@@ -1,6 +1,7 @@
 // @flow
 
 export type PostMetric = {
+  id: string,
   sharesCount: number,
   likesCount: number,
 }
@@ -12,6 +13,7 @@ export default (posts: Post[]): PostMetric[] => {
     const likesCount: number = (((post.likes || {}).data || []).length || 0);
     
     return {
+      id: post.id,
       sharesCount,
       likesCount,
     };

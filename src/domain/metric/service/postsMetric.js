@@ -2,6 +2,7 @@
 import userMetric from './userMetric';
 import postMetric from './postMetric';
 import _ from 'lodash';
+import type { PostMetric } from './postMetric';
 
 export type PostsMetric = {
   dateStart: Date,
@@ -11,6 +12,7 @@ export type PostsMetric = {
   totalPostsLikes: number,
   uniqueUserPosts: number,
   postEngagement: number,
+  posts: PostMetric[],
 }
 
 export default (posts: Post[], members: {}[]): PostsMetric => {
@@ -36,5 +38,6 @@ export default (posts: Post[], members: {}[]): PostsMetric => {
     totalPostsLikes,
     uniqueUserPosts,
     postEngagement,
+    posts: postCounted,
   };
 }

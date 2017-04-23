@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import postsMetricer from '../service/postsMetric';
 import userCount from '../service/userMetric';
-import postCount from '../service/postMetric';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import Post from 'domain/group/component/Post';
@@ -17,7 +16,6 @@ class MetricSummary extends React.Component {
   render() {
     const { feeds, members } = this.props;
     const userCounted = userCount((feeds || []));
-    const postCounted = postCount((feeds || []));
     const postsMet = postsMetricer((feeds || []), (members || []));
 
     return (
@@ -91,7 +89,7 @@ class MetricSummary extends React.Component {
               <h4 className="card-title">Shares Count</h4>
               <p>Top 10 posts with most shares count.</p>
               <ul className="list-group">
-                {_.sortBy(postCounted, 'sharesCount').reverse().slice(0, 10).map((post, key) => (<Post key={key} {...post} />))}
+                {_.sortBy(postsMet.posts, 'sharesCount').reverse().slice(0, 10).map((post, key) => (<Post key={key} {...post} />))}
               </ul>
             </div>
           </div>
@@ -103,7 +101,7 @@ class MetricSummary extends React.Component {
               <h4 className="card-title">Likes Count</h4>
               <p>Top 10 posts with most likes count.</p>
               <ul className="list-group">
-                {_.sortBy(postCounted, 'likesCount').reverse().slice(0, 10).map((post, key) => (<Post key={key} {...post} />))}
+                {_.sortBy(postsMet.posts, 'likesCount').reverse().slice(0, 10).map((post, key) => (<Post key={key} {...post} />))}
               </ul>
             </div>
           </div>
