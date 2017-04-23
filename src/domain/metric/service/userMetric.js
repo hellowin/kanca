@@ -16,7 +16,7 @@ export default (feeds: Post[]): UserMetric[] => {
     const userId = (feed.from || {}).id;
 
     // create empty user posts mapping
-    if (!users[userId]) users[userId] = { id: (feed.from || {}).id, name: (feed.from || {}).name, posts: [] };
+    if (!users[userId] && feed.from) users[userId] = { id: feed.from.id, name: feed.from.name, posts: [] };
     users[userId].posts.push(feed);
   });
 
