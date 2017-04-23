@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import postsMetricer from '../service/postsMetric';
-import userCount from '../service/userCount';
+import userCount from '../service/userMetric';
 import postCount from '../service/postMetric';
 import _ from 'lodash';
 import moment from 'moment-timezone';

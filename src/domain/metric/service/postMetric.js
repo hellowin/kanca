@@ -1,10 +1,19 @@
-export default (posts: {
-  created_time: string,
-}[]): { sharesCount: number, likesCount: number }[] => {
+// @flow
+
+export type PostMetric = {
+  sharesCount: number,
+  likesCount: number,
+}
+
+export default (posts: Post[]): PostMetric[] => {
   // calculate post
-  return posts.map(post => ({
-    ...post,
-    sharesCount: ((post.shares || {}).count || 0),
-    likesCount: (((post.likes || {}).data || []).length || 0),
-  }));
+  return posts.map((post: Post): PostMetric => {
+    const sharesCount: number = ((post.shares || {}).count || 0);
+    const likesCount: number = (((post.likes || {}).data || []).length || 0);
+    
+    return {
+      sharesCount,
+      likesCount,
+    };
+  });
 };

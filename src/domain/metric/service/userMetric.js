@@ -1,6 +1,15 @@
+// @flow
 import _ from 'lodash';
 
-export default (feeds: {}[]): { id: string, name: string, postsCount: number, postsSharesCount: number, postsLikesCount: number }[] => {
+export type UserMetric = {
+  id: string,
+  name: string,
+  postsCount: number,
+  postsSharesCount: number,
+  postsLikesCount: number,
+}
+
+export default (feeds: Post[]): UserMetric[] => {
   // create user posts mapping
   const users = {};
   _.each(feeds, feed => {

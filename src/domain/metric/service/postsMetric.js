@@ -1,6 +1,6 @@
 // @flow
-import userCount from './userCount';
-import postMetricer from './postMetric';
+import userMetric from './userMetric';
+import postMetric from './postMetric';
 import _ from 'lodash';
 
 export type PostsMetric = {
@@ -13,11 +13,9 @@ export type PostsMetric = {
   postEngagement: number,
 }
 
-export default (posts: {
-  created_time: string,
-}[], members: {}[]): PostsMetric => {
-  const userCounted = userCount(posts);
-  const postCounted = postMetricer(posts);
+export default (posts: Post[], members: {}[]): PostsMetric => {
+  const userCounted = userMetric(posts);
+  const postCounted = postMetric(posts);
 
   const dateStart: Date = new Date((_.sortBy(posts, 'created_time')[0] || {}).created_time);
   const dateEnd: Date = new Date((_.sortBy(posts, 'created_time').reverse()[0] || {}).created_time);
