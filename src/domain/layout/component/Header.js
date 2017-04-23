@@ -7,6 +7,7 @@ import loc from 'infra/service/location';
 const mapStateToProps = state => ({
   loading: state.user.loading,
   profile: state.user.profile,
+  group: state.group.selected,
 });
 
 class Header extends Component {
@@ -42,7 +43,7 @@ class Header extends Component {
   }
 
   render() {
-    const { profile, loading } = this.props;
+    const { profile, loading, group } = this.props;
 
     return (
       <header className="app-header navbar" style={{ paddingRight: '15px' }}>
@@ -52,6 +53,9 @@ class Header extends Component {
           <li className="nav-item">
             <a className="nav-link navbar-toggler sidebar-toggler" onClick={this.sidebarToggle} href="#">&#9776;</a>
           </li>
+          {group ? (<li className="nav-item">
+            <span>Selected Group: <b>{group.name}</b></span>
+          </li>) : ''}
         </ul>
         {!loading ? (<ul className="nav navbar-nav ml-auto">
           <li className="nav-item">

@@ -1,5 +1,3 @@
-// bakalan buat user
-
 declare type UserProfile = {
   facebookId: string,
   name: string,
@@ -17,4 +15,52 @@ declare type Group = {
     id: string,
     name: string,
   }
+}
+
+declare type List<T> = {
+  data: T[],
+  paging?: {
+    cursors: {
+      before: string,
+      after: string,
+    }
+  }
+}
+
+declare type Like = {
+  id: string,
+  name: string,
+}
+
+declare type Comment = {
+  id: string,
+  from: {
+    name: string,
+    id: string,
+  },
+  message: string,
+  likes: List<Like>,
+  comments: List<Comment>,
+}
+
+declare type Post = {
+  created_time: string,
+  id: string,
+  updated_time: string,
+  caption?: string,
+  story?: string,
+  picture?: string,
+  message?: string,
+  from?: {
+    name: string,
+    id: string,
+  },
+  status_type: string,
+  type: string,
+  permalink_url: string,
+  likes: List<Like>,
+  shares: {
+    count: number,
+  },
+  comments: List<Comment>,
 }
