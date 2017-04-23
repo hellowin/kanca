@@ -1,6 +1,8 @@
+// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import loc from 'infra/service/location';
+import groupRepo from 'infra/repo/group';
 
 const mapStateToProps = state => ({
   profile: state.user.profile,
@@ -12,6 +14,10 @@ const goTo = path => e => {
 }
 
 class Dashboard extends React.Component {
+
+  componentDidMount() {
+    groupRepo.restoreGroup();
+  }
 
   render() {
     const { profile } = this.props;
