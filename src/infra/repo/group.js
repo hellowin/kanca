@@ -57,9 +57,9 @@ const groupRepo = {
 
   restoreGroup() {
     store.dispatch(action.groupSet({ loading: true }));
-    const selected = st.get('group.selected');
-    const feeds = st.get('group.feeds');
-    const members = st.get('group.members');
+    const selected = st.get('group.selected') || {};
+    const feeds = st.get('group.feeds') || [];
+    const members = st.get('group.members') || [];
     store.dispatch(action.groupSet({ selected, feeds, members, loading: false }));
   },
 
