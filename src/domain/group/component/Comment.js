@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import moment from 'moment-timezone';
 
 const Comment = props => {
@@ -14,15 +13,6 @@ const Comment = props => {
       {validComments.map((comment, key) => <Comment key={key} {...comment} order={1} />)}
     </div>
   );
-};
-
-Comment.propTypes = {
-  children: PropTypes.object.isRequired,
-  style: PropTypes.object,
-};
-
-Comment.defaultProps = {
-  style: {},
 };
 
 export default Comment;

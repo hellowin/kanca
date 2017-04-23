@@ -4,10 +4,10 @@ export default (feeds: {}[]): { id: string, name: string, postsCount: number, po
   // create user posts mapping
   const users = {};
   _.each(feeds, feed => {
-    const userId = feed.from.id;
+    const userId = (feed.from || {}).id;
 
     // create empty user posts mapping
-    if (!users[userId]) users[userId] = { id: feed.from.id, name: feed.from.name, posts: [] };
+    if (!users[userId]) users[userId] = { id: (feed.from || {}).id, name: (feed.from || {}).name, posts: [] };
     users[userId].posts.push(feed);
   });
 
