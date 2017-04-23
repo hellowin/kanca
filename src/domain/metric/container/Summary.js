@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import timeRangeMetricer, { extractDateRangeFromPosts } from '../service/timeRangeMetric';
 import _ from 'lodash';
 import moment from 'moment-timezone';
-import PostSummary from '../component/PostSummary';
+
+import timeRangeMetricer, { extractDateRangeFromPosts } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
+
+import PostSummary from '../component/PostSummary';
 
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
@@ -14,30 +16,58 @@ const mapStateToProps = state => ({
 class MetricSummary extends React.Component {
 
   state = {
-    dateStart: Date,
-    dateEnd: Date,
+    data: {
+      dateStart: Date,
+      dateEnd: Date,
+    },
   }
 
   constructor(props) {
     super(props);
 
-    const { feeds } = props;
+    this.onFormChange = this.onFormChange.bind(this);
 
+    const { feeds } = props;
     const { dateStart, dateEnd } = extractDateRangeFromPosts(feeds, 'd');
 
     this.state = {
-      dateStart,
-      dateEnd,
+      data: {
+        dateStart,
+        dateEnd,
+      },
+    }
+  }
+
+  onFormChange(key) {
+    return e => {
+      const { data } = this.state;
+      let value = e.target.value;
+      if (key === 'dateStart' || key === 'dateEnd') value = new Date(value);
+      data[key] = value;
+      this.setState({ data });
     }
   }
 
   render() {
     const { feeds, members } = this.props;
-    const { dateStart, dateEnd } = this.state;
-    const metric: TimeRangeMetric = timeRangeMetricer(dateStart, dateEnd, feeds, members);
+    const { data } = this.state;
+    const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, feeds, members);
 
     return (
       <div className="row">
+
+        <div className="col-md-12">
+          <div className="card">
+            <div className="card-block">
+              <form className="form-inline">
+                <label className="col-form-label mr-1">Date range</label>
+                <input className="form-control mr-1" type="date" value={moment(data.dateStart).format('YYYY-MM-DD')} onChange={this.onFormChange('dateStart')} />
+                <input className="form-control mr-1" type="date" value={moment(data.dateEnd).format('YYYY-MM-DD')} onChange={this.onFormChange('dateEnd')} />
+                <button className="btn btn-primary" type="submit">Refresh</button>
+              </form>
+            </div>
+          </div>
+        </div>
 
         <div className="col-md-12">
           <h4>Summary</h4>
@@ -46,7 +76,7 @@ class MetricSummary extends React.Component {
         <div className="col-md-6">
           <div className="card">
             <div className="card-block">
-              {feeds.length > 0 ? <p>Time range {moment(dateStart).format('YYYY-MM-DD HH:mm:ss')} - {moment(dateEnd).format('YYYY-MM-DD HH:mm:ss')}</p> : ''}
+              {feeds.length > 0 ? <p>Time range {moment(data.dateStart).format('YYYY-MM-DD HH:mm:ss')} - {moment(data.dateEnd).format('YYYY-MM-DD HH:mm:ss')}</p> : ''}
               <p>Total posts: {metric.postsMetric.totalPosts}</p>
               <p>Total posts shares: {metric.postsMetric.totalPostsShares}</p>
               <p>Total posts likes: {metric.postsMetric.totalPostsLikes}</p>
