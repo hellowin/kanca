@@ -25,9 +25,9 @@ class Login extends React.Component {
     return (
       <div className="container" style={{ marginTop: '100px' }}>
         <div className="row justify-content-center">
-          <div className="col-md-5">
+          <div className="col-8">
             <div className="card-group mb-0">
-              <div className="card card-inverse card-primary py-3 hidden-md-down">
+              <div className="card p-2">
                 <div className="card-block text-center">
                   <div>
                     <h2>Login</h2>
