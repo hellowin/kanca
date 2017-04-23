@@ -6,7 +6,7 @@ cache:
     - node_modules
 install:
   - yarn global add codecov
-  - export REACT_APP_COMMIT_VERSION=$(git rev-parse --short HEAD)
+  - export REACT_APP_VERSION=$(git rev-parse --short HEAD)
 script:
   - yarn install
   - yarn test -- --coverage && codecov
