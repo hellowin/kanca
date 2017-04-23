@@ -4,7 +4,8 @@ import postsMetricer from '../service/postsMetric';
 import userCount from '../service/userMetric';
 import _ from 'lodash';
 import moment from 'moment-timezone';
-import Post from 'domain/group/component/Post';
+import PostSummary from '../component/PostSummary';
+import type { PostsMetric } from '../service/postsMetric';
 
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
@@ -16,7 +17,7 @@ class MetricSummary extends React.Component {
   render() {
     const { feeds, members } = this.props;
     const userCounted = userCount((feeds || []));
-    const postsMet = postsMetricer((feeds || []), (members || []));
+    const postsMet: PostsMetric = postsMetricer((feeds || []), (members || []));
 
     return (
       <div className="row">
@@ -32,6 +33,7 @@ class MetricSummary extends React.Component {
               <p>Total posts: {postsMet.totalPosts}</p>
               <p>Total posts shares: {postsMet.totalPostsShares}</p>
               <p>Total posts likes: {postsMet.totalPostsLikes}</p>
+              <p>Total posts comments: {postsMet.totalPostsComments}</p>
               <p>Total members: {members.length}</p>
               <p>Total unique member posting: {postsMet.uniqueUserPosts}</p>
               <p>User post engagement: {postsMet.postEngagement} %<br />(total unique user posting / total member)</p>
@@ -83,25 +85,25 @@ class MetricSummary extends React.Component {
           <h4>Post Activity</h4>
         </div>
 
-        <div className="col-md-12">
+        <div className="col-md-6">
           <div className="card">
             <div className="card-block">
               <h4 className="card-title">Shares Count</h4>
               <p>Top 10 posts with most shares count.</p>
               <ul className="list-group">
-                {_.sortBy(postsMet.posts, 'sharesCount').reverse().slice(0, 10).map((post, key) => (<Post key={key} {...post} />))}
+                {_.sortBy(postsMet.posts, 'sharesCount').reverse().slice(0, 10).map((post, key) => (<PostSummary key={key} {...post} />))}
               </ul>
             </div>
           </div>
         </div>
 
-        <div className="col-md-12">
+        <div className="col-md-6">
           <div className="card">
             <div className="card-block">
               <h4 className="card-title">Likes Count</h4>
               <p>Top 10 posts with most likes count.</p>
               <ul className="list-group">
-                {_.sortBy(postsMet.posts, 'likesCount').reverse().slice(0, 10).map((post, key) => (<Post key={key} {...post} />))}
+                {_.sortBy(postsMet.posts, 'likesCount').reverse().slice(0, 10).map((post, key) => (<PostSummary key={key} {...post} />))}
               </ul>
             </div>
           </div>

@@ -17,11 +17,40 @@ declare type Group = {
   }
 }
 
+declare type List<T> = {
+  data: T[],
+  paging?: {
+    cursors: {
+      before: string,
+      after: string,
+    }
+  }
+}
+
+declare type Like = {
+  id: string,
+  name: string,
+}
+
+declare type Comment = {
+  id: string,
+  from: {
+    name: string,
+    id: string,
+  },
+  message: string,
+  likes: List<Like>,
+  comments: List<Comment>,
+}
+
 declare type Post = {
   created_time: string,
   id: string,
   updated_time: string,
+  caption?: string,
   story?: string,
+  picture?: string,
+  message?: string,
   from?: {
     name: string,
     id: string,
@@ -29,47 +58,9 @@ declare type Post = {
   status_type: string,
   type: string,
   permalink_url: string,
-  likes: {
-    data: {
-      id: string,
-      name: string,
-    }[],
-    paging?: {
-      cursors: {
-        before: string,
-        after: string,
-      }
-    }
-  },
+  likes: List<Like>,
   shares: {
     count: number,
   },
-  comments: {
-    data: {
-      id: string,
-      from: {
-        name: string,
-        id: string,
-      },
-      message: string,
-      likes: {
-        data: {
-          id: string,
-          name: string,
-        }[],
-        paging?: {
-          cursors: {
-            before: string,
-            after: string,
-          }
-        }
-      }
-    }[],
-    paging?: {
-      cursors: {
-        before: string,
-        after: string,
-      }
-    }
-  }
+  comments: List<Comment>,
 }
