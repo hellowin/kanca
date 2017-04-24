@@ -12,6 +12,7 @@ const groupIds = config.groupIds.split(',');
 const mapStateToProps = state => ({
   loading: state.group.loading,
   inputs: state.group.inputs,
+  manages: state.group.manages,
   features: state.group.features,
 });
 
@@ -22,11 +23,12 @@ class GroupSelection extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.features.length === 0) groupRepo.fetchFeatures(groupIds);
+    const { loading, features } = nextProps;
+    if (!loading && features.length === 0) groupRepo.fetchFeatures(groupIds);
   }
 
   render() {
-    const { loading, inputs, features } = this.props;
+    const { loading, inputs, manages, features } = this.props;
 
     return !loading? (
       <div className="row">
@@ -45,12 +47,20 @@ class GroupSelection extends React.Component {
           ))}
         </div>
 
-        <div className="col-12">
-          <h1 className="h3 mb-1">Featured Groups</h1>
-          {features.map((feature, id) => (
-            <GroupInfo key={id} {...feature} />
+        {manages.length > 0 ? (<div className="col-12">
+          <h1 className="h3 mb-1">Managed Groups</h1>
+          {manages.map((group, id) => (
+            <GroupInfo key={id} {...group} />
           ))}
-        </div>
+        </div>) : ''}
+
+        {features.length > 0 ? (<div className="col-12">
+          <h1 className="h3 mb-1">Featured Groups</h1>
+          {features.map((group, id) => (
+            <GroupInfo key={id} {...group} />
+          ))}
+        </div>) : ''}
+
       </div>
     ) : (
       <div className="row">

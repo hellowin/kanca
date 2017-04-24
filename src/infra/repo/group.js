@@ -41,13 +41,17 @@ const groupRepo = {
   fetchFeatures(groupIds: string[]): Promise<any> {
     store.dispatch(action.groupSet({ loading: true }));
     const features = [];
+    let manages = [];
+
     const promises = groupIds.map(id => graph.getGroup(id)
       .then(res => features.push(res))
       .catch(console.log));
     
     return Promise.all(promises)
+      .then(() => graph.getUserManagedGroups())
+      .then(res => (manages = res))
       .then(() => {
-        store.dispatch(action.groupSet({ features, loading: false }));
+        store.dispatch(action.groupSet({ features, manages, loading: false }));
       });
   },
 
