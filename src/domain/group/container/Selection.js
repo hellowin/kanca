@@ -29,17 +29,28 @@ class GroupSelection extends React.Component {
     const { loading, inputs, features } = this.props;
 
     return !loading? (
-      <div>
-        <h1 className="h3">Input Group ID</h1>
-        <InputGroup />
-        {inputs.length > 0 ? <h1 className="h3">Recently Input Groups</h1> : ''}
-        {inputs.map((input, id) => (
-          <GroupInfo key={id} {...input} />
-        ))}
-        <h1 className="h3 mb-1">Featured Groups</h1>
-        {features.map((feature, id) => (
-          <GroupInfo key={id} {...feature} />
-        ))}
+      <div className="row">
+        <div className="col-12">
+          <h1 className="h3">Input Group ID</h1>
+        </div>
+
+        <div className="col-12">
+          <InputGroup />
+        </div>
+
+        <div className="col-12">
+          {inputs.length > 0 ? <h1 className="h3">Recently Input Groups</h1> : ''}
+          {inputs.map((input, id) => (
+            <GroupInfo key={id} {...input} />
+          ))}
+        </div>
+
+        <div className="col-12">
+          <h1 className="h3 mb-1">Featured Groups</h1>
+          {features.map((feature, id) => (
+            <GroupInfo key={id} {...feature} />
+          ))}
+        </div>
       </div>
     ) : (
       <div className="row">
