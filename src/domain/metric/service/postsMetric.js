@@ -7,9 +7,9 @@ export type PostsMetric = {
   dateStart: Date,
   dateEnd: Date,
   totalPosts: number,
+  totalComments: number,
   totalPostsShares: number,
   totalPostsLikes: number,
-  totalPostsComments: number,
   postMetrics: PostMetric[],
 }
 
@@ -20,17 +20,17 @@ export default (posts: Post[]): PostsMetric => {
   const dateEnd: Date = new Date((_.sortBy(posts, 'created_time').reverse()[0] || {}).created_time);
 
   const totalPosts = posts.length;
+  const totalComments = postMetrics.map(post => (post || {}).commentsCount).reduce((pre, cur) => pre + cur, 0);
   const totalPostsShares = postMetrics.map(post => (post || {}).sharesCount).reduce((pre, cur) => pre + cur, 0);
   const totalPostsLikes = postMetrics.map(post => (post || {}).likesCount).reduce((pre, cur) => pre + cur, 0);
-  const totalPostsComments = postMetrics.map(post => (post || {}).commentsCount).reduce((pre, cur) => pre + cur, 0);
 
   return {
     dateStart,
     dateEnd,
     totalPosts,
+    totalComments,
     totalPostsShares,
     totalPostsLikes,
-    totalPostsComments,
     postMetrics,
   };
 }
