@@ -22,8 +22,19 @@ const groupRepo = {
       .then(() => groupRepo.fetchFeeds(group.id, config.feedPages));
   },
 
-  addInput(group: {}) {
-    const inputs = [...store.getState().group.inputs, group];
+  addInput(group: Object) {
+    const oldInputs = store.getState().group.inputs;
+    const uniqueInputs = {};
+    oldInputs.forEach(input => {
+      if (!uniqueInputs[input.id]) uniqueInputs[input.id] = input;
+    });
+    const groupId: string = (group || {}).id;
+    if (groupId) uniqueInputs[groupId] = group;
+    const inputs = _.values(uniqueInputs);
+
+    // store on local storage
+    st.set('group.inputs', inputs);
+    // store on redux
     store.dispatch(action.groupSet({ inputs }));
   },
 
@@ -61,11 +72,12 @@ const groupRepo = {
 
   restoreGroup() {
     store.dispatch(action.groupSet({ loading: true }));
+    const inputs = st.get('group.inputs') || [];
     const selected = st.get('group.selected') || {};
     const feeds = st.get('group.feeds') || [];
     const comments = st.get('group.comments') || [];
     const members = st.get('group.members') || [];
-    store.dispatch(action.groupSet({ selected, feeds, comments, members, loading: false }));
+    store.dispatch(action.groupSet({ inputs, selected, feeds, comments, members, loading: false }));
   },
 
 };
