@@ -96,7 +96,7 @@ class Pagination extends React.Component {
       <div className="col-12">
         <div className="row">
           <div className="col-md-6" style={{ lineHeight: 3 }}>
-            Page {page} of {totalPage}, per page {fixPerPage}
+            Page {page} of {totalPage}.
           </div>
           <div className="col-md-6">
             {pagination}
