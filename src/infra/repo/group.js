@@ -4,6 +4,7 @@ import action from 'infra/service/action';
 import graph from 'infra/service/graph';
 import config from 'config';
 import st from 'store';
+import _ from 'lodash';
 
 const groupRepo = {
 
@@ -42,16 +43,18 @@ const groupRepo = {
   fetchFeeds(groupId: string, pages: number): Promise<any> {
     store.dispatch(action.groupSet({ loading: true, feeds: [] }));
     let feeds;
+    let comments;
     let members;
   
     return graph.getGroupFeed(groupId, pages).then(res => (feeds = res))
       .then(() => graph.getGroupMembers(groupId, pages)).then(res => (members = res))
+      .then(() => graph.getGroupComments(feeds).then(res => (comments = res)))
       .then(() => {
         // store on local storage
         st.set('group.feeds', feeds);
         st.set('group.members', members);
         // store on redux
-        store.dispatch(action.groupSet({ feeds, members, loading: false }));
+        store.dispatch(action.groupSet({ feeds, comments, members, loading: false }));
       });
   },
 

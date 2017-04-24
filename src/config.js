@@ -6,5 +6,5 @@ export default {
   urlPrefix: process.env.REACT_APP_URL_PREFIX,
   feedPages: process.env.REACT_APP_FEED_PAGES || 10,
   groupIds: process.env.REACT_APP_GROUP_IDS || '1920036621597031',
-  commitVersion: process.env.REACT_APP_COMMIT_VERSION || '0.0.0',
+  version: process.env.REACT_APP_VERSION || 'development',
 };

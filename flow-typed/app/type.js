@@ -34,6 +34,7 @@ declare type Like = {
 
 declare type Comment = {
   id: string,
+  created_time: string,
   from: {
     name: string,
     id: string,
