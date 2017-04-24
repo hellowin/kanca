@@ -2,33 +2,55 @@
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import postsMetricer from './postsMetric';
-import userMetricer from './userMetric';
+import usersMetricer from './usersMetric';
 import type { PostsMetric } from './postsMetric';
-import type { UserMetric } from './userMetric';
+import type { UsersMetric } from './usersMetric';
 
 export type TimeRangeMetric = {
   dateStart: Date,
   dateEnd: Date,
   postsMetric: PostsMetric,
-  userMetrics: UserMetric[],
+  usersMetric: UsersMetric,
 }
 
-export default (dateStart: Date, dateEnd: Date, posts: Post[], members: Member[], comments: Comment[]): TimeRangeMetric => {
+export const timeRangeMetric = (dateStart: Date, dateEnd: Date, posts: Post[], members: Member[], comments: Comment[]): TimeRangeMetric => {
   // pick date
   const filteredPosts = posts.filter(post => new Date(post.created_time) >= dateStart && new Date(post.created_time) < dateEnd);
   const filteredComments = comments.filter(comm => new Date(comm.created_time) >= dateStart && new Date(comm.created_time) < dateEnd);
   
   // calculate metrics
-  const postsMetric = postsMetricer(filteredPosts, members);
-  const userMetrics = userMetricer(members, filteredPosts, filteredComments);
+  const postsMetric = postsMetricer(filteredPosts);
+  const usersMetric = usersMetricer(members, filteredPosts, filteredComments);
 
   return {
     dateStart,
     dateEnd,
     postsMetric,
-    userMetrics,
+    usersMetric,
   };
 };
+
+export const timeSeriesMetric = (dateStart: Date, dateEnd: Date, granularity: moment.unitOfTime.Base, posts: Post[], members: Member[], comments: Comment[]): TimeRangeMetric[] => {
+  // define start and end time
+  const start = moment(dateStart).startOf(granularity);
+  const end = moment(dateEnd).endOf(granularity);
+
+  // create list of start and end of granularity
+  const cursor = start.clone();
+  const timeSeries: {dateStart: Date, dateEnd: Date}[] = [];
+  while (cursor.valueOf() < end.valueOf()) {
+    timeSeries.push({
+      dateStart: cursor.clone(),
+      dateEnd: cursor.clone().endOf(granularity),
+    })
+    cursor.add(1, granularity);
+  }
+
+  // calculate each time series
+  const results: TimeRangeMetric[] = timeSeries.map(({ dateStart, dateEnd }) => timeRangeMetric(dateStart, dateEnd, posts, members, comments));
+
+  return results;
+}
 
 export const extractDateRangeFromPosts = (posts: Post[], granularity: moment.unitOfTime.Base): { dateStart: Date, dateEnd: Date } => {
   const start: Date = new Date((_.sortBy(posts, 'created_time')[0] || {}).created_time);
@@ -40,3 +62,5 @@ export const extractDateRangeFromPosts = (posts: Post[], granularity: moment.uni
     dateEnd: endOf.toDate(),
   };
 };
+
+export default timeRangeMetric;

@@ -50,6 +50,9 @@ class Sidebar extends Component {
                 <li className="nav-item">
                   <a href="" className="nav-link" onClick={goTo('/metric/summary')}>Summary</a>
                 </li>
+                <li className="nav-item">
+                  <a href="" className="nav-link" onClick={goTo('/metric/time-series')}>Time Series</a>
+                </li>
               </ul>
             </li> : ''}
 

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -11,16 +12,19 @@ import PostSummary from '../component/PostSummary';
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
   members: state.group.members,
+  comments: state.group.comments,
 });
 
 class MetricSummary extends React.Component {
 
-  state = {
+  state: {
     data: {
       dateStart: Date,
       dateEnd: Date,
     },
   }
+
+  onFormChange: Function
 
   constructor(props) {
     super(props);
@@ -49,9 +53,9 @@ class MetricSummary extends React.Component {
   }
 
   render() {
-    const { feeds, members } = this.props;
+    const { feeds, members, comments } = this.props;
     const { data } = this.state;
-    const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, feeds, members);
+    const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, feeds, members, comments);
 
     return (
       <div className="row">
@@ -63,7 +67,6 @@ class MetricSummary extends React.Component {
                 <label className="col-form-label mr-1">Date range</label>
                 <input className="form-control mr-1" type="date" value={moment(data.dateStart).format('YYYY-MM-DD')} onChange={this.onFormChange('dateStart')} />
                 <input className="form-control mr-1" type="date" value={moment(data.dateEnd).format('YYYY-MM-DD')} onChange={this.onFormChange('dateEnd')} />
-                <button className="btn btn-primary" type="submit">Refresh</button>
               </form>
             </div>
           </div>
@@ -76,14 +79,14 @@ class MetricSummary extends React.Component {
         <div className="col-md-6">
           <div className="card">
             <div className="card-block">
-              {feeds.length > 0 ? <p>Time range {moment(data.dateStart).format('YYYY-MM-DD HH:mm:ss')} - {moment(data.dateEnd).format('YYYY-MM-DD HH:mm:ss')}</p> : ''}
+              <p>Time range {moment(data.dateStart).format('YYYY-MM-DD HH:mm:ss')} - {moment(data.dateEnd).format('YYYY-MM-DD HH:mm:ss')}</p>
               <p>Total posts: {metric.postsMetric.totalPosts}</p>
               <p>Total posts shares: {metric.postsMetric.totalPostsShares}</p>
               <p>Total posts likes: {metric.postsMetric.totalPostsLikes}</p>
-              <p>Total posts comments: {metric.postsMetric.totalPostsComments}</p>
-              <p>Total members: {members.length}</p>
-              <p>Total unique member posting: {metric.postsMetric.uniqueUserPosts}</p>
-              <p>User post engagement: {metric.postsMetric.postEngagement} %<br />(total unique user posting / total member)</p>
+              <p>Total posts comments: {metric.postsMetric.totalComments}</p>
+              <p>Total members: {metric.usersMetric.totalMembers}</p>
+              <p>Total unique member posting: {metric.usersMetric.uniqueUsersPosts().length}</p>
+              <p>Total unique member commenting: {metric.usersMetric.uniqueUsersComments().length}</p>
             </div>
           </div>
         </div>
@@ -92,37 +95,49 @@ class MetricSummary extends React.Component {
           <h4>User Activity</h4>
         </div>
 
-        <div className="col-md-4">
+        <div className="col-md-6">
           <div className="card">
             <div className="card-block">
               <h4 className="card-title">Posts Count</h4>
               <p>Top 10 user posts count.</p>
               <ul className="list-group">
-                {_.sortBy(metric.userMetrics, 'postsCount').reverse().slice(0, 10).map((user, key) => (<li key={key} className="list-group-item">{user.name}: {user.postsCount} - {((user.postsCount/metric.postsMetric.totalPosts)*100).toFixed(2)}%</li>))}
+                {metric.usersMetric.sortByPostsCount().slice(0, 10).map((user, key) => (<li key={key} className="list-group-item">{user.name}: {user.postsCount} - {((user.postsCount/metric.postsMetric.totalPosts)*100).toFixed(2)}%</li>))}
               </ul>
             </div>
           </div>
         </div>
 
-        <div className="col-md-4">
+        <div className="col-md-6">
+          <div className="card">
+            <div className="card-block">
+              <h4 className="card-title">Comments Count</h4>
+              <p>Top 10 user comments count.</p>
+              <ul className="list-group">
+                {metric.usersMetric.sortByCommentsCount().slice(0, 10).map((user, key) => (<li key={key} className="list-group-item">{user.name}: {user.commentsCount} - {((user.commentsCount/metric.postsMetric.totalComments)*100).toFixed(2)}%</li>))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-md-6">
           <div className="card">
             <div className="card-block">
               <h4 className="card-title">Shares Count</h4>
               <p>Top 10 user posts shares count.</p>
               <ul className="list-group">
-                {_.sortBy(metric.userMetrics, 'postsSharesCount').reverse().slice(0, 10).map((user, key) => (<li key={key} className="list-group-item">{user.name}: {user.postsSharesCount} - {((user.postsSharesCount/metric.postsMetric.totalPostsShares)*100).toFixed(2)}%</li>))}
+                {metric.usersMetric.sortByPostsSharesCount().slice(0, 10).map((user, key) => (<li key={key} className="list-group-item">{user.name}: {user.postsSharesCount} - {((user.postsSharesCount/metric.postsMetric.totalPostsShares)*100).toFixed(2)}%</li>))}
               </ul>
             </div>
           </div>
         </div>
 
-        <div className="col-md-4">
+        <div className="col-md-6">
           <div className="card">
             <div className="card-block">
               <h4 className="card-title">Likes Count</h4>
               <p>Top 10 user posts likes count.</p>
               <ul className="list-group">
-                {_.sortBy(metric.userMetrics, 'postsLikesCount').reverse().slice(0, 10).map((user, key) => (<li key={key} className="list-group-item">{user.name}: {user.postsLikesCount} - {((user.postsLikesCount/metric.postsMetric.totalPostsLikes)*100).toFixed(2)}%</li>))}
+                {metric.usersMetric.sortByPostsLikesCount().slice(0, 10).map((user, key) => (<li key={key} className="list-group-item">{user.name}: {user.postsLikesCount} - {((user.postsLikesCount/metric.postsMetric.totalPostsLikes)*100).toFixed(2)}%</li>))}
               </ul>
             </div>
           </div>
