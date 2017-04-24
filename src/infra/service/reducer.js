@@ -23,6 +23,7 @@ const user = (state = {
 const group = (state = {
   loading: false,
   inputs: [],
+  manages: [],
   features: [],
   selected: {},
   feeds: [],

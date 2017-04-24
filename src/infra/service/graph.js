@@ -48,7 +48,7 @@ const login = () => new Promise((resolve, reject) => {
     } else {
       reject(new Error('User cancelled login or did not fully authorize.'));
     }
-  }, { scope: 'public_profile, email' });
+  }, { scope: 'public_profile, email, user_managed_groups' });
 });
 
 const logout = () => new Promise((resolve) => {
@@ -77,7 +77,24 @@ const getUser = () => get('/me?fields=id,name,email,picture')
     return user;
   });
 
-const getGroup = (groupId: string) => get(`/${groupId}?fields=id,name,privacy,cover,description,owner`)
+const getUserManagedGroups = (): Promise<Group[]> => get('/me/groups?fields=id,name,privacy,cover,description,owner&limit=100')
+  .then(res => {
+    const rawGroups = res.data;
+    if (rawGroups.length < 1) return [];
+
+    const groups: Group[] = rawGroups.map(raw => ({
+      id: raw.id,
+      name: raw.name,
+      privacy: raw.privacy,
+      cover: (raw.cover || {}).source,
+      description: raw.description,
+      owner: raw.owner,
+    }));
+
+    return groups;
+  });
+
+const getGroup = (groupId: string): Promise<Group> => get(`/${groupId}?fields=id,name,privacy,cover,description,owner`)
   .then(res => {
     const group: Group = {
       id: res.id,
@@ -139,6 +156,7 @@ export default {
   getLoginStatus,
   getUser,
   getGroup,
+  getUserManagedGroups,
   getGroupFeed,
   getGroupComments,
   getGroupMembers,

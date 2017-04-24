@@ -22,7 +22,7 @@ const Card = props => {
       <div className="card-block">
         <p><b>{name}</b></p>
         <span className="mr-1"><i className="fa fa-lock"></i> {privacy}</span>
-        <span className="mr-1"><i className="fa fa-user"></i> {owner.name}</span>
+        {owner ? <span className="mr-1"><i className="fa fa-user"></i> {owner.name}</span> : ''}
       </div>
       <div className="card-block pt-0" style={{ textAlign: 'right' }}>
         <a href={`https://www.facebook.com/groups/${id}/`} target="_blank" className="btn btn-primary btn-sm">Open in FB</a>
