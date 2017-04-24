@@ -7,6 +7,8 @@ import moment from 'moment-timezone';
 import { extractDateRangeFromPosts, timeSeriesMetric as timeSeriesMetricer } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
 
+import PostsTimeSeries from '../component/PostsTimeSeries';
+
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
   members: state.group.members,
@@ -19,6 +21,7 @@ class MetricSummary extends React.Component {
     data: {
       dateStart: Date,
       dateEnd: Date,
+      granularity: string,
     },
   }
 
@@ -37,6 +40,7 @@ class MetricSummary extends React.Component {
       data: {
         dateStart,
         dateEnd,
+        granularity: 'd',
       },
     }
   }
@@ -54,7 +58,7 @@ class MetricSummary extends React.Component {
   render() {
     const { feeds, members, comments } = this.props;
     const { data } = this.state;
-    const metric: TimeRangeMetric[] = timeSeriesMetricer(data.dateStart, data.dateEnd, 'd', feeds, members, comments);
+    const metrics: TimeRangeMetric[] = timeSeriesMetricer(data.dateStart, data.dateEnd, data.granularity, feeds, members, comments);
 
     return (
       <div className="row">
@@ -66,6 +70,12 @@ class MetricSummary extends React.Component {
                 <label className="col-form-label mr-1">Date range</label>
                 <input className="form-control mr-1" type="date" value={moment(data.dateStart).format('YYYY-MM-DD')} onChange={this.onFormChange('dateStart')} />
                 <input className="form-control mr-1" type="date" value={moment(data.dateEnd).format('YYYY-MM-DD')} onChange={this.onFormChange('dateEnd')} />
+                <select className="form-control mr-1" onChange={this.onFormChange('granularity')} selected={data.granularity}>
+                  <option value="d">Daily</option>
+                  <option value="w">Weekly</option>
+                  <option value="M">Monthly</option>
+                  <option value="y">Annually</option>
+                </select>
               </form>
             </div>
           </div>
@@ -78,7 +88,7 @@ class MetricSummary extends React.Component {
         <div className="col-md-12">
           <div className="card">
             <div className="card-block">
-              {JSON.stringify(metric.map(met => ({ date: moment(met.dateStart).format('YYYY-MM-DD'), posts: met.usersMetric.uniqueUsersPosts().length })), null, 2)}
+              <PostsTimeSeries metrics={metrics} />
             </div>
           </div>
         </div>
