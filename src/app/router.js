@@ -14,6 +14,7 @@ import GroupSelection from 'domain/group/container/Selection';
 import GroupFeed from 'domain/group/container/Feed';
 import Metric from 'domain/metric/container/Root';
 import MetricSummary from 'domain/metric/container/Summary';
+import MetricTimeSeries from 'domain/metric/container/TimeSeries';
 
 const history = syncHistoryWithStore(browserHistory, store);
 
@@ -33,6 +34,7 @@ const RouterComp = props => (
 
       <Route path="metric" component={Metric}>
         <Route path="summary" component={MetricSummary} />
+        <Route path="time-series" component={MetricTimeSeries} />
       </Route>
     </Route>
     <Route path={prefix + '/login'} component={Login} />
