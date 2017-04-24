@@ -67,7 +67,6 @@ class MetricSummary extends React.Component {
                 <label className="col-form-label mr-1">Date range</label>
                 <input className="form-control mr-1" type="date" value={moment(data.dateStart).format('YYYY-MM-DD')} onChange={this.onFormChange('dateStart')} />
                 <input className="form-control mr-1" type="date" value={moment(data.dateEnd).format('YYYY-MM-DD')} onChange={this.onFormChange('dateEnd')} />
-                <button className="btn btn-primary" type="submit">Refresh</button>
               </form>
             </div>
           </div>
