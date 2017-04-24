@@ -130,7 +130,7 @@ class MetricSummary extends React.Component {
               <p>Total posts: {metric.postsMetric.totalPosts}</p>
               <p>Total posts shares: {metric.postsMetric.totalPostsShares}</p>
               <p>Total posts likes: {metric.postsMetric.totalPostsLikes}</p>
-              <p>Total posts comments: {metric.postsMetric.totalComments}</p>
+              <p>Total comments: {metric.postsMetric.totalComments}</p>
               <p>Total members: {metric.usersMetric.totalMembers}</p>
               <p>Total unique member posting: {metric.usersMetric.uniqueUsersPosts().length}</p>
               <p>Total unique member commenting: {metric.usersMetric.uniqueUsersComments().length}</p>
