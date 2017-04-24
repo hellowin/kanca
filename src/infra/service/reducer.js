@@ -26,6 +26,7 @@ const group = (state = {
   features: [],
   selected: {},
   feeds: [],
+  comments: [],
   members: [],
 }, action) => {
   switch (action.type) {

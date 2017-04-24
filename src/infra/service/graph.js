@@ -1,4 +1,5 @@
 // @flow
+import _ from 'lodash';
 
 const get = (url: string): Promise<any> => new Promise((resolve, reject) => {
   window.FB.api(url, fbRes => {
@@ -92,13 +93,41 @@ const getGroup = (groupId: string) => get(`/${groupId}?fields=id,name,privacy,co
     return group;
   });
 
-const getGroupFeed = (groupId: string, pages: number): Promise<any> => {
+const getGroupFeed = (groupId: string, pages: number): Promise<{}[]> => {
   const url = `/${groupId}/feed?fields=created_time,id,message,updated_time,caption,story,description,from,link,name,picture,status_type,type,shares,permalink_url,likes.limit(100),comments.limit(100){id,from,message,likes.limit(100),comments.limit(100){id,from,message,likes.limit(100)}}&limit=100`;
   const list = new GraphList();
   return list.fetchForward(url, pages);
 };
 
-const getGroupMembers = (groupId: string, pages: number): Promise<any> => {
+const getGroupComments = (posts: Object[]): Promise<any> => {
+  // currently just put existing comments without fetching next page
+  const firstComments = [];
+  const secondComments = [];
+  // get post with comments
+  posts.forEach(post => {
+    const comments = ((post.comments || {}).data || []).map(comment => ({
+      parent: post.id,
+      order: 0,
+      ...comment,
+    }));
+    if (comments) firstComments.push(...comments);
+  });
+  // get second comments
+  firstComments.forEach(com => {
+    const comments = ((com.comments || {}).data || []).map(comment => ({
+      parent: com.id,
+      order: 1,
+      ...comment,
+    }));
+    if (comments) secondComments.push(...comments);
+  });
+
+  const comments = [...firstComments.map(com => _.omit(com, 'comments')), ...secondComments];
+
+  return Promise.resolve(comments);
+};
+
+const getGroupMembers = (groupId: string, pages: number): Promise<{}[]> => {
   const url = `/${groupId}/members?fields=id,name,administrator,picture&limit=100`;
   const list = new GraphList();
   return list.fetchForward(url, pages);
@@ -111,5 +140,6 @@ export default {
   getUser,
   getGroup,
   getGroupFeed,
+  getGroupComments,
   getGroupMembers,
 };
