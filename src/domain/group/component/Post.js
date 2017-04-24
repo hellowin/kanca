@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment-timezone';
 import Comment from './Comment';
+import Pagination from 'infra/component/Pagination';
 
 const Post = props => {
   const {
@@ -40,11 +41,11 @@ const Post = props => {
           {likes ? <span><i className="fa fa-thumbs-up"></i> {likes.data.length} </span> : ''}
         </div>
       </div>
-      <div className="card-block row">
+      {validComments.length > 0 ? (<div className="card-block row">
         <div className="col-md-12">
-          {validComments.map((comment, key) => <Comment key={key} {...comment} />)}
+          <Pagination list={validComments} ChildNode={Comment} />
         </div>
-      </div>
+      </div>) : ''}
       <div className="card-block" style={{ textAlign: 'right' }}>
         <a href={permalink_url} target="_blank" className="btn btn-primary btn-sm">Open in FB</a>
       </div>
