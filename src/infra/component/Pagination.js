@@ -5,12 +5,13 @@ class Pagination extends React.Component {
 
   state: {
     page: number,
-    perPage: number,
   }
 
   props: {
     list: Object[],
     ChildNode: any,
+    perPage?: number,
+    hideNavigationOnSinglePage?: boolean,
   }
 
   goToPage: Function
@@ -22,7 +23,6 @@ class Pagination extends React.Component {
 
     this.state = {
       page: 1,
-      perPage: 10,
     };
   }
 
@@ -34,14 +34,19 @@ class Pagination extends React.Component {
   }
 
   render() {
-    const { list, ChildNode } = this.props;
-    const { page, perPage } = this.state;
+    const { list, ChildNode, hideNavigationOnSinglePage, perPage } = this.props;
+    const { page } = this.state;
 
-    const start = (page - 1) * perPage;
-    const end = start + perPage - 1;
+    // handle default props
+    const fixPerPage = perPage || 10;
+
+    // handle list
+    const start = (page - 1) * fixPerPage;
+    const end = start + fixPerPage - 1;
     const currentList = list.slice(start, end);
 
-    const totalPage = Math.ceil(list.length / perPage)
+    // handle pagination details
+    const totalPage = Math.ceil(list.length / fixPerPage)
     const max = 3;
     const startPage: number = page - max <= 1 ? 1 : page - max;
     const endPage: number = page + max >= totalPage ? totalPage : page + max;
@@ -50,15 +55,16 @@ class Pagination extends React.Component {
       allPages.push(x);
     }
 
+    // available pages
     const pages = [
-      (<li className={page <= 1 ? 'disabled page-item' : 'page-item'}>
+      (<li key="prev" className={page <= 1 ? 'disabled page-item' : 'page-item'}>
         <a className="page-link" href="#" aria-label="Previous" onClick={this.goToPage(page - 1)}>
           <span aria-hidden="true">«</span>
           <span className="sr-only">Previous</span>
         </a>
       </li>),
-      ...allPages.map(pg => <li className={page === pg ? 'active page-item' : 'page-item'}><a className="page-link" href="#" onClick={this.goToPage(pg)} >{pg}</a></li>),
-      (<li className={page >= totalPage ? 'disabled page-item' : 'page-item'}>
+      ...allPages.map((pg, key) => <li key={key} className={page === pg ? 'active page-item' : 'page-item'}><a className="page-link" href="#" onClick={this.goToPage(pg)} >{pg}</a></li>),
+      (<li key="next" className={page >= totalPage ? 'disabled page-item' : 'page-item'}>
         <a className="page-link" href="#" aria-label="Next" onClick={this.goToPage(page + 1)}>
           <span aria-hidden="true">»</span>
           <span className="sr-only">Next</span>
@@ -74,25 +80,25 @@ class Pagination extends React.Component {
       </nav>
     );
 
+    const navigation = hideNavigationOnSinglePage && totalPage === 1 ? '' : (
+      <div className="col-12">
+        <div className="row">
+          <div className="col-md-6">
+            Page {page} of {totalPage}, per page {fixPerPage}
+          </div>
+          <div className="col-md-6">
+            {pagination}
+          </div>
+        </div>
+      </div>
+    );
+
     return (
       <div className="row">
         <div className="col-12">
           {currentList.map((props, key) => <ChildNode key={key} {...props} />)}
         </div>
-        <div className="col-12">
-          <div className="card">
-            <div className="card-block">
-              <div className="row">
-                <div className="col-md-6">
-                  Page {page} of {totalPage}, per page {perPage}
-                </div>
-                <div className="col-md-6">
-                  {pagination}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {navigation}
       </div>
     );
   }

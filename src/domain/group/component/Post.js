@@ -43,7 +43,7 @@ const Post = props => {
       </div>
       {validComments.length > 0 ? (<div className="card-block row">
         <div className="col-md-12">
-          <Pagination list={validComments} ChildNode={Comment} />
+          <Pagination list={validComments} ChildNode={Comment} hideNavigationOnSinglePage />
         </div>
       </div>) : ''}
       <div className="card-block" style={{ textAlign: 'right' }}>

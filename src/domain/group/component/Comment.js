@@ -13,7 +13,7 @@ const Comment = props => {
       <p className="text-muted">{moment(created_time).format('YYYY-MM-DD HH:mm:ss')} {' '} <i className="fa fa-thumbs-up"></i> {' '} {likes ? likes.data.length : 0}</p>
       {validComments.length > 0 ? (
         <div className="col-12">
-          <Pagination list={validComments} ChildNode={Comment} />
+          <Pagination list={validComments} ChildNode={Comment} hideNavigationOnSinglePage />
         </div>
        ) : ''}
     </div>
