@@ -20,7 +20,7 @@ export default (posts: Post[]): PostMetric[] => {
   return posts.map((post: Post): PostMetric => {
     const sharesCount: number = ((post.shares || {}).count || 0);
     const likesCount: number = (((post.likes || {}).data || []).length || 0);
-    const preCommentsCount: number = ((post.comments || {}).data || []).length;
+    const preCommentsCount: number = (((post.comments || {}).data || []).length || 0);
     const subCommentsCount: number = ((post.comments || {}).data || []).reduce((pre, cur: Comment) => pre + (((cur.comments || {}).data || []).length), 0);
     const commentsCount = preCommentsCount + subCommentsCount;
 
