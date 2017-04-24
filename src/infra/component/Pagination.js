@@ -10,12 +10,12 @@ class Pagination extends React.Component {
 
   props: {
     list: Object[],
-    ChildNode: React.Component<*, *, *>,
+    ChildNode: any,
   }
 
   goToPage: Function
 
-  constructor(props) {
+  constructor(props: Object) {
     super(props);
 
     this.goToPage = this.goToPage.bind(this);
