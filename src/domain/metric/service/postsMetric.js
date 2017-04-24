@@ -13,7 +13,7 @@ export type PostsMetric = {
   postMetrics: PostMetric[],
 }
 
-export default (posts: Post[], members: Member[]): PostsMetric => {
+export default (posts: Post[]): PostsMetric => {
   const postMetrics = postMetric(posts);
 
   const dateStart: Date = new Date((_.sortBy(posts, 'created_time')[0] || {}).created_time);

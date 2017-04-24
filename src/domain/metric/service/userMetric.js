@@ -33,20 +33,25 @@ export default (members: Member[], posts: Post[], comments: Comment[]): UserMetr
     const name = member.name;
     const picture = member.picture.data.url;
     const user = userFactory(id, name, picture);
-    users.push(user);
+    users[id] = user;
   });
   
   // create user posts mapping
   _.each(posts, feed => {
     const userId = (feed.from || {}).id;
+    const userName = (feed.from || {}).name;
     // create empty user posts mapping
+    if (!users[userId]) users[userId] = userFactory(userId, userName, '');
     if (feed.from) users[userId].posts.push(feed);
   });
 
   // create user comments mapping
   _.each(comments, comment => {
     const userId = (comment.from || {}).id;
-    // create empty user posts mapping
+    const userName = (comment.from || {}).name;
+    // create empty user comments mapping
+    if (!users[userId]) users[userId] = userFactory(userId, userName, '');
+
     if (comment.from) users[userId].comments.push(comment);
   });
 

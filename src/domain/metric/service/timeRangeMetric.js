@@ -2,15 +2,15 @@
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import postsMetricer from './postsMetric';
-import userMetricer from './userMetric';
+import usersMetricer from './usersMetric';
 import type { PostsMetric } from './postsMetric';
-import type { UserMetric } from './userMetric';
+import type { UsersMetric } from './usersMetric';
 
 export type TimeRangeMetric = {
   dateStart: Date,
   dateEnd: Date,
   postsMetric: PostsMetric,
-  userMetrics: UserMetric[],
+  usersMetric: UsersMetric,
 }
 
 export default (dateStart: Date, dateEnd: Date, posts: Post[], members: Member[], comments: Comment[]): TimeRangeMetric => {
@@ -19,14 +19,14 @@ export default (dateStart: Date, dateEnd: Date, posts: Post[], members: Member[]
   const filteredComments = comments.filter(comm => new Date(comm.created_time) >= dateStart && new Date(comm.created_time) < dateEnd);
   
   // calculate metrics
-  const postsMetric = postsMetricer(filteredPosts, members);
-  const userMetrics = userMetricer(members, filteredPosts, filteredComments);
+  const postsMetric = postsMetricer(filteredPosts);
+  const usersMetric = usersMetricer(members, filteredPosts, filteredComments);
 
   return {
     dateStart,
     dateEnd,
     postsMetric,
-    userMetrics,
+    usersMetric,
   };
 };
 
