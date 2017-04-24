@@ -52,6 +52,7 @@ const groupRepo = {
       .then(() => {
         // store on local storage
         st.set('group.feeds', feeds);
+        st.set('group.comments', comments);
         st.set('group.members', members);
         // store on redux
         store.dispatch(action.groupSet({ feeds, comments, members, loading: false }));
@@ -62,8 +63,9 @@ const groupRepo = {
     store.dispatch(action.groupSet({ loading: true }));
     const selected = st.get('group.selected') || {};
     const feeds = st.get('group.feeds') || [];
+    const comments = st.get('group.comments') || [];
     const members = st.get('group.members') || [];
-    store.dispatch(action.groupSet({ selected, feeds, members, loading: false }));
+    store.dispatch(action.groupSet({ selected, feeds, comments, members, loading: false }));
   },
 
 };
