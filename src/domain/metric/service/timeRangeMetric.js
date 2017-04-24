@@ -13,13 +13,14 @@ export type TimeRangeMetric = {
   userMetrics: UserMetric[],
 }
 
-export default (dateStart: Date, dateEnd: Date, posts: Post[], members: Member[]): TimeRangeMetric => {
+export default (dateStart: Date, dateEnd: Date, posts: Post[], members: Member[], comments: Comment[]): TimeRangeMetric => {
   // pick date
   const filteredPosts = posts.filter(post => new Date(post.created_time) >= dateStart && new Date(post.created_time) < dateEnd);
+  const filteredComments = comments.filter(comm => new Date(comm.created_time) >= dateStart && new Date(comm.created_time) < dateEnd);
   
   // calculate metrics
   const postsMetric = postsMetricer(filteredPosts, members);
-  const userMetrics = userMetricer(filteredPosts);
+  const userMetrics = userMetricer(members, filteredPosts, filteredComments);
 
   return {
     dateStart,
