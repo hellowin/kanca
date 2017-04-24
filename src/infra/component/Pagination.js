@@ -57,6 +57,12 @@ class Pagination extends React.Component {
 
     // available pages
     const pages = [
+      (<li key="first" className={page <= 1 ? 'disabled page-item' : 'page-item'}>
+        <a className="page-link" href="#" aria-label="First" onClick={this.goToPage(1)}>
+          <span aria-hidden="true">««</span>
+          <span className="sr-only">First</span>
+        </a>
+      </li>),
       (<li key="prev" className={page <= 1 ? 'disabled page-item' : 'page-item'}>
         <a className="page-link" href="#" aria-label="Previous" onClick={this.goToPage(page - 1)}>
           <span aria-hidden="true">«</span>
@@ -69,7 +75,13 @@ class Pagination extends React.Component {
           <span aria-hidden="true">»</span>
           <span className="sr-only">Next</span>
         </a>
-      </li>)
+      </li>),
+      (<li key="last" className={page >= totalPage ? 'disabled page-item' : 'page-item'}>
+        <a className="page-link" href="#" aria-label="Last" onClick={this.goToPage(totalPage)}>
+          <span aria-hidden="true">»»</span>
+          <span className="sr-only">Last</span>
+        </a>
+      </li>),
     ];
 
     const pagination = (
