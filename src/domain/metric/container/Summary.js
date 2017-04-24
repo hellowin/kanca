@@ -113,7 +113,7 @@ class MetricSummary extends React.Component {
               <h4 className="card-title">Comments Count</h4>
               <p>Top 10 user comments count.</p>
               <ul className="list-group">
-                {metric.usersMetric.sortByCommentsCount().slice(0, 10).map((user, key) => (<li key={key} className="list-group-item">{user.name}: {user.commentsCount} - {((user.commentsCount/metric.postsMetric.totalPostsComments)*100).toFixed(2)}%</li>))}
+                {metric.usersMetric.sortByCommentsCount().slice(0, 10).map((user, key) => (<li key={key} className="list-group-item">{user.name}: {user.commentsCount} - {((user.commentsCount/metric.postsMetric.totalComments)*100).toFixed(2)}%</li>))}
               </ul>
             </div>
           </div>
