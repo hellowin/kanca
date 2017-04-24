@@ -66,9 +66,13 @@ class PostsTimeSeries extends React.Component {
     const id = `id-${(Math.random() * 1000000000000000000).toFixed(0)}`
 
     return (
-      <div className="text-center">
-        {title ? <h5>{title}</h5> : ''}
-        <C3 id={id} config={config} />
+      <div className="row">
+        <div className="col-12 text-center">
+          {title ? <h5>{title}</h5> : ''}
+        </div>
+        <div className="col-12">
+          <C3 id={id} config={config} />
+        </div>
       </div>
     );
   };
