@@ -28,6 +28,7 @@ const calculate = (column: string, metrics: TimeRangeMetric[]): number[] => {
 class PostsTimeSeries extends React.Component {
 
   props: {
+    title: string,
     metrics: TimeRangeMetric[],
     show: {
       column: 'totalPosts' | 'usersPosts' | 'totalComments' | 'usersComments',
@@ -36,7 +37,7 @@ class PostsTimeSeries extends React.Component {
   }
 
   render() {
-    const { metrics, show } = this.props;
+    const { metrics, show, title } = this.props;
 
     const fixShow = show || defaultShow;
 
@@ -64,7 +65,12 @@ class PostsTimeSeries extends React.Component {
 
     const id = `id-${(Math.random() * 1000000000000000000).toFixed(0)}`
 
-    return <C3 id={id} config={config} />;
+    return (
+      <div className="text-center">
+        {title ? <h5>{title}</h5> : ''}
+        <C3 id={id} config={config} />
+      </div>
+    );
   };
 
 }

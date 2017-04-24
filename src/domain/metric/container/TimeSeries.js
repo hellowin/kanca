@@ -88,7 +88,7 @@ class MetricSummary extends React.Component {
         <div className="col-md-12">
           <div className="card">
             <div className="card-block">
-              <PostsTimeSeries metrics={metrics} show={[
+              <PostsTimeSeries title="Posts" metrics={metrics} show={[
                 { column: 'totalPosts', label: 'Total Posts' },
                 { column: 'usersPosts', label: 'Unique User Posts' },
               ]} />
@@ -99,7 +99,7 @@ class MetricSummary extends React.Component {
         <div className="col-md-12">
           <div className="card">
             <div className="card-block">
-              <PostsTimeSeries metrics={metrics} show={[
+              <PostsTimeSeries title="Comments" metrics={metrics} show={[
                 { column: 'totalComments', label: 'Total Comments' },
                 { column: 'usersComments', label: 'Unique User Comments' },
               ]} />
