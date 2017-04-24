@@ -25,11 +25,13 @@ class MetricSummary extends React.Component {
   }
 
   onFormChange: Function
+  autoPickDate: Function
 
   constructor(props) {
     super(props);
 
     this.onFormChange = this.onFormChange.bind(this);
+    this.autoPickDate = this.autoPickDate.bind(this);
 
     const { feeds } = props;
     const { dateStart, dateEnd } = extractDateRangeFromPosts(feeds, 'd');
@@ -52,6 +54,47 @@ class MetricSummary extends React.Component {
     }
   }
 
+  autoPickDate(name: string) {
+    return e => {
+      e.preventDefault();
+      const { feeds } = this.props;
+      const { data } = this.state;
+
+      let date: { dateStart: Date, dateEnd: Date } = extractDateRangeFromPosts(feeds, 'd');
+      switch (name) {
+        case 'thisWeek':
+          date = {
+            dateStart: moment().startOf('w').toDate(),
+            dateEnd: moment().toDate(),
+          };
+          break;
+        case 'lastWeek':
+          date = {
+            dateStart: moment().add(-1, 'w').startOf('w').toDate(),
+            dateEnd: moment().add(-1, 'w').endOf('w').toDate(),
+          };
+          break;
+        case 'thisMonth':
+          date = {
+            dateStart: moment().startOf('M').toDate(),
+            dateEnd: moment().toDate(),
+          };
+          break;
+        case 'lastMonth':
+          date = {
+            dateStart: moment().add(-1, 'M').startOf('M').toDate(),
+            dateEnd: moment().add(-1, 'M').endOf('M').toDate(),
+          };
+          break;
+        default:
+      }
+      
+      data.dateStart = date.dateStart;
+      data.dateEnd = date.dateEnd;
+      this.setState({ data });
+    };
+  }
+
   render() {
     const { feeds, members, comments } = this.props;
     const { data } = this.state;
@@ -67,6 +110,10 @@ class MetricSummary extends React.Component {
                 <label className="col-form-label mr-1">Date range</label>
                 <input className="form-control mr-1" type="date" value={moment(data.dateStart).format('YYYY-MM-DD')} onChange={this.onFormChange('dateStart')} />
                 <input className="form-control mr-1" type="date" value={moment(data.dateEnd).format('YYYY-MM-DD')} onChange={this.onFormChange('dateEnd')} />
+                <button className="btn btn-primary mr-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('thisWeek')}>This Week</button>
+                <button className="btn btn-primary mr-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('lastWeek')}>Last Week</button>
+                <button className="btn btn-primary mr-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('thisMonth')}>This Month</button>
+                <button className="btn btn-primary mr-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('lastMonth')}>Last Month</button>
               </form>
             </div>
           </div>
