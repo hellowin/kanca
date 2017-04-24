@@ -95,7 +95,7 @@ class Pagination extends React.Component {
     const navigation = hideNavigationOnSinglePage && totalPage === 1 ? '' : (
       <div className="col-12">
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-6" style={{ lineHeight: 3 }}>
             Page {page} of {totalPage}, per page {fixPerPage}
           </div>
           <div className="col-md-6">
