@@ -30,7 +30,8 @@ class MetricSummary extends React.Component {
     this.onFormChange = this.onFormChange.bind(this);
 
     const { feeds } = props;
-    const { dateStart, dateEnd } = extractDateRangeFromPosts(feeds, 'd');
+    const { dateEnd } = extractDateRangeFromPosts(feeds, 'd');
+    const dateStart = moment(dateEnd).add(-1, 'month').toDate();
 
     this.state = {
       data: {
@@ -77,7 +78,7 @@ class MetricSummary extends React.Component {
         <div className="col-md-12">
           <div className="card">
             <div className="card-block">
-              {JSON.stringify(metric, null, 2)}
+              {JSON.stringify(metric.map(met => ({ date: moment(met.dateStart).format('YYYY-MM-DD'), posts: met.usersMetric.uniqueUsersPosts().length })), null, 2)}
             </div>
           </div>
         </div>
