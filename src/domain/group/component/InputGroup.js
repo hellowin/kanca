@@ -41,6 +41,8 @@ class InputGroup extends React.Component {
           if (!name || ! privacy || !owner) throw new Error('ID is not a valid Facebook Group ID.');
 
           groupRepo.addInput(res);
+
+          this.setState({ error: null, data: { groupId: '' } });
         })
         .catch(err => {
           this.setState({ error: err });
