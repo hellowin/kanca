@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Post from '../component/Post';
 import loc from 'infra/service/location';
 import Loading from 'infra/component/Loading';
+import Pagination from 'infra/component/Pagination';
 
 const mapStateToProps = state => ({
   loading: state.group.loading,
@@ -18,9 +19,7 @@ const GroupFeed = props => {
   return !loading ? (
     <div>
       <h1 className="h3">Group Feed</h1>
-      {feeds.map((post, id) => (
-        <Post key={id} {...post} />
-      ))}
+      <Pagination list={feeds} ChildNode={Post} />
     </div>
   ) : <Loading />;
 };
