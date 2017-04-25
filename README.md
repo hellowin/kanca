@@ -1,5 +1,6 @@
 # Kanca
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/34810083c2eb4046a67dba2959dcca9f)](https://www.codacy.com/app/hellowin/kanca?utm_source=github.com&utm_medium=referral&utm_content=hellowin/kanca&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/hellowin/kanca.svg?branch=master)](https://travis-ci.org/hellowin/kanca)
 [![codecov](https://codecov.io/gh/hellowin/kanca/branch/master/graph/badge.svg)](https://codecov.io/gh/hellowin/kanca)
 [![Known Vulnerabilities](https://snyk.io/test/github/hellowin/kanca/badge.svg)](https://snyk.io/test/github/hellowin/kanca)
