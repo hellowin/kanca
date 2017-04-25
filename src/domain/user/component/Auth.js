@@ -23,7 +23,7 @@ class Auth extends React.Component {
 
   render() {
     const { loading, children } = this.props;
-    return !loading ? children : <Loading />;
+    return !loading ? children : <div style={{ paddingTop: '50px' }}><Loading /></div>;
   }
 
 }
