@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Router from 'app/router';
+import Router from 'app/Router';
 import 'index.css';
 import { Provider } from 'react-redux';
 import store from 'infra/service/store';
