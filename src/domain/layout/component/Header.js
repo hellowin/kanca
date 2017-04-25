@@ -4,6 +4,7 @@ import { Dropdown, DropdownMenu, DropdownItem } from 'reactstrap';
 import { connect } from 'react-redux';
 import moment from 'moment-timezone';
 import userRepo from 'infra/repo/user';
+import groupRepo from 'infra/repo/group';
 import loc from 'infra/service/location';
 
 const mapStateToProps = state => ({
@@ -77,10 +78,9 @@ class Header extends Component {
   }
 
   render() {
-    const { profile, loading, group, updatedTime } = this.props;
+    const { profile, loading, group } = this.props;
     const { deltaTime, diffTime } = this.state;
-    // const refreshTime = diffTime + 15 * 60000 < 0; // 15 minutes
-    const refreshTime = true;
+    const refreshTime = diffTime + 15 * 60000 < 0; // 15 minutes
 
     return (
       <header className="app-header navbar" style={{ paddingRight: '15px' }}>
@@ -91,7 +91,7 @@ class Header extends Component {
             <a className="nav-link navbar-toggler sidebar-toggler" onClick={this.sidebarToggle} href="#">&#9776;</a>
           </li>
           {group ? (<li className="nav-item">
-            <span>Selected Group: <b>{group.name}</b> | Updated {deltaTime} ago {refreshTime ? <span> | <button className="btn btn-primary btn-sm" style={{ cursor: 'pointer' }}>Refresh</button></span> : ''} </span>
+            <span>Selected Group: <b>{group.name}</b> | Updated {deltaTime} ago {refreshTime ? <span> | <button className="btn btn-primary btn-sm" style={{ cursor: 'pointer' }} onClick={() => groupRepo.refreshGroup()}>Refresh</button></span> : ''} </span>
           </li>) : ''}
         </ul>
         {!loading ? (<ul className="nav navbar-nav ml-auto">

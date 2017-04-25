@@ -24,6 +24,11 @@ const groupRepo = {
       .then(() => groupRepo.fetchFeeds(group.id, config.feedPages));
   },
 
+  refreshGroup(): Promise<any> {
+    const groupId = store.getState().group.selected.id;
+    return this.selectGroup(groupId);
+  },
+
   addInput(group: Object) {
     const oldInputs = store.getState().group.inputs;
     const uniqueInputs = {};
