@@ -6,8 +6,8 @@ import config from 'config';
 
 // containers
 import App from './App';
-import Login from 'domain/user/container/login';
-import UserProfile from 'domain/user/container/profile';
+import Login from 'domain/user/container/Login';
+import UserProfile from 'domain/user/container/Profile';
 import Group from 'domain/group/container/Root';
 import GroupWelcome from 'domain/group/container/Welcome';
 import GroupSelection from 'domain/group/container/Selection';
