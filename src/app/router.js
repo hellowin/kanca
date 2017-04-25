@@ -5,7 +5,7 @@ import store from 'infra/service/store';
 import config from 'config';
 
 // containers
-import App from './app';
+import App from './App';
 import Login from 'domain/user/container/login';
 import UserProfile from 'domain/user/container/profile';
 import Group from 'domain/group/container/Root';
