@@ -26,6 +26,7 @@ const group = (state = {
   manages: [],
   features: [],
   selected: {},
+  updatedTime: null,
   feeds: [],
   comments: [],
   members: [],

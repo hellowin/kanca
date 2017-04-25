@@ -9,15 +9,17 @@ import _ from 'lodash';
 const groupRepo = {
 
   selectGroup(groupId: string): Promise<any> {
-    store.dispatch(action.groupSet({ loading: true, selected: {} }));
+    store.dispatch(action.groupSet({ loading: true, selected: {}, updatedTime: new Date() }));
     let group;
     return graph.getGroup(groupId)
       .then(res => (group = res))
       .then(() => {
+        const updatedTime = new Date();
         // store on local storage
         st.set('group.selected', group);
+        st.set('group.updatedTime', updatedTime);
         // store on redux
-        store.dispatch(action.groupSet({ selected: group }));
+        store.dispatch(action.groupSet({ updatedTime, selected: group }));
       })
       .then(() => groupRepo.fetchFeeds(group.id, config.feedPages));
   },
@@ -78,10 +80,12 @@ const groupRepo = {
     store.dispatch(action.groupSet({ loading: true }));
     const inputs = st.get('group.inputs') || [];
     const selected = st.get('group.selected') || {};
+    let updatedTime = st.get('group.updatedTime') || null;
+    if (updatedTime) updatedTime = new Date(updatedTime);
     const feeds = st.get('group.feeds') || [];
     const comments = st.get('group.comments') || [];
     const members = st.get('group.members') || [];
-    store.dispatch(action.groupSet({ inputs, selected, feeds, comments, members, loading: false }));
+    store.dispatch(action.groupSet({ inputs, selected, updatedTime, feeds, comments, members, loading: false }));
   },
 
 };
