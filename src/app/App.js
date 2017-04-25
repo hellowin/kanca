@@ -7,7 +7,7 @@ import Sidebar from 'domain/layout/component/Sidebar';
 import Aside from 'domain/layout/component/Aside';
 import Footer from 'domain/layout/component/Footer';
 import { connect } from 'react-redux';
-import Auth from 'domain/user/component/auth';
+import Auth from 'domain/user/component/Auth';
 
 const mapStateToProps = state => ({
   profile: state.user.profile,
