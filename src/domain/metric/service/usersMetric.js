@@ -4,8 +4,8 @@ import userMetricer from './userMetric';
 import type { UserMetric } from './userMetric';
 
 export type UsersMetric = {
-  totalMembers: number,
   userMetrics: UserMetric[],
+  totalMembers(): number,
   uniqueUsersPosts(): UserMetric[],
   uniqueUsersComments(): UserMetric[],
   uniqueUsersPostsLikes(): UserMetric[],
@@ -17,12 +17,11 @@ export type UsersMetric = {
 }
 
 export default (members: Member[], posts: Post[], comments: Comment[]): UsersMetric => {
-  const totalMembers = members.length;
   const userMetrics: UserMetric[] = userMetricer(members, posts, comments);
 
   return {
-    totalMembers,
     userMetrics,
+    totalMembers: () => userMetrics.length,
     uniqueUsersPosts: () => userMetrics.filter(met => met.postsCount !== 0),
     uniqueUsersComments: () => userMetrics.filter(met => met.commentsCount !== 0),
     uniqueUsersPostsLikes: () => userMetrics.filter(met => met.postsLikesCount !== 0),

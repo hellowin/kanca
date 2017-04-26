@@ -13,11 +13,11 @@ const defaultShow = [
 const calculate = (column: string, metrics: TimeRangeMetric[]): number[] => {
   switch (column) {
     case 'totalPosts':
-      return metrics.map(met => met.postsMetric.totalPosts);
+      return metrics.map(met => met.postsMetric.totalPosts());
     case 'usersPosts':
       return metrics.map(met => met.usersMetric.uniqueUsersPosts().length);
     case 'totalComments':
-      return metrics.map(met => met.postsMetric.totalComments);
+      return metrics.map(met => met.postsMetric.totalComments());
     case 'usersComments':
       return metrics.map(met => met.usersMetric.uniqueUsersComments().length);
     default:

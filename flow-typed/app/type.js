@@ -42,6 +42,8 @@ declare type Comment = {
   message: string,
   likes: List<Like>,
   comments: List<Comment>,
+  parent?: string,
+  hierarchy?: number,
 }
 
 declare type Post = {

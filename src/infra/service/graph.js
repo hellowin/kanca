@@ -124,7 +124,7 @@ const getGroupComments = (posts: Object[]): Promise<any> => {
   posts.forEach(post => {
     const comments = ((post.comments || {}).data || []).map(comment => ({
       parent: post.id,
-      order: 0,
+      hierarchy: 0,
       ...comment,
     }));
     if (comments) firstComments.push(...comments);
@@ -133,7 +133,7 @@ const getGroupComments = (posts: Object[]): Promise<any> => {
   firstComments.forEach(com => {
     const comments = ((com.comments || {}).data || []).map(comment => ({
       parent: com.id,
-      order: 1,
+      hierarchy: 1,
       ...comment,
     }));
     if (comments) secondComments.push(...comments);
