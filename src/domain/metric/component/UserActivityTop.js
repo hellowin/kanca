@@ -5,6 +5,7 @@ import type { TimeRangeMetric } from '../service/timeRangeMetric';
 
 type UserTop = {
   name: string,
+  picture: string,
   total: number,
   percent: number,
 }
@@ -44,9 +45,46 @@ class UserActivityTop extends React.Component {
         <h4 className="card-title">{title}</h4>
         <p>{subTitle}</p>
         <ul className="list-group">
-          {getUsers(metric, type).filter(user => user.total > 0).map((user, key) => 
-            (<li key={key} className="list-group-item">{user.name}: {user.total} - {user.percent ? `${user.percent}%` : ''}</li>)
-          )}
+          {getUsers(metric, type).filter(user => user.total > 0).map((user, key) => {
+            switch (key) {
+              case 0:
+                return (
+                  <li key={key} className="list-group-item">
+                    <div className="col-12">
+                      {user.picture ? <img alt="user pic" src={user.picture} className="mr-1 mb-1" style={{ float: 'left', width: '70px' }} /> : ''}
+                      <h4>{user.name}</h4>
+                      <span>Total {type} {user.total} - {user.percent ? `${user.percent}%` : ''}</span>
+                    </div>
+                  </li>
+                );
+              case 1:
+                return (
+                  <li key={key} className="list-group-item">
+                    <div className="col-12">
+                      {user.picture ? <img alt="user pic" src={user.picture} className="mr-1 mb-1" style={{ float: 'left', width: '60px' }} /> : ''}
+                      <h5>{user.name}</h5>
+                      <span>Total {type} {user.total} - {user.percent ? `${user.percent}%` : ''}</span>
+                    </div>
+                  </li>
+                );
+              case 2:
+                return (
+                  <li key={key} className="list-group-item">
+                    <div className="col-12">
+                      {user.picture ? <img alt="user pic" src={user.picture} className="mr-1 mb-1" style={{ float: 'left', width: '50px' }} /> : ''}
+                      <h6>{user.name}</h6>
+                      <span>Total {type} {user.total} - {user.percent ? `${user.percent}%` : ''}</span>
+                    </div>
+                  </li>
+                );
+              default:
+                return (
+                  <li key={key} className="list-group-item">
+                    {user.name}: {user.total} - {user.percent ? `${user.percent}%` : ''}
+                  </li>
+                );
+            }
+          })}
         </ul>
       </Card>
     );
