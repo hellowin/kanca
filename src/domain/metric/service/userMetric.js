@@ -5,6 +5,7 @@ export type UserMetric = {
   id: string,
   name: string,
   picture: string,
+  url?: string,
   posts: Post[],
   comments: Comment[],
   postsCount: number,
@@ -13,10 +14,11 @@ export type UserMetric = {
   postsLikesCount: number,
 }
 
-const userFactory = (id: string, name: string, picture: string): UserMetric => ({
+const userFactory = (id: string, name: string, picture: string, url?: string): UserMetric => ({
   id,
   name,
   picture,
+  url,
   posts: [],
   comments: [],
   postsCount: 0,
@@ -32,7 +34,8 @@ export default (members: Member[], posts: Post[], comments: Comment[]): UserMetr
     const id = member.id;
     const name = member.name;
     const picture = member.picture.data.url;
-    const user = userFactory(id, name, picture);
+    const url = member.link;
+    const user = userFactory(id, name, picture, url);
     users[id] = user;
   });
   

@@ -6,6 +6,7 @@ import type { TimeRangeMetric } from '../service/timeRangeMetric';
 type UserTop = {
   name: string,
   picture: string,
+  url?: string,
   total: number,
   percent: number,
 }
@@ -50,9 +51,9 @@ class UserActivityTop extends React.Component {
               case 0:
                 return (
                   <li key={key} className="list-group-item">
-                    <div className="col-12">
-                      {user.picture ? <img alt="user pic" src={user.picture} className="mr-1 mb-1" style={{ float: 'left', width: '70px' }} /> : ''}
-                      <h4>{user.name}</h4>
+                    <div className="col-12" style={{ margin: '0 -15px' }}>
+                      {user.picture ? <img alt="user pic" src={user.picture} className="mr-1 mb-1" style={{ float: 'left', width: '50px' }} /> : ''}
+                      <a href={user.url} target="_blank"><h4>{user.name}</h4></a>
                       <span>Total {type} {user.total} - {user.percent ? `${user.percent}%` : ''}</span>
                     </div>
                   </li>
@@ -60,9 +61,9 @@ class UserActivityTop extends React.Component {
               case 1:
                 return (
                   <li key={key} className="list-group-item">
-                    <div className="col-12">
-                      {user.picture ? <img alt="user pic" src={user.picture} className="mr-1 mb-1" style={{ float: 'left', width: '60px' }} /> : ''}
-                      <h5>{user.name}</h5>
+                    <div className="col-12" style={{ margin: '0 -15px' }}>
+                      {user.picture ? <img alt="user pic" src={user.picture} className="mr-1 mb-1" style={{ float: 'left', width: '45px' }} /> : ''}
+                      <a href={user.url} target="_blank"><h5>{user.name}</h5></a>
                       <span>Total {type} {user.total} - {user.percent ? `${user.percent}%` : ''}</span>
                     </div>
                   </li>
@@ -70,9 +71,9 @@ class UserActivityTop extends React.Component {
               case 2:
                 return (
                   <li key={key} className="list-group-item">
-                    <div className="col-12">
-                      {user.picture ? <img alt="user pic" src={user.picture} className="mr-1 mb-1" style={{ float: 'left', width: '50px' }} /> : ''}
-                      <h6>{user.name}</h6>
+                    <div className="col-12" style={{ margin: '0 -15px' }}>
+                      {user.picture ? <img alt="user pic" src={user.picture} className="mr-1 mb-1" style={{ float: 'left', width: '40px' }} /> : ''}
+                      <a href={user.url} target="_blank"><h6>{user.name}</h6></a>
                       <span>Total {type} {user.total} - {user.percent ? `${user.percent}%` : ''}</span>
                     </div>
                   </li>
@@ -80,7 +81,7 @@ class UserActivityTop extends React.Component {
               default:
                 return (
                   <li key={key} className="list-group-item">
-                    {user.name}: {user.total} - {user.percent ? `${user.percent}%` : ''}
+                    <a href={user.url} target="_blank">{user.name}</a>: {user.total} - {user.percent ? `${user.percent}%` : ''}
                   </li>
                 );
             }
