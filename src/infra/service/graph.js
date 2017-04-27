@@ -145,7 +145,7 @@ const getGroupComments = (posts: Object[]): Promise<any> => {
 };
 
 const getGroupMembers = (groupId: string, pages: number): Promise<{}[]> => {
-  const url = `/${groupId}/members?fields=id,name,administrator,picture&limit=100`;
+  const url = `/${groupId}/members?fields=id,name,administrator,picture,link&limit=100`;
   const list = new GraphList();
   return list.fetchForward(url, pages);
 };

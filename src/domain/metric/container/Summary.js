@@ -8,6 +8,7 @@ import timeRangeMetricer, { extractDateRangeFromPosts } from '../service/timeRan
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
 
 import PostSummary from '../component/PostSummary';
+import UserActivityTop from '../component/UserActivityTop';
 
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
@@ -143,51 +144,19 @@ class MetricSummary extends React.Component {
         </div>
 
         <div className="col-md-6">
-          <div className="card">
-            <div className="card-block">
-              <h4 className="card-title">Posts Count</h4>
-              <p>Top 10 user posts count.</p>
-              <ul className="list-group">
-                {metric.usersMetric.sortByPostsCount().slice(0, 10).map((user, key) => (<li key={key} className="list-group-item">{user.name}: {user.postsCount} - {((user.postsCount/metric.postsMetric.totalPosts())*100).toFixed(2)}%</li>))}
-              </ul>
-            </div>
-          </div>
+          <UserActivityTop metric={metric} type="posts" title="Posts" subTitle="Top 10 user posts count." />
         </div>
 
         <div className="col-md-6">
-          <div className="card">
-            <div className="card-block">
-              <h4 className="card-title">Comments Count</h4>
-              <p>Top 10 user comments count.</p>
-              <ul className="list-group">
-                {metric.usersMetric.sortByCommentsCount().slice(0, 10).map((user, key) => (<li key={key} className="list-group-item">{user.name}: {user.commentsCount} - {((user.commentsCount/metric.postsMetric.totalComments())*100).toFixed(2)}%</li>))}
-              </ul>
-            </div>
-          </div>
+          <UserActivityTop metric={metric} type="comments" title="Comments" subTitle="Top 10 user comments count." />
         </div>
 
         <div className="col-md-6">
-          <div className="card">
-            <div className="card-block">
-              <h4 className="card-title">Shares Count</h4>
-              <p>Top 10 user posts shares count.</p>
-              <ul className="list-group">
-                {metric.usersMetric.sortByPostsSharesCount().slice(0, 10).map((user, key) => (<li key={key} className="list-group-item">{user.name}: {user.postsSharesCount} - {((user.postsSharesCount/metric.postsMetric.totalPostsShares())*100).toFixed(2)}%</li>))}
-              </ul>
-            </div>
-          </div>
+          <UserActivityTop metric={metric} type="posts-shares" title="Posts Shares" subTitle="Top 10 number of shares received by user posts." />
         </div>
 
         <div className="col-md-6">
-          <div className="card">
-            <div className="card-block">
-              <h4 className="card-title">Likes Count</h4>
-              <p>Top 10 user posts likes count.</p>
-              <ul className="list-group">
-                {metric.usersMetric.sortByPostsLikesCount().slice(0, 10).map((user, key) => (<li key={key} className="list-group-item">{user.name}: {user.postsLikesCount} - {((user.postsLikesCount/metric.postsMetric.totalPostsLikes())*100).toFixed(2)}%</li>))}
-              </ul>
-            </div>
-          </div>
+          <UserActivityTop metric={metric} type="posts-likes" title="Posts Likes" subTitle="Top 10 number of likes received by user posts." />
         </div>
 
         <div className="col-md-12">

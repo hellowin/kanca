@@ -77,5 +77,6 @@ declare type Member = {
       url: string,
     }
   },
+  link: string,
   administrator: boolean,
 }
