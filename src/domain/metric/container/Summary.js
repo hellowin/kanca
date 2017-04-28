@@ -9,6 +9,7 @@ import type { TimeRangeMetric } from '../service/timeRangeMetric';
 
 import UserActivityTop from '../component/UserActivityTop';
 import PostActivityTop from '../component/PostActivityTop';
+import CommentActivityTop from '../component/CommentActivityTop';
 
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
@@ -169,6 +170,14 @@ class MetricSummary extends React.Component {
 
         <div className="col-md-6">
           <PostActivityTop metric={metric} type="shares" title="Posts Shares" subTitle="Top 10 most shared posts." />
+        </div>
+
+        <div className="col-md-12">
+          <h4>Comment Activity</h4>
+        </div>
+
+        <div className="col-md-6">
+          <CommentActivityTop metric={metric} type="likes" title="Comment Likes" subTitle="Top 10 most liked comments." />
         </div>
 
       </div>
