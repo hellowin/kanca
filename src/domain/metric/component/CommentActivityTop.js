@@ -1,7 +1,6 @@
 // @flow
 import React from 'react';
 import Card from 'infra/component/Card';
-import PostSummary from './PostSummary';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
 import type { CommentMetric } from '../service/commentMetric';
 
