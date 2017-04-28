@@ -10,8 +10,10 @@ export type PostsMetric = {
   totalPosts(): number,
   totalUsers(): number,
   totalComments(): number,
-  totalPostsShares(): number,
-  totalPostsLikes(): number,
+  totalShares(): number,
+  sortBySharesCount(): PostMetric[],
+  totalLikes(): number,
+  sortByLikesCount(): PostMetric[],
 }
 
 export default (posts: Post[]): PostsMetric => {
@@ -24,7 +26,9 @@ export default (posts: Post[]): PostsMetric => {
     totalPosts: () => postMetrics.length,
     totalUsers: () => new Set(postMetrics.map(post => (post.from || {}).id).filter(x => x)).size,
     totalComments: () => postMetrics.map(post => (post || {}).commentsCount).reduce((pre, cur) => pre + cur, 0),
-    totalPostsShares: () => postMetrics.map(post => (post || {}).sharesCount).reduce((pre, cur) => pre + cur, 0),
-    totalPostsLikes: () => postMetrics.map(post => (post || {}).likesCount).reduce((pre, cur) => pre + cur, 0),
+    totalShares: () => postMetrics.map(post => (post || {}).sharesCount).reduce((pre, cur) => pre + cur, 0),
+    sortBySharesCount: () => _.sortBy(postMetrics, 'sharesCount').reverse(),
+    totalLikes: () => postMetrics.map(post => (post || {}).likesCount).reduce((pre, cur) => pre + cur, 0),
+    sortByLikesCount: () => _.sortBy(postMetrics, 'likesCount').reverse(),
   };
 }
