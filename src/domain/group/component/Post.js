@@ -1,9 +1,11 @@
+// @flow
 import React from 'react';
 import moment from 'moment-timezone';
 import Comment from './Comment';
 import Pagination from 'infra/component/Pagination';
+import Card from 'infra/component/Card';
 
-const Post = props => {
+const GroupPost = (props: Post) => {
   const {
     created_time,
     message,
@@ -22,8 +24,8 @@ const Post = props => {
   const validComments = ((comments || {}).data || []);
   
   return (
-    <div className="card">
-      <div className="card-block row">
+    <Card>
+      <div className="row">
         {picture ? <div className="col-md-2"><img src={picture} className="rounded float-left" alt="Post pic" style={{ width: '100%' }} /></div> : ''}
         <div className={picture ? 'col-md-10' : 'col-md-12'}>
           <p className="card-text">{message}</p>
@@ -49,8 +51,8 @@ const Post = props => {
       <div className="card-block" style={{ textAlign: 'right' }}>
         <a href={permalink_url} target="_blank" className="btn btn-primary btn-sm">Open in FB</a>
       </div>
-    </div>
+    </Card>
   );
 }
 
-export default Post;
+export default GroupPost;

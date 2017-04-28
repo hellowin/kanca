@@ -54,6 +54,8 @@ declare type Post = {
   story?: string,
   picture?: string,
   message?: string,
+  description?: string,
+  name?: string,
   from?: {
     name: string,
     id: string,

@@ -1,3 +1,4 @@
+// @flow
 import React from 'react';
 import { Router, Route, browserHistory, Redirect, IndexRedirect } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
@@ -14,13 +15,14 @@ import GroupSelection from 'domain/group/container/Selection';
 import GroupFeed from 'domain/group/container/Feed';
 import Metric from 'domain/metric/container/Root';
 import MetricSummary from 'domain/metric/container/Summary';
+import MetricMembers from 'domain/metric/container/Members';
 import MetricTimeSeries from 'domain/metric/container/TimeSeries';
 
 const history = syncHistoryWithStore(browserHistory, store);
 
 const prefix = config.urlPrefix;
 
-const RouterComp = props => (
+const RouterComp = () => (
   <Router history={history}>
     <Route path={prefix} component={App}>
       <IndexRedirect to="welcome" />
@@ -34,6 +36,7 @@ const RouterComp = props => (
 
       <Route path="metric" component={Metric}>
         <Route path="summary" component={MetricSummary} />
+        <Route path="members" component={MetricMembers} />
         <Route path="time-series" component={MetricTimeSeries} />
       </Route>
     </Route>
