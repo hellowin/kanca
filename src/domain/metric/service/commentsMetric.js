@@ -10,6 +10,7 @@ export type CommentsMetric = {
   totalComments(): number,
   totalUsers(): number,
   totalLikes(): number,
+  sortByLikesCount(): CommentMetric[],
 }
 
 export default (comments: Comment[]): CommentsMetric => {
@@ -22,5 +23,6 @@ export default (comments: Comment[]): CommentsMetric => {
     totalComments: () => commentMetrics.length,
     totalUsers: () => new Set(commentMetrics.map(com => com.from.id)).size,
     totalLikes: () => commentMetrics.map(com => com.likesCount).reduce((pre, cur) => pre + cur, 0),
+    sortByLikesCount: () => _.sortBy(commentMetrics, 'likesCount').reverse(),
   };
 };
