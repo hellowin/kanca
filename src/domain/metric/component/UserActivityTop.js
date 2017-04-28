@@ -21,11 +21,11 @@ const getUsers = (metric: TimeRangeMetric, type: string): UserTop[] => {
         .map(user => ({ ...user, total: user.commentsCount, percent: +((user.commentsCount/metric.postsMetric.totalComments())*100).toFixed(2) }));
     case 'posts-shares':
       return metric.usersMetric.sortByPostsSharesCount().slice(0, 10)
-        .map(user => ({ ...user, total: user.postsSharesCount, percent: +((user.postsSharesCount/metric.postsMetric.totalPostsShares())*100).toFixed(2) }));
+        .map(user => ({ ...user, total: user.postsSharesCount, percent: +((user.postsSharesCount/metric.postsMetric.totalShares())*100).toFixed(2) }));
     case 'posts-likes':
     default:
       return metric.usersMetric.sortByPostsLikesCount().slice(0, 10)
-        .map(user => ({ ...user, total: user.postsLikesCount, percent: +((user.postsLikesCount/metric.postsMetric.totalPostsLikes())*100).toFixed(2) }));
+        .map(user => ({ ...user, total: user.postsLikesCount, percent: +((user.postsLikesCount/metric.postsMetric.totalLikes())*100).toFixed(2) }));
   }
 }
 

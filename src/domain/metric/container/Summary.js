@@ -7,8 +7,8 @@ import moment from 'moment-timezone';
 import timeRangeMetricer, { extractDateRangeFromPosts } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
 
-import PostSummary from '../component/PostSummary';
 import UserActivityTop from '../component/UserActivityTop';
+import PostActivityTop from '../component/PostActivityTop';
 
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
@@ -129,8 +129,8 @@ class MetricSummary extends React.Component {
             <div className="card-block">
               <p>Time range {moment(data.dateStart).format('YYYY-MM-DD HH:mm:ss')} - {moment(data.dateEnd).format('YYYY-MM-DD HH:mm:ss')}</p>
               <p>Total posts: {metric.postsMetric.totalPosts()}</p>
-              <p>Total posts shares: {metric.postsMetric.totalPostsShares()}</p>
-              <p>Total posts likes: {metric.postsMetric.totalPostsLikes()}</p>
+              <p>Total posts shares: {metric.postsMetric.totalShares()}</p>
+              <p>Total posts likes: {metric.postsMetric.totalLikes()}</p>
               <p>Total comments: {metric.commentsMetric.totalComments()}</p>
               <p>Total members: {metric.usersMetric.totalMembers()}</p>
               <p>Total unique member posting: {metric.usersMetric.uniqueUsersPosts().length}</p>
@@ -164,27 +164,11 @@ class MetricSummary extends React.Component {
         </div>
 
         <div className="col-md-6">
-          <div className="card">
-            <div className="card-block">
-              <h4 className="card-title">Shares Count</h4>
-              <p>Top 10 posts with most shares count.</p>
-              <ul className="list-group">
-                {_.sortBy(metric.postsMetric.postMetrics, 'sharesCount').reverse().slice(0, 10).map((post, key) => (<PostSummary key={key} {...post} />))}
-              </ul>
-            </div>
-          </div>
+          <PostActivityTop metric={metric} type="likes" title="Posts Likes" subTitle="Top 10 most liked posts." />
         </div>
 
         <div className="col-md-6">
-          <div className="card">
-            <div className="card-block">
-              <h4 className="card-title">Likes Count</h4>
-              <p>Top 10 posts with most likes count.</p>
-              <ul className="list-group">
-                {_.sortBy(metric.postsMetric.postMetrics, 'likesCount').reverse().slice(0, 10).map((post, key) => (<PostSummary key={key} {...post} />))}
-              </ul>
-            </div>
-          </div>
+          <PostActivityTop metric={metric} type="shares" title="Posts Shares" subTitle="Top 10 most shared posts." />
         </div>
 
       </div>

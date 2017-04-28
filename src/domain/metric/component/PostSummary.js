@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import moment from 'moment-timezone';
+import Card from 'infra/component/Card';
 import type { PostMetric } from '../service/postMetric';
 
 const Post = (props: PostMetric) => {
@@ -15,8 +16,8 @@ const Post = (props: PostMetric) => {
   } = props;
   
   return (
-    <div className="card">
-      <div className="card-block row">
+    <Card>
+      <div className="row">
         <div className='col-12'>
           <p className="card-text">{text.split(/\s+/).slice(0,10).join(" ")} ...</p>
           {from ? <span><i className="fa fa-user"></i> <b>{from.name}</b> </span> : ''}
@@ -27,7 +28,7 @@ const Post = (props: PostMetric) => {
           <a href={url} target="_blank" className="btn btn-primary btn-sm ml-1">Open in FB</a>
         </div>
       </div>
-    </div>
+    </Card>
   );
 }
 
