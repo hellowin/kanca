@@ -3,8 +3,9 @@ import React from 'react';
 import Card from 'infra/component/Card';
 import PostSummary from './PostSummary';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
+import type { PostMetric } from '../service/postMetric';
 
-type PostTop = {
+type PostTop = PostMetric & {
   total: number,
   percent: number,
 }
