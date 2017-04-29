@@ -17,6 +17,7 @@ export type PostsMetric = {
   sortByLikesCount(): PostMetric[],
   postsByDays(): { day: string, postMetrics: PostMetric[], postsMetric: PostsMetric }[],
   postsByHours(): { hour: string, trihourly: string, postMetrics: PostMetric[], postsMetric: PostsMetric }[],
+  wordCount(): { word: string, count: number }[],
 }
 
 const postsMetric = (posts: Post[]): PostsMetric => {
@@ -32,7 +33,7 @@ const postsMetric = (posts: Post[]): PostsMetric => {
       ...day,
       postsMetric: postsMetric(day.postMetrics.map(me => me.post)),
     }));
-  }
+  };
   const postsByHours = () => {
     const hours = {};
     postMetrics.forEach(met => {
@@ -48,7 +49,18 @@ const postsMetric = (posts: Post[]): PostsMetric => {
       ...hour,
       postsMetric: postsMetric(hour.postMetrics.map(me => me.post)),
     }));
-  }
+  };
+  const wordCount = () => {
+    const count: { [string]: { word: string, count: number } } = {};
+    postMetrics.forEach(pos => {
+      const words = _.words(pos.text);
+      words.forEach(word => {
+        if (!count[word]) count[word] = { word, count: 0 };
+        count[word].count += 1;
+      });
+    });
+    return _.values(count);
+  };
 
   return {
     postMetrics,
@@ -63,6 +75,7 @@ const postsMetric = (posts: Post[]): PostsMetric => {
     sortByLikesCount: () => _.sortBy(postMetrics, 'likesCount').reverse(),
     postsByDays,
     postsByHours,
+    wordCount,
   };
 }
 
