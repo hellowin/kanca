@@ -60,8 +60,8 @@ class MetricSummary extends React.Component {
 
     const forms: FormObject[] = [
       { type: FormTypes.DATE, label: 'Date start', value: data.dateStart, model: 'dateStart', col: 4 },
-      { type: FormTypes.DATE, value: data.dateStart, model: 'dateEnd', col: 4 },
-      { type: FormTypes.SELECT, value: data.granularity, model: 'granularity', col: 4, selectOptions: [
+      { type: FormTypes.DATE, label: 'Date end', value: data.dateStart, model: 'dateEnd', col: 4 },
+      { type: FormTypes.SELECT, label: 'Granularity', value: data.granularity, model: 'granularity', col: 4, selectOptions: [
         { text: 'Daily', value: 'd' },
         { text: 'Weekly', value: 'w' },
         { text: 'Monthly', value: 'M' },

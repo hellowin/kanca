@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import moment from 'moment-timezone';
 
 // Types
 export const FormTypes = {
@@ -17,24 +18,25 @@ export const ValueTypes = {
   TEXT: 'TEXT',
   NUMBER: 'NUMBER',
   BOOLEAN: 'BOOLEAN',
+  DATE: 'DATE',
 };
 
 export type ValueType = $Keys<typeof ValueTypes>
 
 export type FormObject = {
-  type: FormType,
-  label: string,
-  col: number,
-  disabled: boolean,
-  value: any,
-  model: string,
-  visible: boolean,
-  required: boolean,
+  type?: FormType,
+  label?: string,
+  col?: number,
+  disabled?: boolean,
+  value?: any,
+  model?: string,
+  visible?: boolean,
+  required?: boolean,
 
-  textareaRows: number,
+  textareaRows?: number,
 
-  selectOptions: { text: string, value: any }[],
-  selectType: ValueType,
+  selectOptions?: { text: string, value: any }[],
+  selectType?: ValueType,
 }
 
 // handler
@@ -46,6 +48,9 @@ const handleChange = (model: string, callback: Function, valLoc: ValueType = Val
       break;
     case ValueTypes.NUMBER:
       val = parseFloat(event.target.value);
+      break;
+    case ValueTypes.DATE:
+      val = new Date(event.target.value);
       break;
     case ValueTypes.TEXT:
     default:
@@ -100,8 +105,6 @@ export default class Form extends React.Component {
 
       const display = visible ? {} : { display: 'none' };
 
-      console.log(display, visible);
-
       let innerForm;
       switch (type) {
         case FormTypes.TEXT:
@@ -139,10 +142,11 @@ export default class Form extends React.Component {
           );
           break;
         case FormTypes.DATE:
+          const fixDateValue = moment(value).isValid() ? moment(value) : moment();
           innerForm = (
             <div className="form-group">
               <label className="control-label">{label}</label>
-              <input type="date" className="form-control input-sm" value={value} onChange={handleChange(model, onChange)} disabled={disabled} required={required} />
+              <input type="date" className="form-control input-sm" value={fixDateValue.format('YYYY-MM-DD')} onChange={handleChange(model, onChange, ValueTypes.DATE)} disabled={disabled} required={required} />
             </div>
           );
           break;
