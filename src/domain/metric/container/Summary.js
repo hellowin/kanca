@@ -11,6 +11,7 @@ import UserActivityTop from '../component/UserActivityTop';
 import PostActivityTop from '../component/PostActivityTop';
 import CommentActivityTop from '../component/CommentActivityTop';
 import Pie from '../component/Pie';
+import WordCloud from '../component/WordCloud';
 import Card from 'infra/component/Card';
 import Form, { FormTypes, withForm } from 'infra/component/Form';
 import type { FormObject } from 'infra/component/Form';
@@ -142,6 +143,7 @@ class MetricSummary extends React.Component {
         </div>
 
         <div className="col-md-6">
+          <WordCloud title="Word cloud" metric={metric} type="all" />
           <Pie title="Activity by day" metric={metric} type="activitiesPerDay" />
           <Pie title="Activity by 3 hourly" metric={metric} type="activitiesPerTrihours" />
         </div>

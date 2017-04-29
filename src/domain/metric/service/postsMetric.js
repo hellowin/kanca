@@ -59,7 +59,7 @@ const postsMetric = (posts: Post[]): PostsMetric => {
         count[word].count += 1;
       });
     });
-    return _.values(count);
+    return _.sortBy(_.values(count), 'count').reverse().slice(0, 500);
   };
 
   return {
