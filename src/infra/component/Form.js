@@ -91,7 +91,7 @@ export const withForm = (Component: Class<*>, setDefaultData: Function = () => {
       this.onFormChange = this.onFormChange.bind(this);
 
       this.state = {
-        data: setDefaultData(props),
+        data: setDefaultData(props, context),
       }
     }
 
