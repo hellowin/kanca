@@ -14,6 +14,7 @@ export type CommentsMetric = {
   sortByLikesCount(): CommentMetric[],
   commentsByDays(): { day: string, commentMetrics: CommentMetric[], commentsMetric: CommentsMetric }[],
   commentsByHours(): { hour: string, trihourly: string, commentMetrics: CommentMetric[], commentsMetric: CommentsMetric }[],
+  wordCount(): { word: string, count: number }[],
 }
 
 const commentsMetric = (comments: Comment[]): CommentsMetric => {
@@ -29,7 +30,7 @@ const commentsMetric = (comments: Comment[]): CommentsMetric => {
       ...day,
       commentsMetric: commentsMetric(day.commentMetrics.map(me => me.comment)),
     }));
-  }
+  };
   const commentsByHours = () => {
     const hours = {};
     commentMetrics.forEach(met => {
@@ -45,7 +46,18 @@ const commentsMetric = (comments: Comment[]): CommentsMetric => {
       ...hour,
       commentsMetric: commentsMetric(hour.commentMetrics.map(me => me.comment)),
     }));
-  }
+  };
+  const wordCount = () => {
+    const count: { [string]: { word: string, count: number } } = {};
+    commentMetrics.forEach(pos => {
+      const words = _.words(pos.text);
+      words.forEach(word => {
+        if (!count[word]) count[word] = { word, count: 0 };
+        count[word].count += 1;
+      });
+    });
+    return _.sortBy(_.values(count), 'count').reverse().slice(0, 500);
+  };
 
   return {
     commentMetrics,
@@ -57,6 +69,7 @@ const commentsMetric = (comments: Comment[]): CommentsMetric => {
     sortByLikesCount: () => _.sortBy(commentMetrics, 'likesCount').reverse(),
     commentsByDays,
     commentsByHours,
+    wordCount,
   };
 };
 
