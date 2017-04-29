@@ -16,6 +16,7 @@ import GroupFeed from 'domain/group/container/Feed';
 import Metric from 'domain/metric/container/Root';
 import MetricSummary from 'domain/metric/container/Summary';
 import MetricPosts from 'domain/metric/container/Posts';
+import MetricComments from 'domain/metric/container/Comments';
 import MetricMembers from 'domain/metric/container/Members';
 import MetricTimeSeries from 'domain/metric/container/TimeSeries';
 
@@ -39,6 +40,7 @@ const RouterComp = () => (
         <Route path="summary" component={MetricSummary} />
         <Route path="members" component={MetricMembers} />
         <Route path="posts" component={MetricPosts} />
+        <Route path="comments" component={MetricComments} />
         <Route path="time-series" component={MetricTimeSeries} />
       </Route>
     </Route>
