@@ -15,7 +15,7 @@ const mapStateToProps = state => ({
   comments: state.group.comments,
 });
 
-const GroupMembers = props => {
+const MembersMetricPage = props => {
   const { loading, members, posts, comments } = props;
 
   const metric = usersMetricer(members, posts, comments);
@@ -34,4 +34,4 @@ const GroupMembers = props => {
   ) : <Loading />;
 };
 
-export default connect(mapStateToProps)(GroupMembers);
+export default connect(mapStateToProps)(MembersMetricPage);
