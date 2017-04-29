@@ -54,6 +54,22 @@ const handleChange = (model: string, callback: Function, valLoc: ValueType = Val
   if (callback) callback(model, val);
 };
 
+const defaultForm = {
+  type: FormTypes.TEXT,
+  label: '',
+  col: 12,
+  disabled: false,
+  value: '',
+  model: '',
+  visible: true,
+  required: false,
+
+  textareaRows: 3,
+
+  selectOptions: [],
+  selectType: ValueTypes.TEXT,
+}
+
 export default class Form extends React.Component {
 
   props: {
@@ -61,28 +77,12 @@ export default class Form extends React.Component {
     onChange: Function,
   }
 
-  static defaultProps = {
-    type: FormTypes.TEXT,
-    label: '',
-    col: 12,
-    disabled: false,
-    value: '',
-    model: '',
-    visible: true,
-    required: false,
-
-    textareaRows: 3,
-
-    selectOptions: [],
-    selectType: ValueTypes.TEXT,
-  }
-
   render() {
     const { forms, onChange } = this.props;
 
     if (forms === undefined) return (<div></div>);
 
-    const elements = forms.map((form: FormObject, formId: number) => {
+    const elements = forms.map((rawForm: FormObject, formId: number) => {
       const {
         type,
         label,
@@ -96,9 +96,11 @@ export default class Form extends React.Component {
         textareaRows,
         selectOptions,
         selectType,
-      } = form;
+      } = { ...defaultForm, ...rawForm };
 
       const display = visible ? {} : { display: 'none' };
+
+      console.log(display, visible);
 
       let innerForm;
       switch (type) {
