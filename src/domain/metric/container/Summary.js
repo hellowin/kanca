@@ -180,6 +180,12 @@ class MetricSummary extends React.Component {
           <CommentActivityTop metric={metric} type="likes" title="Comment Likes" subTitle="Top 10 most liked comments." />
         </div>
 
+        <div className="col-md-6">
+          <pre>
+            {JSON.stringify(metric.postsMetric.postsByDays().map(day => ({ day: day.day, count: day.postsMetric.totalPosts() })), null, 2)}
+          </pre>
+        </div>
+
       </div>
     );
   }
