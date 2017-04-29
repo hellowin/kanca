@@ -75,6 +75,33 @@ const defaultForm = {
   selectType: ValueTypes.TEXT,
 }
 
+// Form higher order component (HOC)
+export const withForm = (Component: Class<*>, setDefaultData: Function = () => {}) =>
+  class WithForm extends Component {
+
+    onFormChange: Function
+
+    state: {
+      data: Object,
+    }
+
+    constructor(props: Object, context: Object) {
+      super(props, context);
+
+      this.onFormChange = this.onFormChange.bind(this);
+
+      this.state = {
+        data: setDefaultData(props),
+      }
+    }
+
+    onFormChange(key: string, value: any) {
+      const { data } = this.state;
+      data[key] = value;
+      this.setState({ data });
+    }
+  };
+
 export default class Form extends React.Component {
 
   props: {

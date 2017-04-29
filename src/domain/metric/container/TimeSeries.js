@@ -8,7 +8,7 @@ import { extractDateRangeFromPosts, timeSeriesMetric as timeSeriesMetricer } fro
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
 
 import PostsTimeSeries from '../component/PostsTimeSeries';
-import Form, { FormTypes } from 'infra/component/Form';
+import Form, { FormTypes, withForm } from 'infra/component/Form';
 import type { FormObject } from 'infra/component/Form';
 
 const mapStateToProps = state => ({
@@ -31,30 +31,14 @@ const setDefaultData = props => {
 
 class MetricSummary extends React.Component {
 
+  onFormChange: Function
+
   state: {
     data: {
       dateStart: Date,
       dateEnd: Date,
       granularity: string,
     },
-  }
-
-  onFormChange: Function
-
-  constructor(props) {
-    super(props);
-
-    this.onFormChange = this.onFormChange.bind(this);
-
-    this.state = {
-      data: setDefaultData(props),
-    }
-  }
-
-  onFormChange(key, value) {
-    const { data } = this.state;
-    data[key] = value;
-    this.setState({ data });
   }
 
   render() {
@@ -116,4 +100,4 @@ class MetricSummary extends React.Component {
 
 }
 
-export default connect(mapStateToProps)(MetricSummary);
+export default connect(mapStateToProps)(withForm(MetricSummary, setDefaultData));
