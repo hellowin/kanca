@@ -11,7 +11,7 @@ import usersMetricer from '../service/usersMetric';
 const mapStateToProps = state => ({
   loading: state.group.loading,
   members: state.group.members,
-  posts: state.group.feed,
+  posts: state.group.feeds,
   comments: state.group.comments,
 });
 
