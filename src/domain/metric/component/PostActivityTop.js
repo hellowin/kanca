@@ -22,7 +22,7 @@ const getPosts = (metric: TimeRangeMetric, type: string): PostTop[] => {
   }
 }
 
-class UserActivityTop extends React.Component {
+class PostActivityTop extends React.Component {
 
   props: {
     metric: TimeRangeMetric,
@@ -41,7 +41,7 @@ class UserActivityTop extends React.Component {
         <ul className="list-group">
           {getPosts(metric, type).filter(post => post.total > 0).map((post, key) => {
             // use same style for now
-            return <PostSummary {...post} />;
+            return <PostSummary key={key} {...post} />;
           })}
         </ul>
       </Card>
@@ -49,4 +49,4 @@ class UserActivityTop extends React.Component {
   }
 }
 
-export default UserActivityTop;
+export default PostActivityTop;
