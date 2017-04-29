@@ -1,6 +1,7 @@
 // @flow
 import postMetric from './postMetric';
 import _ from 'lodash';
+import moment from 'moment-timezone';
 import type { PostMetric } from './postMetric';
 
 export type PostsMetric = {
@@ -14,10 +15,40 @@ export type PostsMetric = {
   sortBySharesCount(): PostMetric[],
   totalLikes(): number,
   sortByLikesCount(): PostMetric[],
+  postsByDays(): { day: string, postMetrics: PostMetric[], postsMetric: PostsMetric }[],
+  postsByHours(): { hour: string, trihourly: string, postMetrics: PostMetric[], postsMetric: PostsMetric }[],
 }
 
-export default (posts: Post[]): PostsMetric => {
+const postsMetric = (posts: Post[]): PostsMetric => {
   const postMetrics = postMetric(posts);
+  const postsByDays = () => {
+    const days = {};
+    postMetrics.forEach(met => {
+      const day = moment(met.createdTime).format('dddd');
+      if (!days[day]) days[day] = { day, postMetrics: [] };
+      days[day].postMetrics.push(met);
+    });
+    return _.values(days).map(day => ({
+      ...day,
+      postsMetric: postsMetric(day.postMetrics.map(me => me.post)),
+    }));
+  }
+  const postsByHours = () => {
+    const hours = {};
+    postMetrics.forEach(met => {
+      const hour = moment(met.createdTime).format('HH');
+      let trihourly = Math.ceil(parseInt(hour, 10)/3) + '';
+      // handle 00:00 AM
+      if (trihourly === '0') trihourly = '1';
+
+      if (!hours[hour]) hours[hour] = { hour, trihourly, postMetrics: [] };
+      hours[hour].postMetrics.push(met);
+    });
+    return _.values(hours).map(hour => ({
+      ...hour,
+      postsMetric: postsMetric(hour.postMetrics.map(me => me.post)),
+    }));
+  }
 
   return {
     postMetrics,
@@ -30,5 +61,9 @@ export default (posts: Post[]): PostsMetric => {
     sortBySharesCount: () => _.sortBy(postMetrics, 'sharesCount').reverse(),
     totalLikes: () => postMetrics.map(post => (post || {}).likesCount).reduce((pre, cur) => pre + cur, 0),
     sortByLikesCount: () => _.sortBy(postMetrics, 'likesCount').reverse(),
+    postsByDays,
+    postsByHours,
   };
 }
+
+export default postsMetric;

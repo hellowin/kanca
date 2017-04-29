@@ -1,6 +1,7 @@
 // @flow
 
 export type PostMetric = {
+  post: Post,
   id: string,
   createdTime: Date,
   text: string,
@@ -27,6 +28,7 @@ export default (posts: Post[]): PostMetric[] => {
     const text = post.message || post.story || post.message || '';
     
     return {
+      post,
       id: post.id,
       createdTime: new Date(post.created_time),
       text,

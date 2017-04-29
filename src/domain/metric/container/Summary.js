@@ -10,6 +10,7 @@ import type { TimeRangeMetric } from '../service/timeRangeMetric';
 import UserActivityTop from '../component/UserActivityTop';
 import PostActivityTop from '../component/PostActivityTop';
 import CommentActivityTop from '../component/CommentActivityTop';
+import PostsPie from '../component/PostsPie';
 import Card from 'infra/component/Card';
 import Form, { FormTypes, withForm } from 'infra/component/Form';
 import type { FormObject } from 'infra/component/Form';
@@ -170,6 +171,12 @@ class MetricSummary extends React.Component {
 
         <div className="col-md-6">
           <PostActivityTop metric={metric} type="shares" title="Posts Shares" subTitle="Top 10 most shared posts." />
+        </div>
+
+        <div className="col-md-6">
+          <PostsPie title="Posts by days" metric={metric} type="postsPerDay" />
+          <PostsPie title="Posts by hours" metric={metric} type="postsPerHours" />
+          <PostsPie title="Posts by 3 hours" metric={metric} type="postsPerTrihours" />
         </div>
 
         <div className="col-md-12">
