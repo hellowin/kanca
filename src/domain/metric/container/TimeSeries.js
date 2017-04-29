@@ -17,6 +17,18 @@ const mapStateToProps = state => ({
   comments: state.group.comments,
 });
 
+const setDefaultData = props => {
+  const { feeds } = props;
+  const { dateEnd } = extractDateRangeFromPosts(feeds, 'd');
+  const dateStart = moment(dateEnd).add(-1, 'month').toDate();
+
+  return {
+    dateStart,
+    dateEnd,
+    granularity: 'd',
+  };
+}
+
 class MetricSummary extends React.Component {
 
   state: {
@@ -34,16 +46,8 @@ class MetricSummary extends React.Component {
 
     this.onFormChange = this.onFormChange.bind(this);
 
-    const { feeds } = props;
-    const { dateEnd } = extractDateRangeFromPosts(feeds, 'd');
-    const dateStart = moment(dateEnd).add(-1, 'month').toDate();
-
     this.state = {
-      data: {
-        dateStart,
-        dateEnd,
-        granularity: 'd',
-      },
+      data: setDefaultData(props),
     }
   }
 
