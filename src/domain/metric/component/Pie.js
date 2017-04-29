@@ -6,6 +6,31 @@ import Card from 'infra/component/Card';
 
 import type { TimeRangeMetric } from '../service/timeRangeMetric'
 
+const trihourlyRename = (arr) => {
+  return arr.map(tri => {
+    switch (tri.key) {
+      case '1':
+        return { key: '00:00-03:00', value: tri.value };
+      case '2':
+        return { key: '03:00-06:00', value: tri.value };
+      case '3':
+        return { key: '06:00-09:00', value: tri.value };
+      case '4':
+        return { key: '09:00-12:00', value: tri.value };
+      case '5':
+        return { key: '12:00-15:00', value: tri.value };
+      case '6':
+        return { key: '15:00-18:00', value: tri.value };
+      case '7':
+        return { key: '18:00-21:00', value: tri.value };
+      case '8':
+        return { key: '21:00-00:00', value: tri.value };
+      default:
+        return { key: 'error', value: tri.value };
+    }
+  });
+}
+
 const calculate = (type: string, metric: TimeRangeMetric): { key: string, value: number }[] => {
   switch (type) {
     case 'postsPerDay':
@@ -19,28 +44,7 @@ const calculate = (type: string, metric: TimeRangeMetric): { key: string, value:
           if (!postTrihourly[det.key]) postTrihourly[det.key] = { key: det.key, value: 0 };
           postTrihourly[det.key].value += det.value;
         });
-      return _.values(postTrihourly).map(tri => {
-        switch (tri.key) {
-          case '1':
-            return { key: '00:00-03:00', value: tri.value };
-          case '2':
-            return { key: '03:00-06:00', value: tri.value };
-          case '3':
-            return { key: '06:00-09:00', value: tri.value };
-          case '4':
-            return { key: '09:00-12:00', value: tri.value };
-          case '5':
-            return { key: '12:00-15:00', value: tri.value };
-          case '6':
-            return { key: '15:00-18:00', value: tri.value };
-          case '7':
-            return { key: '18:00-21:00', value: tri.value };
-          case '8':
-            return { key: '21:00-00:00', value: tri.value };
-          default:
-            return { key: 'error', value: tri.value };
-        }
-      });
+      return trihourlyRename(_.values(postTrihourly));
     case 'commentsPerDay':
       return metric.commentsMetric.commentsByDays().map(pos => ({ key: pos.day, value: pos.commentsMetric.totalComments() }));
     case 'commentsPerHours':
@@ -52,28 +56,7 @@ const calculate = (type: string, metric: TimeRangeMetric): { key: string, value:
           if (!commentTrihourly[det.key]) commentTrihourly[det.key] = { key: det.key, value: 0 };
           commentTrihourly[det.key].value += det.value;
         });
-      return _.values(commentTrihourly).map(tri => {
-        switch (tri.key) {
-          case '1':
-            return { key: '00:00-03:00', value: tri.value };
-          case '2':
-            return { key: '03:00-06:00', value: tri.value };
-          case '3':
-            return { key: '06:00-09:00', value: tri.value };
-          case '4':
-            return { key: '09:00-12:00', value: tri.value };
-          case '5':
-            return { key: '12:00-15:00', value: tri.value };
-          case '6':
-            return { key: '15:00-18:00', value: tri.value };
-          case '7':
-            return { key: '18:00-21:00', value: tri.value };
-          case '8':
-            return { key: '21:00-00:00', value: tri.value };
-          default:
-            return { key: 'error', value: tri.value };
-        }
-      });
+      return trihourlyRename(_.values(commentTrihourly));
     case 'activitiesPerDay':
       const commentActs: { key: string, value: number }[] = metric.commentsMetric.commentsByDays().map(pos => ({ key: pos.day, value: pos.commentsMetric.totalComments() }));
       const postActs: { key: string, value: number }[] = metric.postsMetric.postsByDays().map(pos => ({ key: pos.day, value: pos.postsMetric.totalComments() }));
@@ -83,6 +66,19 @@ const calculate = (type: string, metric: TimeRangeMetric): { key: string, value:
         acts[act.key].value += act.value;
       });
       return _.values(acts);
+    case 'activitiesPerTrihours':
+      const actTrihourly: { [string]: { key: string, value: number } } = {};
+      metric.postsMetric.postsByHours().map(pos => ({ key: pos.trihourly, value: pos.postsMetric.totalPosts() }))
+        .forEach(det => {
+          if (!actTrihourly[det.key]) actTrihourly[det.key] = { key: det.key, value: 0 };
+          actTrihourly[det.key].value += det.value;
+        });
+      metric.commentsMetric.commentsByHours().map(pos => ({ key: pos.trihourly, value: pos.commentsMetric.totalComments() }))
+        .forEach(det => {
+          if (!actTrihourly[det.key]) actTrihourly[det.key] = { key: det.key, value: 0 };
+          actTrihourly[det.key].value += det.value;
+        });
+      return trihourlyRename(_.values(actTrihourly));
     default:
       return [];
   }
@@ -93,7 +89,7 @@ class PostsPie extends React.Component {
   props: {
     title: string,
     metric: TimeRangeMetric,
-    type: 'activitiesPerDay' | 'postsPerDay' | 'postsPerHours' | 'postsPerTrihours' | 'commentsPerDay' | 'commentsPerHours' | 'commentsPerTrihours',
+    type: 'activitiesPerDay' | 'activitiesPerTrihours' | 'postsPerDay' | 'postsPerHours' | 'postsPerTrihours' | 'commentsPerDay' | 'commentsPerHours' | 'commentsPerTrihours',
   }
 
   render() {
