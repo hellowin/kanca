@@ -141,6 +141,11 @@ class MetricSummary extends React.Component {
           </div>
         </div>
 
+        <div className="col-md-6">
+          <Pie title="Activity by day" metric={metric} type="activitiesPerDay" />
+          <Pie title="Activity by 3 hourly" metric={metric} type="activitiesPerTrihours" />
+        </div>
+
         <div className="col-md-12">
           <h4>User Activity</h4>
         </div>
@@ -174,8 +179,8 @@ class MetricSummary extends React.Component {
         </div>
 
         <div className="col-md-6">
-          <Pie title="Posts by days" metric={metric} type="postsPerDay" />
-          <Pie title="Posts by hours" metric={metric} type="postsPerHours" />
+          <Pie title="Posts by day" metric={metric} type="postsPerDay" />
+          <Pie title="Posts by hour" metric={metric} type="postsPerHours" />
           <Pie title="Posts by 3 hours" metric={metric} type="postsPerTrihours" />
         </div>
 
@@ -188,8 +193,8 @@ class MetricSummary extends React.Component {
         </div>
 
         <div className="col-md-6">
-          <Pie title="Comments by days" metric={metric} type="commentsPerDay" />
-          <Pie title="Comments by hours" metric={metric} type="commentsPerHours" />
+          <Pie title="Comments by day" metric={metric} type="commentsPerDay" />
+          <Pie title="Comments by hour" metric={metric} type="commentsPerHours" />
           <Pie title="Comments by 3 hours" metric={metric} type="commentsPerTrihours" />
         </div>
 
