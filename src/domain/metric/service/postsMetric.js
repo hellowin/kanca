@@ -16,7 +16,7 @@ export type PostsMetric = {
   totalLikes(): number,
   sortByLikesCount(): PostMetric[],
   postsByDays(): { day: string, postMetrics: PostMetric[], postsMetric: PostsMetric }[],
-  postsByHours(): { day: string, postMetrics: PostMetric[], postsMetric: PostsMetric }[],
+  postsByHours(): { hour: string, trihourly: string, postMetrics: PostMetric[], postsMetric: PostsMetric }[],
 }
 
 const postsMetric = (posts: Post[]): PostsMetric => {
@@ -37,7 +37,11 @@ const postsMetric = (posts: Post[]): PostsMetric => {
     const hours = {};
     postMetrics.forEach(met => {
       const hour = moment(met.createdTime).format('HH');
-      if (!hours[hour]) hours[hour] = { hour, postMetrics: [] };
+      let trihourly = Math.ceil(parseInt(hour, 10)/3) + '';
+      // handle 00:00 AM
+      if (trihourly === '0') trihourly = '1';
+
+      if (!hours[hour]) hours[hour] = { hour, trihourly, postMetrics: [] };
       hours[hour].postMetrics.push(met);
     });
     return _.values(hours).map(hour => ({
