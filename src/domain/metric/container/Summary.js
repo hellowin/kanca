@@ -10,12 +10,25 @@ import type { TimeRangeMetric } from '../service/timeRangeMetric';
 import UserActivityTop from '../component/UserActivityTop';
 import PostActivityTop from '../component/PostActivityTop';
 import CommentActivityTop from '../component/CommentActivityTop';
+import Card from 'infra/component/Card';
+import Form, { FormTypes, withForm } from 'infra/component/Form';
+import type { FormObject } from 'infra/component/Form';
 
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
   members: state.group.members,
   comments: state.group.comments,
 });
+
+const setDefaultData = props => {
+  const { feeds } = props;
+    const { dateStart, dateEnd } = extractDateRangeFromPosts(feeds, 'd');
+
+    return {
+      dateStart,
+      dateEnd,
+    };
+}
 
 class MetricSummary extends React.Component {
 
@@ -32,28 +45,7 @@ class MetricSummary extends React.Component {
   constructor(props) {
     super(props);
 
-    this.onFormChange = this.onFormChange.bind(this);
     this.autoPickDate = this.autoPickDate.bind(this);
-
-    const { feeds } = props;
-    const { dateStart, dateEnd } = extractDateRangeFromPosts(feeds, 'd');
-
-    this.state = {
-      data: {
-        dateStart,
-        dateEnd,
-      },
-    }
-  }
-
-  onFormChange(key) {
-    return e => {
-      const { data } = this.state;
-      let value = e.target.value;
-      if (key === 'dateStart' || key === 'dateEnd') value = new Date(value);
-      data[key] = value;
-      this.setState({ data });
-    }
   }
 
   autoPickDate(name: string) {
@@ -88,7 +80,9 @@ class MetricSummary extends React.Component {
             dateEnd: moment().add(-1, 'M').endOf('M').toDate(),
           };
           break;
+        case 'totalTime':
         default:
+          date = extractDateRangeFromPosts(feeds, 'd');
       }
       
       data.dateStart = date.dateStart;
@@ -101,24 +95,30 @@ class MetricSummary extends React.Component {
     const { feeds, members, comments } = this.props;
     const { data } = this.state;
     const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, feeds, members, comments);
+    
+    const forms: FormObject[] = [
+      { type: FormTypes.DATE, label: 'Date start', value: data.dateStart, model: 'dateStart', col: 6 },
+      { type: FormTypes.DATE, label: 'Date end', value: data.dateEnd, model: 'dateEnd', col: 6 },
+    ];
 
     return (
       <div className="row">
 
         <div className="col-md-12">
-          <div className="card">
-            <div className="card-block">
-              <form className="form-inline">
-                <label className="col-form-label mr-1">Date range</label>
-                <input className="form-control mr-1" type="date" value={moment(data.dateStart).format('YYYY-MM-DD')} onChange={this.onFormChange('dateStart')} />
-                <input className="form-control mr-1" type="date" value={moment(data.dateEnd).format('YYYY-MM-DD')} onChange={this.onFormChange('dateEnd')} />
-                <button className="btn btn-primary mr-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('thisWeek')}>This Week</button>
-                <button className="btn btn-primary mr-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('lastWeek')}>Last Week</button>
-                <button className="btn btn-primary mr-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('thisMonth')}>This Month</button>
-                <button className="btn btn-primary mr-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('lastMonth')}>Last Month</button>
-              </form>
+          <Card>
+            <div className="row">
+              <div className="col-md-6">
+                <Form forms={forms} onChange={this.onFormChange} />
+              </div>
+              <div className="col-md-6">
+                <button className="btn btn-primary mr-1 mb-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('thisWeek')}>This Week</button>
+                <button className="btn btn-primary mr-1 mb-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('lastWeek')}>Last Week</button>
+                <button className="btn btn-primary mr-1 mb-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('thisMonth')}>This Month</button>
+                <button className="btn btn-primary mr-1 mb-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('lastMonth')}>Last Month</button>
+                <button className="btn btn-primary mr-1 mb-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('totalTime')}>Total Time</button>
+              </div>
             </div>
-          </div>
+          </Card>
         </div>
 
         <div className="col-md-12">
@@ -186,4 +186,4 @@ class MetricSummary extends React.Component {
 
 }
 
-export default connect(mapStateToProps)(MetricSummary);
+export default connect(mapStateToProps)(withForm(MetricSummary, setDefaultData));

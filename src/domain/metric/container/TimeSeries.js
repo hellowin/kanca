@@ -8,6 +8,8 @@ import { extractDateRangeFromPosts, timeSeriesMetric as timeSeriesMetricer } fro
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
 
 import PostsTimeSeries from '../component/PostsTimeSeries';
+import Form, { FormTypes, withForm } from 'infra/component/Form';
+import type { FormObject } from 'infra/component/Form';
 
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
@@ -15,7 +17,21 @@ const mapStateToProps = state => ({
   comments: state.group.comments,
 });
 
+const setDefaultData = props => {
+  const { feeds } = props;
+  const { dateEnd } = extractDateRangeFromPosts(feeds, 'd');
+  const dateStart = moment(dateEnd).add(-1, 'month').toDate();
+
+  return {
+    dateStart,
+    dateEnd,
+    granularity: 'd',
+  };
+}
+
 class MetricSummary extends React.Component {
+
+  onFormChange: Function
 
   state: {
     data: {
@@ -25,40 +41,21 @@ class MetricSummary extends React.Component {
     },
   }
 
-  onFormChange: Function
-
-  constructor(props) {
-    super(props);
-
-    this.onFormChange = this.onFormChange.bind(this);
-
-    const { feeds } = props;
-    const { dateEnd } = extractDateRangeFromPosts(feeds, 'd');
-    const dateStart = moment(dateEnd).add(-1, 'month').toDate();
-
-    this.state = {
-      data: {
-        dateStart,
-        dateEnd,
-        granularity: 'd',
-      },
-    }
-  }
-
-  onFormChange(key) {
-    return e => {
-      const { data } = this.state;
-      let value = e.target.value;
-      if (key === 'dateStart' || key === 'dateEnd') value = new Date(value);
-      data[key] = value;
-      this.setState({ data });
-    }
-  }
-
   render() {
     const { feeds, members, comments } = this.props;
     const { data } = this.state;
     const metrics: TimeRangeMetric[] = timeSeriesMetricer(data.dateStart, data.dateEnd, data.granularity, feeds, members, comments);
+
+    const forms: FormObject[] = [
+      { type: FormTypes.DATE, label: 'Date start', value: data.dateStart, model: 'dateStart', col: 4 },
+      { type: FormTypes.DATE, label: 'Date end', value: data.dateStart, model: 'dateEnd', col: 4 },
+      { type: FormTypes.SELECT, label: 'Granularity', value: data.granularity, model: 'granularity', col: 4, selectOptions: [
+        { text: 'Daily', value: 'd' },
+        { text: 'Weekly', value: 'w' },
+        { text: 'Monthly', value: 'M' },
+        { text: 'Annually', value: 'y' },
+      ] },
+    ];
 
     return (
       <div className="row">
@@ -66,17 +63,7 @@ class MetricSummary extends React.Component {
         <div className="col-md-12">
           <div className="card">
             <div className="card-block">
-              <form className="form-inline">
-                <label className="col-form-label mr-1">Date range</label>
-                <input className="form-control mr-1" type="date" value={moment(data.dateStart).format('YYYY-MM-DD')} onChange={this.onFormChange('dateStart')} />
-                <input className="form-control mr-1" type="date" value={moment(data.dateEnd).format('YYYY-MM-DD')} onChange={this.onFormChange('dateEnd')} />
-                <select className="form-control mr-1" onChange={this.onFormChange('granularity')} selected={data.granularity}>
-                  <option value="d">Daily</option>
-                  <option value="w">Weekly</option>
-                  <option value="M">Monthly</option>
-                  <option value="y">Annually</option>
-                </select>
-              </form>
+              <Form forms={forms} onChange={this.onFormChange} />
             </div>
           </div>
         </div>
@@ -113,4 +100,4 @@ class MetricSummary extends React.Component {
 
 }
 
-export default connect(mapStateToProps)(MetricSummary);
+export default connect(mapStateToProps)(withForm(MetricSummary, setDefaultData));
