@@ -1,22 +1,7 @@
 // @flow
 import React from 'react';
 
-const handleChange = (model: string, callback: Function, valLoc: ValueType = ValueTypes.TEXT) => event => {
-  let val;
-  switch (valLoc) {
-    case ValueTypes.BOOLEAN:
-      val = event.target.checked;
-      break;
-    case ValueTypes.NUMBER:
-      val = parseFloat(event.target.value);
-      break;
-    case ValueTypes.TEXT:
-    default:
-      val = event.target.value;
-  }
-  if (callback) callback(model, val);
-};
-
+// Types
 export const FormTypes = {
   TEXT: 'TEXT',
   NUMBER: 'NUMBER',
@@ -51,6 +36,23 @@ export type FormObject = {
   selectOptions: { text: string, value: any }[],
   selectType: ValueType,
 }
+
+// handler
+const handleChange = (model: string, callback: Function, valLoc: ValueType = ValueTypes.TEXT) => event => {
+  let val;
+  switch (valLoc) {
+    case ValueTypes.BOOLEAN:
+      val = event.target.checked;
+      break;
+    case ValueTypes.NUMBER:
+      val = parseFloat(event.target.value);
+      break;
+    case ValueTypes.TEXT:
+    default:
+      val = event.target.value;
+  }
+  if (callback) callback(model, val);
+};
 
 export default class Form extends React.Component {
 
