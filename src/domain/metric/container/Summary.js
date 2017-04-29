@@ -10,7 +10,7 @@ import type { TimeRangeMetric } from '../service/timeRangeMetric';
 import UserActivityTop from '../component/UserActivityTop';
 import PostActivityTop from '../component/PostActivityTop';
 import CommentActivityTop from '../component/CommentActivityTop';
-import PostsPie from '../component/PostsPie';
+import Pie from '../component/Pie';
 import Card from 'infra/component/Card';
 import Form, { FormTypes, withForm } from 'infra/component/Form';
 import type { FormObject } from 'infra/component/Form';
@@ -174,9 +174,9 @@ class MetricSummary extends React.Component {
         </div>
 
         <div className="col-md-6">
-          <PostsPie title="Posts by days" metric={metric} type="postsPerDay" />
-          <PostsPie title="Posts by hours" metric={metric} type="postsPerHours" />
-          <PostsPie title="Posts by 3 hours" metric={metric} type="postsPerTrihours" />
+          <Pie title="Posts by days" metric={metric} type="postsPerDay" />
+          <Pie title="Posts by hours" metric={metric} type="postsPerHours" />
+          <Pie title="Posts by 3 hours" metric={metric} type="postsPerTrihours" />
         </div>
 
         <div className="col-md-12">
@@ -185,6 +185,12 @@ class MetricSummary extends React.Component {
 
         <div className="col-md-6">
           <CommentActivityTop metric={metric} type="likes" title="Comment Likes" subTitle="Top 10 most liked comments." />
+        </div>
+
+        <div className="col-md-6">
+          <Pie title="Comments by days" metric={metric} type="commentsPerDay" />
+          <Pie title="Comments by hours" metric={metric} type="commentsPerHours" />
+          <Pie title="Comments by 3 hours" metric={metric} type="commentsPerTrihours" />
         </div>
 
       </div>
