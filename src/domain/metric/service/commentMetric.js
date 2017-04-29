@@ -1,6 +1,7 @@
 // @flow
 
 export type CommentMetric = {
+  comment: Comment,
   id: string,
   createdTime: Date,
   text: string,
@@ -16,6 +17,7 @@ export type CommentMetric = {
 export default (comments: Comment[]): CommentMetric[] => {
   return comments.map((comment: Comment): CommentMetric => {
     return {
+      comment,
       id: comment.id,
       parent: comment.parent,
       createdTime: new Date(comment.created_time),

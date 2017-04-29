@@ -1,6 +1,7 @@
 // @flow
 import commentMetric from './commentMetric';
 import _ from 'lodash';
+import moment from 'moment-timezone';
 import type { CommentMetric } from './commentMetric';
 
 export type CommentsMetric = {
@@ -11,10 +12,40 @@ export type CommentsMetric = {
   totalUsers(): number,
   totalLikes(): number,
   sortByLikesCount(): CommentMetric[],
+  commentsByDays(): { day: string, commentMetrics: CommentMetric[], commentsMetric: CommentsMetric }[],
+  commentsByHours(): { hour: string, trihourly: string, commentMetrics: CommentMetric[], commentsMetric: CommentsMetric }[],
 }
 
-export default (comments: Comment[]): CommentsMetric => {
+const commentsMetric = (comments: Comment[]): CommentsMetric => {
   const commentMetrics: CommentMetric[] = commentMetric(comments);
+  const commentsByDays = () => {
+    const days = {};
+    commentMetrics.forEach(met => {
+      const day = moment(met.createdTime).format('dddd');
+      if (!days[day]) days[day] = { day, commentMetrics: [] };
+      days[day].commentMetrics.push(met);
+    });
+    return _.values(days).map(day => ({
+      ...day,
+      commentsMetric: commentsMetric(day.commentMetrics.map(me => me.comment)),
+    }));
+  }
+  const commentsByHours = () => {
+    const hours = {};
+    commentMetrics.forEach(met => {
+      const hour = moment(met.createdTime).format('HH');
+      let trihourly = Math.ceil(parseInt(hour, 10)/3) + '';
+      // handle 00:00 AM
+      if (trihourly === '0') trihourly = '1';
+
+      if (!hours[hour]) hours[hour] = { hour, trihourly, commentMetrics: [] };
+      hours[hour].commentMetrics.push(met);
+    });
+    return _.values(hours).map(hour => ({
+      ...hour,
+      commentsMetric: commentsMetric(hour.commentMetrics.map(me => me.comment)),
+    }));
+  }
 
   return {
     commentMetrics,
@@ -24,5 +55,9 @@ export default (comments: Comment[]): CommentsMetric => {
     totalUsers: () => new Set(commentMetrics.map(com => com.from.id)).size,
     totalLikes: () => commentMetrics.map(com => com.likesCount).reduce((pre, cur) => pre + cur, 0),
     sortByLikesCount: () => _.sortBy(commentMetrics, 'likesCount').reverse(),
+    commentsByDays,
+    commentsByHours,
   };
 };
+
+export default commentsMetric;
