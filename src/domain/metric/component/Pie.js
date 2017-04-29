@@ -74,6 +74,15 @@ const calculate = (type: string, metric: TimeRangeMetric): { key: string, value:
             return { key: 'error', value: tri.value };
         }
       });
+    case 'activitiesPerDay':
+      const commentActs: { key: string, value: number }[] = metric.commentsMetric.commentsByDays().map(pos => ({ key: pos.day, value: pos.commentsMetric.totalComments() }));
+      const postActs: { key: string, value: number }[] = metric.postsMetric.postsByDays().map(pos => ({ key: pos.day, value: pos.postsMetric.totalComments() }));
+      const acts: { [string]: { key: string, value: number } } = {};
+      [...commentActs, ...postActs].forEach(act => {
+        if (!acts[act.key]) acts[act.key] = { key: act.key, value: 0 };
+        acts[act.key].value += act.value;
+      });
+      return _.values(acts);
     default:
       return [];
   }
@@ -84,13 +93,13 @@ class PostsPie extends React.Component {
   props: {
     title: string,
     metric: TimeRangeMetric,
-    type: 'postsPerDay' | 'postsPerHours' | 'postsPerTrihours' | 'commentsPerDay' | 'commentsPerHours' | 'commentsPerTrihours',
+    type: 'activitiesPerDay' | 'postsPerDay' | 'postsPerHours' | 'postsPerTrihours' | 'commentsPerDay' | 'commentsPerHours' | 'commentsPerTrihours',
   }
 
   render() {
     const { metric, type, title } = this.props;
 
-    const fixType = type || 'postsPerDay';
+    const fixType = type || 'activitiesPerDay';
 
     const columns = calculate(fixType, metric).map(col => [col.key, col.value]);
 

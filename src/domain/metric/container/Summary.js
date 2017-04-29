@@ -141,6 +141,10 @@ class MetricSummary extends React.Component {
           </div>
         </div>
 
+        <div className="col-md-6">
+          <Pie title="Comments by days" metric={metric} type="activitiesPerDay" />
+        </div>
+
         <div className="col-md-12">
           <h4>User Activity</h4>
         </div>
