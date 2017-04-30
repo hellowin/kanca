@@ -3,6 +3,7 @@ import commentMetric from './commentMetric';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import type { CommentMetric } from './commentMetric';
+import { syncToPromise } from 'infra/service/util';
 
 export type CommentsMetric = {
   commentMetrics: CommentMetric[],
@@ -14,7 +15,7 @@ export type CommentsMetric = {
   sortByLikesCount(): CommentMetric[],
   commentsByDays(): { day: string, commentMetrics: CommentMetric[], commentsMetric: CommentsMetric }[],
   commentsByHours(): { hour: string, trihourly: string, commentMetrics: CommentMetric[], commentsMetric: CommentsMetric }[],
-  wordCount(): { word: string, count: number }[],
+  wordCount(): Promise<{ word: string, count: number }[]>,
 }
 
 const commentsMetric = (comments: Comment[]): CommentsMetric => {
@@ -47,7 +48,7 @@ const commentsMetric = (comments: Comment[]): CommentsMetric => {
       commentsMetric: commentsMetric(hour.commentMetrics.map(me => me.comment)),
     }));
   };
-  const wordCount = () => {
+  const wordCount = () => syncToPromise(() => {
     const count: { [string]: { word: string, count: number } } = {};
     commentMetrics.forEach(pos => {
       const words = _.words(pos.text);
@@ -57,7 +58,7 @@ const commentsMetric = (comments: Comment[]): CommentsMetric => {
       });
     });
     return _.sortBy(_.values(count), 'count').reverse().slice(0, 500);
-  };
+  });
 
   return {
     commentMetrics,
