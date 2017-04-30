@@ -70,7 +70,10 @@ class WordCloud extends React.Component {
     calculate(fixType, metric)
       .then(res => {
         const rawData = res.map(wor => ({ text: wor.word, value: wor.count }));
-        const data = _.sortBy(rawData, 'value').reverse().filter(dat => dat.value > 1).slice(0, 500);
+        const data = _.sortBy(rawData, 'value')
+          .reverse()
+          .filter(dat => dat.value > 1)
+          .slice(0, 500);
         return data;
       })
       .then(data => this.setState({ loading: false, data }))
