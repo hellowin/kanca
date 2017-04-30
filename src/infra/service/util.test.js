@@ -1,13 +1,41 @@
 // @flow
-import { wordCounter } from './util';
+import { syncToPromise, wordCounter } from './util';
 import _ from 'lodash';
+
+describe('sync to promise', () => {
+
+  it('able to generate promise from sync operation', () =>
+    syncToPromise(() => {
+      return 1 + 1;
+    })
+      .then(res => expect(res).toEqual(2))
+  );
+
+  it('able to generate promise from promise operation', () =>
+    syncToPromise(() => Promise.resolve(1 + 1))
+      .then(res => expect(res).toEqual(2))
+  );
+
+  it('able to catch error from sync operation', () =>
+    syncToPromise(() => {
+      throw new Error('ERROR');
+    })
+      .catch(err => expect(err.message).toEqual('ERROR'))
+  );
+
+  it('able to catch error from promise operation', () =>
+    syncToPromise(() => Promise.reject(new Error('ERROR')))
+      .catch(err => expect(err.message).toEqual('ERROR'))
+  );
+
+});
 
 describe('word counting', () => {
 
   type WordCount = { word: string, count: number }
   const pick = (count: WordCount[], word: string) => (_.find(count, co => co.word === word) || {});
 
-  test('able to count words', () => {
+  it('able to count words', () => {
     const string = 'aku kamu kami react native react redux , (*&( &*yu 8989';
 
     return wordCounter(string)
