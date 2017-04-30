@@ -5,7 +5,7 @@
     "**/**.test.js"
   ],
   "dependencies": {
-    "unused-ignores": [
+    "mute": [
       "react-addons-*"
     ]
   }
