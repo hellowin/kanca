@@ -98,10 +98,8 @@ class WordCloud extends React.Component {
     } else if (loading) {
       content = <div>Counting words...</div>
     } else {
-      content = <div>No words found.</div>
+      content = <div>Not enough data.</div>
     }
-
-    console.log(data)
 
     return (
       <Card>
