@@ -19,7 +19,7 @@ export const wordCounter = (string: string): Promise<{ word: string, count: numb
     if (!count[word]) count[word] = { word, count: 0 };
     count[word].count += 1;
   });
-  return _.sortBy(_.values(count), 'count').reverse().slice(0, 500);
+  return _.sortBy(_.values(count), 'count').reverse().slice(0, 300);
 });
 
 export default {

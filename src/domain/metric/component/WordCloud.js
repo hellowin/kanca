@@ -12,6 +12,12 @@ const calculate = (type: string, metric: TimeRangeMetric): Promise<{ word: strin
   let promises = [];
 
   switch (type) {
+    case 'posts':
+      promises = [metric.postsMetric.wordCount()];
+      break;
+    case 'comments':
+      promises = [metric.commentsMetric.wordCount()];
+      break;
     case 'all':
     default:
       promises = [metric.postsMetric.wordCount(), metric.commentsMetric.wordCount()];
@@ -33,7 +39,7 @@ class WordCloud extends React.Component {
   props: {
     title: string,
     metric: TimeRangeMetric,
-    type: 'all',
+    type: 'all' | 'posts' | 'comments',
   }
 
   state : {
@@ -74,7 +80,7 @@ class WordCloud extends React.Component {
         const data = _.sortBy(rawData, 'value')
           .reverse()
           .filter(dat => dat.value > 1)
-          .slice(0, 500);
+          .slice(0, 300);
         return data;
       })
       .then(data => this.setState({ loading: false, data }))

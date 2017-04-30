@@ -143,7 +143,7 @@ class MetricSummary extends React.Component {
         </div>
 
         <div className="col-md-6">
-          <WordCloud title="Word cloud" metric={metric} type="all" />
+          <WordCloud title="Word cloud posts" metric={metric} type="posts" />
           <Pie title="Activity by day" metric={metric} type="activitiesPerDay" />
           <Pie title="Activity by 3 hourly" metric={metric} type="activitiesPerTrihours" />
         </div>
