@@ -51,7 +51,7 @@ const commentsMetric = (comments: Comment[]): CommentsMetric => {
   const wordCount = () => syncToPromise(() => {
     const count: { [string]: { word: string, count: number } } = {};
     commentMetrics.forEach(pos => {
-      const words = _.words(pos.text);
+      const words = _.words(pos.text).map(word => word.toLowerCase()).filter(word => word.length > 3);
       words.forEach(word => {
         if (!count[word]) count[word] = { word, count: 0 };
         count[word].count += 1;
