@@ -3,5 +3,10 @@
     "**/node_modules/**",
     "flow-typed/**",
     "**/**.test.js"
-  ]
+  ],
+  "dependencies": {
+    "unused-ignores": [
+      "react-addons-*"
+    ]
+  }
 }

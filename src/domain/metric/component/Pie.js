@@ -87,7 +87,7 @@ const calculate = (type: string, metric: TimeRangeMetric): { key: string, value:
 class PostsPie extends React.Component {
 
   props: {
-    title: string,
+    title?: string,
     metric: TimeRangeMetric,
     type: 'activitiesPerDay' | 'activitiesPerTrihours' | 'postsPerDay' | 'postsPerHours' | 'postsPerTrihours' | 'commentsPerDay' | 'commentsPerHours' | 'commentsPerTrihours',
   }

@@ -27,7 +27,9 @@ class MembersMetricPage extends React.Component {
   onFormChange: Function
 
   state: {
-    sort: string,
+    data: {
+      sort: string,
+    },
   }
 
   render() {

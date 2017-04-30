@@ -37,7 +37,7 @@ const calculate = (type: string, metric: TimeRangeMetric): Promise<{ word: strin
 class WordCloud extends React.Component {
 
   props: {
-    title: string,
+    title?: string,
     metric: TimeRangeMetric,
     type: 'all' | 'posts' | 'comments',
   }
