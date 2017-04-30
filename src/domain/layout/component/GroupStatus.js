@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
   updatedTime: state.group.updatedTime,
 });
 
-class Header extends React.Component {
+class GroupStatus extends React.Component {
 
   state: {
     deltaTime: string,
@@ -36,7 +36,6 @@ class Header extends React.Component {
   }
 
   getTime(updatedTime) {
-    clearInterval(this.intervalTime);
     this.intervalTime = setInterval(() => {
       const deltaTime = moment(new Date(updatedTime)).toNow();
       const diffTime = moment(new Date(updatedTime)).diff(moment());
@@ -47,6 +46,10 @@ class Header extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { updatedTime } = nextProps;
     this.getTime(updatedTime);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalTime);
   }
 
   render() {
@@ -73,4 +76,4 @@ class Header extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(GroupStatus);

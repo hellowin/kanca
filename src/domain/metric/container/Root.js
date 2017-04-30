@@ -2,9 +2,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import loc from 'infra/service/location';
+import Loading from 'infra/component/Loading';
 
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
+  loading: state.group.loading,
 });
 
 const checkMetricAvailability = props => {
@@ -23,9 +25,9 @@ class Metric extends React.Component {
   }
 
   render(){
-    const { children } = this.props;
+    const { loading, children } = this.props;
 
-    return children;
+    return !loading ? children : <Loading />;
   }
 
 }

@@ -6,8 +6,8 @@ import moment from 'moment-timezone';
 
 import { extractDateRangeFromPosts, timeSeriesMetric as timeSeriesMetricer } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
-
 import PostsTimeSeries from '../component/PostsTimeSeries';
+
 import Form, { FormTypes, withForm } from 'infra/component/Form';
 import type { FormObject } from 'infra/component/Form';
 
@@ -27,7 +27,7 @@ const setDefaultData = props => {
     dateEnd,
     granularity: 'd',
   };
-}
+};
 
 class MetricSummary extends React.Component {
 
@@ -48,7 +48,7 @@ class MetricSummary extends React.Component {
 
     const forms: FormObject[] = [
       { type: FormTypes.DATE, label: 'Date start', value: data.dateStart, model: 'dateStart', col: 4 },
-      { type: FormTypes.DATE, label: 'Date end', value: data.dateStart, model: 'dateEnd', col: 4 },
+      { type: FormTypes.DATE, label: 'Date end', value: data.dateEnd, model: 'dateEnd', col: 4 },
       { type: FormTypes.SELECT, label: 'Granularity', value: data.granularity, model: 'granularity', col: 4, selectOptions: [
         { text: 'Daily', value: 'd' },
         { text: 'Weekly', value: 'w' },
