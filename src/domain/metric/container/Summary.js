@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
-import timeRangeMetricer, { extractDateRangeFromPosts } from '../service/timeRangeMetric';
+import timeRangeMetricer, { timeSeriesMetric as timeSeriesMetricer, extractDateRangeFromPosts } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
 
 import UserActivityTop from '../component/UserActivityTop';
 import PostActivityTop from '../component/PostActivityTop';
 import CommentActivityTop from '../component/CommentActivityTop';
+import PostsTimeSeries from '../component/PostsTimeSeries';
 import Pie from '../component/Pie';
 import WordCloud from '../component/WordCloud';
 import Card from 'infra/component/Card';
@@ -24,7 +25,8 @@ const mapStateToProps = state => ({
 
 const setDefaultData = props => {
   const { feeds } = props;
-    const { dateStart, dateEnd } = extractDateRangeFromPosts(feeds, 'd');
+    const { dateEnd } = extractDateRangeFromPosts(feeds, 'd');
+    const dateStart = moment(dateEnd).startOf('M').toDate();
 
     return {
       dateStart,
@@ -83,8 +85,10 @@ class MetricSummary extends React.Component {
           };
           break;
         case 'totalTime':
-        default:
           date = extractDateRangeFromPosts(feeds, 'd');
+          break;
+        default:
+          date.dateStart = moment(date.dateEnd).startOf('M').toDate();
       }
       
       data.dateStart = date.dateStart;
@@ -97,6 +101,7 @@ class MetricSummary extends React.Component {
     const { feeds, members, comments } = this.props;
     const { data } = this.state;
     const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, feeds, members, comments);
+    const metrics: TimeRangeMetric[] = timeSeriesMetricer(data.dateStart, data.dateEnd, 'd', feeds, members, comments);
     
     const forms: FormObject[] = [
       { type: FormTypes.DATE, label: 'Date start', value: data.dateStart, model: 'dateStart', col: 6 },
@@ -124,80 +129,31 @@ class MetricSummary extends React.Component {
         </div>
 
         <div className="col-md-12">
-          <h4>Summary</h4>
+          <PostsTimeSeries title="Activity" metrics={metrics} show={[
+            { column: 'totalPosts', label: 'Total Posts' },
+            { column: 'usersPosts', label: 'Unique User Posts' },
+            { column: 'totalComments', label: 'Total Comments' },
+            { column: 'usersComments', label: 'Unique User Comments' },
+          ]} />
         </div>
 
         <div className="col-md-6">
-          <div className="card">
-            <div className="card-block">
-              <p>Time range {moment(data.dateStart).format('YYYY-MM-DD HH:mm:ss')} - {moment(data.dateEnd).format('YYYY-MM-DD HH:mm:ss')}</p>
-              <p>Total posts: {metric.postsMetric.totalPosts()}</p>
-              <p>Total posts shares: {metric.postsMetric.totalShares()}</p>
-              <p>Total posts likes: {metric.postsMetric.totalLikes()}</p>
-              <p>Total comments: {metric.commentsMetric.totalComments()}</p>
-              <p>Total members: {metric.usersMetric.totalMembers()}</p>
-              <p>Total unique member posting: {metric.usersMetric.uniqueUsersPosts().length}</p>
-              <p>Total unique member commenting: {metric.usersMetric.uniqueUsersComments().length}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-md-6">
-          <WordCloud title="Word cloud posts" metric={metric} type="posts" />
           <Pie title="Activity by day" metric={metric} type="activitiesPerDay" />
+          <Card>
+            <p>Time range {moment(data.dateStart).format('YYYY-MM-DD HH:mm:ss')} - {moment(data.dateEnd).format('YYYY-MM-DD HH:mm:ss')}</p>
+            <p>Total posts: {metric.postsMetric.totalPosts()}</p>
+            <p>Total posts shares: {metric.postsMetric.totalShares()}</p>
+            <p>Total posts likes: {metric.postsMetric.totalLikes()}</p>
+            <p>Total comments: {metric.commentsMetric.totalComments()}</p>
+            <p>Total members: {metric.usersMetric.totalMembers()}</p>
+            <p>Total unique member posting: {metric.usersMetric.uniqueUsersPosts().length}</p>
+            <p>Total unique member commenting: {metric.usersMetric.uniqueUsersComments().length}</p>
+          </Card>
+        </div>
+
+        <div className="col-md-6">
           <Pie title="Activity by 3 hourly" metric={metric} type="activitiesPerTrihours" />
-        </div>
-
-        <div className="col-md-12">
-          <h4>User Activity</h4>
-        </div>
-
-        <div className="col-md-6">
-          <UserActivityTop metric={metric} type="posts" title="Posts" subTitle="Top 10 user posts count." />
-        </div>
-
-        <div className="col-md-6">
-          <UserActivityTop metric={metric} type="comments" title="Comments" subTitle="Top 10 user comments count." />
-        </div>
-
-        <div className="col-md-6">
-          <UserActivityTop metric={metric} type="posts-shares" title="Posts Shares" subTitle="Top 10 number of shares received by user posts." />
-        </div>
-
-        <div className="col-md-6">
-          <UserActivityTop metric={metric} type="posts-likes" title="Posts Likes" subTitle="Top 10 number of likes received by user posts." />
-        </div>
-
-        <div className="col-md-12">
-          <h4>Post Activity</h4>
-        </div>
-
-        <div className="col-md-6">
-          <PostActivityTop metric={metric} type="likes" title="Posts Likes" subTitle="Top 10 most liked posts." />
-        </div>
-
-        <div className="col-md-6">
-          <PostActivityTop metric={metric} type="shares" title="Posts Shares" subTitle="Top 10 most shared posts." />
-        </div>
-
-        <div className="col-md-6">
-          <Pie title="Posts by day" metric={metric} type="postsPerDay" />
-          <Pie title="Posts by hour" metric={metric} type="postsPerHours" />
-          <Pie title="Posts by 3 hours" metric={metric} type="postsPerTrihours" />
-        </div>
-
-        <div className="col-md-12">
-          <h4>Comment Activity</h4>
-        </div>
-
-        <div className="col-md-6">
-          <CommentActivityTop metric={metric} type="likes" title="Comment Likes" subTitle="Top 10 most liked comments." />
-        </div>
-
-        <div className="col-md-6">
-          <Pie title="Comments by day" metric={metric} type="commentsPerDay" />
-          <Pie title="Comments by hour" metric={metric} type="commentsPerHours" />
-          <Pie title="Comments by 3 hours" metric={metric} type="commentsPerTrihours" />
+          <WordCloud title="Word cloud posts" metric={metric} type="posts" />
         </div>
 
       </div>
