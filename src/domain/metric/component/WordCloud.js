@@ -9,22 +9,23 @@ import { syncToPromise } from 'infra/service/util';
 import type { TimeRangeMetric } from '../service/timeRangeMetric'
 
 const calculate = (type: string, metric: TimeRangeMetric): Promise<{ word: string, count: number }[]> => {
-  const promPostsWordCount = metric.postsMetric.wordCount();
-  const promCommsWordCount = metric.commentsMetric.wordCount();
+  let promises = [];
 
   switch (type) {
     case 'all':
     default:
-      const allCount: { [string]: { word: string, count: number } } = {};
-      return Promise.all([promPostsWordCount, promCommsWordCount])
-        .then(([postsWordCount, commsWordCount]) => syncToPromise(() => {
-          [...postsWordCount, ...commsWordCount].forEach(wor => {
-            if (!allCount[wor.word]) allCount[wor.word] = { word: wor.word, count: 0 };
-            allCount[wor.word].count += wor.count;
-          });
-          return _.values(allCount);
-        }));
+      promises = [metric.postsMetric.wordCount(), metric.commentsMetric.wordCount()];
   }
+
+  return Promise.all(promises)
+    .then(res => syncToPromise(() => {
+      const allCount: { [string]: { word: string, count: number } } = {};
+      res.reduce((pre, cur) => [...pre, ...cur], []).forEach(wor => {
+        if (!allCount[wor.word]) allCount[wor.word] = { word: wor.word, count: 0 };
+        allCount[wor.word].count += wor.count;
+      });
+      return _.values(allCount);
+    }));
 }
 
 class WordCloud extends React.Component {
