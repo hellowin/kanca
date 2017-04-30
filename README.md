@@ -37,6 +37,8 @@ Since this project uses [Flow](https://flow.org/), some IDE or Text Editors need
 
 Add `"javascript.validate.enable": false` on your VSCode config (`.vscode/settings.json`).
 
+It would be better if you install this [Flow plugin](https://marketplace.visualstudio.com/items?itemName=flowtype.flow-for-vscode) as well.
+
 ## Development
 
 1. Run `$ npm start` or `$ yarn start`
