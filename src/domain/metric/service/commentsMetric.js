@@ -3,7 +3,7 @@ import commentMetric from './commentMetric';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import type { CommentMetric } from './commentMetric';
-import { syncToPromise, wordCounter } from 'infra/service/util';
+import { wordCounter } from 'infra/service/util';
 
 export type CommentsMetric = {
   commentMetrics: CommentMetric[],
@@ -48,10 +48,7 @@ const commentsMetric = (comments: Comment[]): CommentsMetric => {
       commentsMetric: commentsMetric(hour.commentMetrics.map(me => me.comment)),
     }));
   };
-  const wordCount = () => syncToPromise(() => {
-    const string: string = commentMetrics.map(pos => pos.text).join(' ');
-    return wordCounter(string);
-  });
+  const wordCount = () => wordCounter(commentMetrics.map(pos => pos.text).join(' '));
 
   return {
     commentMetrics,

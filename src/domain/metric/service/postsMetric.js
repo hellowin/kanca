@@ -3,7 +3,7 @@ import postMetric from './postMetric';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import type { PostMetric } from './postMetric';
-import { syncToPromise, wordCounter } from 'infra/service/util';
+import { wordCounter } from 'infra/service/util';
 
 export type PostsMetric = {
   postMetrics: PostMetric[],
@@ -51,10 +51,7 @@ const postsMetric = (posts: Post[]): PostsMetric => {
       postsMetric: postsMetric(hour.postMetrics.map(me => me.post)),
     }));
   };
-  const wordCount = () => syncToPromise(() => {
-    const string: string = postMetrics.map(pos => pos.text).join(' ');
-    return wordCounter(string);
-  });
+  const wordCount = () => wordCounter(postMetrics.map(pos => pos.text).join(' '));
 
   return {
     postMetrics,
