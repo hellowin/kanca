@@ -4,6 +4,7 @@ import _ from 'lodash';
 import Measure from 'react-measure';
 import Cloud from './Cloud';
 import Card from 'infra/component/Card';
+import { syncToPromise } from 'infra/service/util';
 
 import type { TimeRangeMetric } from '../service/timeRangeMetric'
 
@@ -16,13 +17,13 @@ const calculate = (type: string, metric: TimeRangeMetric): Promise<{ word: strin
     default:
       const allCount: { [string]: { word: string, count: number } } = {};
       return Promise.all([promPostsWordCount, promCommsWordCount])
-        .then(([postsWordCount, commsWordCount]) => {
+        .then(([postsWordCount, commsWordCount]) => syncToPromise(() => {
           [...postsWordCount, ...commsWordCount].forEach(wor => {
             if (!allCount[wor.word]) allCount[wor.word] = { word: wor.word, count: 0 };
             allCount[wor.word].count += wor.count;
           });
           return _.values(allCount);
-        });
+        }));
   }
 }
 
@@ -62,7 +63,7 @@ class WordCloud extends React.Component {
 
   generateData(props: Object) {
     this.setState({ loading: true, data: [] });
-    const { metric, type } = this.props;
+    const { metric, type } = props;
 
     const fixType = type || 'all';
 
@@ -79,18 +80,28 @@ class WordCloud extends React.Component {
   render() {
     const { title } = this.props;
     const { loading, data } = this.state;
-    
+
+   let content;
+
+   if (!loading && data.length > 0) {
+      content = (<Measure>
+        { dimensions => (
+          <Cloud
+            width={(dimensions.width || 400)}
+            data={data}
+          />
+        )}
+      </Measure>);
+    } else if (loading) {
+      content = <div>Counting words...</div>
+    } else {
+      content = <div>No words found.</div>
+    }
+
     return (
       <Card>
         <h3>{title}</h3>
-        {!loading ? (<Measure>
-          { dimensions => (
-            <Cloud
-              width={dimensions.width - 30}
-              data={data}
-            />
-          )}
-        </Measure>) : <div>Counting words...</div>}
+        {content}
       </Card>
     );
   };
