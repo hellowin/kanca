@@ -15,14 +15,23 @@ const style = {
   },
 };
 
-const Load = () => (
-  <div className="row">
-    <div className="col-md-12" style={style.container}>
-      <div style={style.center}>
-        <Loading type="bars" color="#3b5998" />
+type Props = {
+  size?: number,
+}
+
+const Load = (props: Props) => {
+  const { size } = props;
+  const fixSize = size || 64;
+
+  return (
+    <div className="row">
+      <div className="col-md-12" style={style.container}>
+        <div style={style.center}>
+          <Loading type="bars" color="#3b5998" height={fixSize} width={fixSize} delay={0} />
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Load;

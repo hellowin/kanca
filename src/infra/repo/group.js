@@ -5,6 +5,7 @@ import graph from 'infra/service/graph';
 import config from 'config';
 import st from 'store';
 import _ from 'lodash';
+import moment from 'moment-timezone';
 
 const groupRepo = {
 
@@ -86,7 +87,7 @@ const groupRepo = {
     const inputs = st.get('group.inputs') || [];
     const selected = st.get('group.selected') || {};
     let updatedTime = st.get('group.updatedTime') || null;
-    if (updatedTime) updatedTime = new Date(updatedTime);
+    if (updatedTime && moment(updatedTime).isValid()) updatedTime = moment(updatedTime).toDate();
     const feeds = st.get('group.feeds') || [];
     const comments = st.get('group.comments') || [];
     const members = st.get('group.members') || [];
