@@ -1,9 +1,10 @@
 # Kanca
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/34810083c2eb4046a67dba2959dcca9f)](https://www.codacy.com/app/hellowin/kanca?utm_source=github.com&utm_medium=referral&utm_content=hellowin/kanca&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/hellowin/kanca.svg?branch=master)](https://travis-ci.org/hellowin/kanca)
 [![codecov](https://codecov.io/gh/hellowin/kanca/branch/master/graph/badge.svg)](https://codecov.io/gh/hellowin/kanca)
 [![Known Vulnerabilities](https://snyk.io/test/github/hellowin/kanca/badge.svg)](https://snyk.io/test/github/hellowin/kanca)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/34810083c2eb4046a67dba2959dcca9f)](https://www.codacy.com/app/hellowin/kanca?utm_source=github.com&utm_medium=referral&utm_content=hellowin/kanca&utm_campaign=badger)
+
 [![bitHound Overall Score](https://www.bithound.io/github/hellowin/kanca/badges/score.svg)](https://www.bithound.io/github/hellowin/kanca)
 [![bitHound Dependencies](https://www.bithound.io/github/hellowin/kanca/badges/dependencies.svg)](https://www.bithound.io/github/hellowin/kanca/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/hellowin/kanca/badges/devDependencies.svg)](https://www.bithound.io/github/hellowin/kanca/master/dependencies/npm)
@@ -28,9 +29,17 @@ Kanca is an application to analyze `Facebook Group` activity. Its key features a
 1. Go to project root directory, copy `.env.template` to `.env` (edit it as you need, look at description below)
 2. Install its dependencies `$ npm install` or `$ yarn install`
 
+## IDE/ Text Editor Configuration
+
+Since this project uses [Flow](https://flow.org/), some IDE or Text Editors needs additional configuration.
+
+### VSCode
+
+Add `"javascript.validate.enable": false` on your VSCode config (`.vscode/settings.json`).
+
 ## Development
 
-1. Run `$ npm start`
+1. Run `$ npm start` or `$ yarn start`
 2. Open browser at `http://localhost:3000`
 
 ## Environment Variable Explanation
