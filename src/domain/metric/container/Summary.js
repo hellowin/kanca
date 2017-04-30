@@ -4,18 +4,15 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 
-import timeRangeMetricer, { timeSeriesMetric as timeSeriesMetricer, extractDateRangeFromPosts } from '../service/timeRangeMetric';
-import type { TimeRangeMetric } from '../service/timeRangeMetric';
-
-import UserActivityTop from '../component/UserActivityTop';
-import PostActivityTop from '../component/PostActivityTop';
-import CommentActivityTop from '../component/CommentActivityTop';
-import PostsTimeSeries from '../component/PostsTimeSeries';
-import Pie from '../component/Pie';
-import WordCloud from '../component/WordCloud';
 import Card from 'infra/component/Card';
 import Form, { FormTypes, withForm } from 'infra/component/Form';
 import type { FormObject } from 'infra/component/Form';
+
+import timeRangeMetricer, { timeSeriesMetric as timeSeriesMetricer, extractDateRangeFromPosts } from '../service/timeRangeMetric';
+import type { TimeRangeMetric } from '../service/timeRangeMetric';
+import PostsTimeSeries from '../component/PostsTimeSeries';
+import Pie from '../component/Pie';
+import WordCloud from '../component/WordCloud';
 
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
