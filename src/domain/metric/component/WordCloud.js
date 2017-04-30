@@ -9,30 +9,37 @@ import { syncToPromise } from 'infra/service/util';
 import type { TimeRangeMetric } from '../service/timeRangeMetric'
 
 const calculate = (type: string, metric: TimeRangeMetric): Promise<{ word: string, count: number }[]> => {
-  const promPostsWordCount = metric.postsMetric.wordCount();
-  const promCommsWordCount = metric.commentsMetric.wordCount();
+  let promises = [];
 
   switch (type) {
+    case 'posts':
+      promises = [metric.postsMetric.wordCount()];
+      break;
+    case 'comments':
+      promises = [metric.commentsMetric.wordCount()];
+      break;
     case 'all':
     default:
-      const allCount: { [string]: { word: string, count: number } } = {};
-      return Promise.all([promPostsWordCount, promCommsWordCount])
-        .then(([postsWordCount, commsWordCount]) => syncToPromise(() => {
-          [...postsWordCount, ...commsWordCount].forEach(wor => {
-            if (!allCount[wor.word]) allCount[wor.word] = { word: wor.word, count: 0 };
-            allCount[wor.word].count += wor.count;
-          });
-          return _.values(allCount);
-        }));
+      promises = [metric.postsMetric.wordCount(), metric.commentsMetric.wordCount()];
   }
+
+  return Promise.all(promises)
+    .then(res => syncToPromise(() => {
+      const allCount: { [string]: { word: string, count: number } } = {};
+      res.reduce((pre, cur) => [...pre, ...cur], []).forEach(wor => {
+        if (!allCount[wor.word]) allCount[wor.word] = { word: wor.word, count: 0 };
+        allCount[wor.word].count += wor.count;
+      });
+      return _.values(allCount);
+    }));
 }
 
 class WordCloud extends React.Component {
 
   props: {
-    title: string,
+    title?: string,
     metric: TimeRangeMetric,
-    type: 'all',
+    type: 'all' | 'posts' | 'comments',
   }
 
   state : {
@@ -70,7 +77,10 @@ class WordCloud extends React.Component {
     calculate(fixType, metric)
       .then(res => {
         const rawData = res.map(wor => ({ text: wor.word, value: wor.count }));
-        const data = _.sortBy(rawData, 'value').reverse().slice(0, 500);
+        const data = _.sortBy(rawData, 'value')
+          .reverse()
+          .filter(dat => dat.value > 1)
+          .slice(0, 300);
         return data;
       })
       .then(data => this.setState({ loading: false, data }))
@@ -95,7 +105,7 @@ class WordCloud extends React.Component {
     } else if (loading) {
       content = <div>Counting words...</div>
     } else {
-      content = <div>No words found.</div>
+      content = <div>Not enough data.</div>
     }
 
     return (

@@ -2,6 +2,7 @@
 import React from 'react';
 import moment from 'moment-timezone';
 import C3 from 'infra/component/C3';
+import Card from 'infra/component/Card';
 
 import type { TimeRangeMetric } from '../service/timeRangeMetric'
 
@@ -66,14 +67,16 @@ class PostsTimeSeries extends React.Component {
     const id = `id-${(Math.random() * 1000000000000000000).toFixed(0)}`
 
     return (
-      <div className="row">
-        <div className="col-12 text-center">
-          {title ? <h5>{title}</h5> : ''}
+      <Card>
+        <div className="row">
+          <div className="col-12 text-center">
+            {title ? <h5>{title}</h5> : ''}
+          </div>
+          <div className="col-12">
+            <C3 id={id} config={config} />
+          </div>
         </div>
-        <div className="col-12">
-          <C3 id={id} config={config} />
-        </div>
-      </div>
+      </Card>
     );
   };
 

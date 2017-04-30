@@ -15,7 +15,7 @@ const Post = (props: UserMetric) => {
   } = props;
 
   return (
-    <div style={{ width: '20rem', float: 'left', margin: '0px 10px', height: '10rem' }}>
+    <div style={{ width: '20rem', float: 'left', margin: '0px 10px 15px 0px', height: '10rem' }}>
       <Card>
         <div className="row">
           {picture ? <div className="col-md-4"><img src={picture} className="rounded float-left" alt="Prof pic" style={{ width: '100%' }} /></div> : ''}
