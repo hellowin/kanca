@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import moment from 'moment-timezone';
 
 import Form, { FormTypes, withForm } from 'infra/component/Form';
-import Card from 'infra/component/Card';
 import type { FormObject } from 'infra/component/Form';
+import Card from 'infra/component/Card';
 
 import timeRangeMetricer, { timeSeriesMetric as timeSeriesMetricer, extractDateRangeFromPosts } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
