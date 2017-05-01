@@ -32,6 +32,12 @@ const calculate = (type: string, metric: TimeRangeMetric): Promise<{ word: strin
       });
       return _.values(allCount);
     }));
+};
+
+const generateWidth = (rawWidth?: number) => {
+  if (!rawWidth) return 400;
+  if (rawWidth === 400) return 273;
+  return rawWidth;
 }
 
 class WordCloud extends React.Component {
@@ -96,10 +102,13 @@ class WordCloud extends React.Component {
    if (!loading && data.length > 0) {
       content = (<Measure>
         { dimensions => (
-          <Cloud
-            width={(dimensions.width || 400)}
-            data={data}
-          />
+          <div>
+            {JSON.stringify(dimensions, null, 2)}
+            <Cloud
+              width={generateWidth(dimensions.width)}
+              data={data}
+            />
+          </div>
         )}
       </Measure>);
     } else if (loading) {
