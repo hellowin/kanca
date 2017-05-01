@@ -1,9 +1,20 @@
 // @flow
 import _ from 'lodash';
+import { reportError } from 'infra/service/reporter';
 
 const get = (url: string): Promise<any> => new Promise((resolve, reject) => {
   window.FB.api(url, fbRes => {
-    if (fbRes.error) return reject(new Error(`${fbRes.error.code} - ${fbRes.error.message}` || fbRes.error));
+    if (fbRes.error) {
+      const code = fbRes.error.code;
+      const type = fbRes.error.type;
+      const id = fbRes.error.fbtrace_id;
+      const message = fbRes.error.message;
+
+      switch (code) {
+        default:
+          return reject(new Error(`${type}:${code}:${message}:${id}`));
+      }
+    }
     return resolve(fbRes);
   });
 });
@@ -75,6 +86,14 @@ const getUser = () => get('/me?fields=id,name,email,picture')
       picture: res.picture.data.url,
     };
     return user;
+  })
+  .catch(err => {
+    const errors = err.message.split(':');
+    switch (errors[1]) {
+      default:
+        reportError(err);
+        throw err;
+    }
   });
 
 const getUserManagedGroups = (): Promise<Group[]> => get('/me/groups?fields=id,name,privacy,cover,description,owner&limit=100')
@@ -92,6 +111,14 @@ const getUserManagedGroups = (): Promise<Group[]> => get('/me/groups?fields=id,n
     }));
 
     return groups;
+  })
+  .catch(err => {
+    const errors = err.message.split(':');
+    switch (errors[1]) {
+      default:
+        reportError(err);
+        throw err;
+    }
   });
 
 const getGroup = (groupId: string): Promise<Group> => get(`/${groupId}?fields=id,name,privacy,cover,description,owner`)
@@ -108,12 +135,30 @@ const getGroup = (groupId: string): Promise<Group> => get(`/${groupId}?fields=id
       },
     }
     return group;
+  })
+  .catch(err => {
+    const errors = err.message.split(':');
+    switch (errors[1]) {
+      case '803':
+        throw new Error('Group ID is not valid.');
+      default:
+        reportError(err);
+        throw err;
+    }
   });
 
 const getGroupFeed = (groupId: string, pages: number): Promise<{}[]> => {
   const url = `/${groupId}/feed?fields=created_time,id,message,updated_time,caption,story,description,from,link,name,picture,status_type,type,shares,permalink_url,likes.limit(100),comments.limit(100){id,from,message,created_time,likes.limit(100),comments.limit(100){id,from,message,created_time,likes.limit(100)}}&limit=100`;
   const list = new GraphList();
-  return list.fetchForward(url, pages);
+  return list.fetchForward(url, pages)
+    .catch(err => {
+      const errors = err.message.split(':');
+      switch (errors[1]) {
+        default:
+          reportError(err);
+          throw err;
+      }
+    });
 };
 
 const getGroupComments = (posts: Object[]): Promise<any> => {
@@ -141,13 +186,29 @@ const getGroupComments = (posts: Object[]): Promise<any> => {
 
   const comments = [...firstComments.map(com => _.omit(com, 'comments')), ...secondComments];
 
-  return Promise.resolve(comments);
+  return Promise.resolve(comments)
+    .catch(err => {
+      const errors = err.message.split(':');
+      switch (errors[1]) {
+        default:
+          reportError(err);
+          throw err;
+      }
+    });
 };
 
 const getGroupMembers = (groupId: string, pages: number): Promise<{}[]> => {
   const url = `/${groupId}/members?fields=id,name,administrator,picture,link&limit=100`;
   const list = new GraphList();
-  return list.fetchForward(url, pages);
+  return list.fetchForward(url, pages)
+    .catch(err => {
+      const errors = err.message.split(':');
+      switch (errors[1]) {
+        default:
+          reportError(err);
+          throw err;
+      }
+    });
 };
 
 export default {
