@@ -6,6 +6,7 @@ import config from 'config';
 import st from 'store';
 import _ from 'lodash';
 import moment from 'moment-timezone';
+import { reportError } from 'infra/service/reporter';
 
 const groupRepo = {
 
@@ -83,15 +84,19 @@ const groupRepo = {
   },
 
   restoreGroup() {
-    store.dispatch(action.groupSet({ loading: true }));
-    const inputs = st.get('group.inputs') || [];
-    const selected = st.get('group.selected') || {};
-    let updatedTime = st.get('group.updatedTime') || null;
-    if (updatedTime && moment(updatedTime).isValid()) updatedTime = moment(updatedTime).toDate();
-    const feeds = st.get('group.feeds') || [];
-    const comments = st.get('group.comments') || [];
-    const members = st.get('group.members') || [];
-    store.dispatch(action.groupSet({ inputs, selected, updatedTime, feeds, comments, members, loading: false }));
+    try {
+      store.dispatch(action.groupSet({ loading: true }));
+      const inputs = st.get('group.inputs') || [];
+      const selected = st.get('group.selected') || {};
+      let updatedTime = st.get('group.updatedTime') || null;
+      if (updatedTime && moment(updatedTime).isValid()) updatedTime = moment(updatedTime).toDate();
+      const feeds = st.get('group.feeds') || [];
+      const comments = st.get('group.comments') || [];
+      const members = st.get('group.members') || [];
+      store.dispatch(action.groupSet({ inputs, selected, updatedTime, feeds, comments, members, loading: false }));
+    } catch (err) {
+      reportError(err);
+    }
   },
 
 };
