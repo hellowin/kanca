@@ -102,13 +102,10 @@ class WordCloud extends React.Component {
    if (!loading && data.length > 0) {
       content = (<Measure>
         { dimensions => (
-          <div>
-            {JSON.stringify(dimensions, null, 2)}
-            <Cloud
-              width={generateWidth(dimensions.width)}
-              data={data}
-            />
-          </div>
+          <Cloud
+            width={generateWidth(dimensions.width)}
+            data={data}
+          />
         )}
       </Measure>);
     } else if (loading) {
