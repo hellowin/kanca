@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import './app.css';
 import Header from 'domain/layout/component/Header';
 import Sidebar from 'domain/layout/component/Sidebar';
-import Aside from 'domain/layout/component/Aside';
 import Footer from 'domain/layout/component/Footer';
 import { connect } from 'react-redux';
 import Auth from 'domain/user/component/Auth';
@@ -30,7 +29,6 @@ class App extends React.Component {
                 {children}
               </div>
             </main>
-            <Aside />
           </div>
           <Footer />
         </div>
