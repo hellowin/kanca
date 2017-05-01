@@ -25,9 +25,9 @@ const Post = (props: UserMetric) => {
             <a href={url} target="_blank"><p className="card-text">{(name || '').length > maxName ? name.slice(0, maxName) + '...' : name}</p></a>
           </div>
 
-          {picture ? <div className="col-md-4"><img src={picture} className="rounded" alt="Prof pic" style={{ width: '100%' }} /></div> : ''}
+          {picture ? <div className="col-4"><img src={picture} className="rounded" alt="Prof pic" style={{ width: '100%' }} /></div> : ''}
 
-          <div className={picture ? 'col-md-6' : 'col-md-12'}>
+          <div className={picture ? 'col-6' : 'col-12'}>
             <dl>
               <dt><i className="fa fa-pencil-square-o mr-1" />Posts</dt>
               <dd>
