@@ -3,8 +3,22 @@ import React from 'react';
 import _ from 'lodash';
 import C3 from 'infra/component/C3';
 import Card from 'infra/component/Card';
+import moment from 'moment-timezone';
 
 import type { TimeRangeMetric } from '../service/timeRangeMetric'
+
+export const PieTypes = {
+  ACTIVITIES_PERDAY: 'ACTIVITIES_PERDAY',
+  ACTIVITIES_PERTRIHOUR: 'ACTIVITIES_PERTRIHOUR',
+  POSTS_PERDAY: 'POSTS_PERDAY',
+  POSTS_PERHOUR: 'POSTS_PERHOUR',
+  POSTS_PERTRIHOUR: 'POSTS_PERTRIHOUR',
+  COMMENTS_PERDAY: 'COMMENTS_PERDAY',
+  COMMENTS_PERHOUR: 'COMMENTS_PERHOUR',
+  COMMENTS_PERTRIHOUR: 'COMMENTS_PERTRIHOUR',
+};
+
+declare type PieType = $Keys<typeof PieTypes>
 
 const trihourlyRename = (arr) => {
   return arr.map(tri => {
@@ -31,13 +45,13 @@ const trihourlyRename = (arr) => {
   });
 }
 
-const calculate = (type: string, metric: TimeRangeMetric): { key: string, value: number }[] => {
+const calculate = (type: PieType, metric: TimeRangeMetric): { key: string, value: number }[] => {
   switch (type) {
-    case 'postsPerDay':
+    case PieTypes.POSTS_PERDAY:
       return metric.postsMetric.postsByDays().map(pos => ({ key: pos.day, value: pos.postsMetric.totalPosts() }));
-    case 'postsPerHours':
+    case PieTypes.POSTS_PERHOUR:
       return metric.postsMetric.postsByHours().map(pos => ({ key: pos.hour, value: pos.postsMetric.totalPosts() }));
-    case 'postsPerTrihours':
+    case PieTypes.POSTS_PERTRIHOUR:
       const postTrihourly: { [string]: { key: string, value: number } } = {};
       metric.postsMetric.postsByHours().map(pos => ({ key: pos.trihourly, value: pos.postsMetric.totalPosts() }))
         .forEach(det => {
@@ -45,11 +59,11 @@ const calculate = (type: string, metric: TimeRangeMetric): { key: string, value:
           postTrihourly[det.key].value += det.value;
         });
       return trihourlyRename(_.values(postTrihourly));
-    case 'commentsPerDay':
+    case PieTypes.COMMENTS_PERDAY:
       return metric.commentsMetric.commentsByDays().map(pos => ({ key: pos.day, value: pos.commentsMetric.totalComments() }));
-    case 'commentsPerHours':
+    case PieTypes.COMMENTS_PERHOUR:
       return metric.commentsMetric.commentsByHours().map(pos => ({ key: pos.hour, value: pos.commentsMetric.totalComments() }));
-    case 'commentsPerTrihours':
+    case PieTypes.COMMENTS_PERTRIHOUR:
       const commentTrihourly: { [string]: { key: string, value: number } } = {};
       metric.commentsMetric.commentsByHours().map(pos => ({ key: pos.trihourly, value: pos.commentsMetric.totalComments() }))
         .forEach(det => {
@@ -57,7 +71,7 @@ const calculate = (type: string, metric: TimeRangeMetric): { key: string, value:
           commentTrihourly[det.key].value += det.value;
         });
       return trihourlyRename(_.values(commentTrihourly));
-    case 'activitiesPerDay':
+    case PieTypes.ACTIVITIES_PERDAY:
       const commentActs: { key: string, value: number }[] = metric.commentsMetric.commentsByDays().map(pos => ({ key: pos.day, value: pos.commentsMetric.totalComments() }));
       const postActs: { key: string, value: number }[] = metric.postsMetric.postsByDays().map(pos => ({ key: pos.day, value: pos.postsMetric.totalComments() }));
       const acts: { [string]: { key: string, value: number } } = {};
@@ -66,7 +80,7 @@ const calculate = (type: string, metric: TimeRangeMetric): { key: string, value:
         acts[act.key].value += act.value;
       });
       return _.values(acts);
-    case 'activitiesPerTrihours':
+    case PieTypes.ACTIVITIES_PERTRIHOUR:
       const actTrihourly: { [string]: { key: string, value: number } } = {};
       metric.postsMetric.postsByHours().map(pos => ({ key: pos.trihourly, value: pos.postsMetric.totalPosts() }))
         .forEach(det => {
@@ -84,26 +98,68 @@ const calculate = (type: string, metric: TimeRangeMetric): { key: string, value:
   }
 }
 
+const generateTitle = (type: PieType): string => {
+  switch (type) {
+    case PieTypes.ACTIVITIES_PERDAY:
+      return 'Activities per Day';
+    case PieTypes.ACTIVITIES_PERTRIHOUR:
+      return 'Activities per Trihour';
+    case PieTypes.POSTS_PERDAY:
+      return 'Posts per Day';
+    case PieTypes.POSTS_PERHOUR:
+      return 'Posts per Hour';
+    case PieTypes.POSTS_PERTRIHOUR:
+      return 'Posts per Trihour';
+    case PieTypes.COMMENTS_PERDAY:
+      return 'Comments per Hour';
+    case PieTypes.COMMENTS_PERHOUR:
+      return 'Comments per Hour';
+    case PieTypes.COMMENTS_PERTRIHOUR:
+      return 'Comments per Trihour';
+    default:
+      return '';
+  }
+}
+
 class PostsPie extends React.Component {
 
   props: {
-    title?: string,
     metric: TimeRangeMetric,
-    type: 'activitiesPerDay' | 'activitiesPerTrihours' | 'postsPerDay' | 'postsPerHours' | 'postsPerTrihours' | 'commentsPerDay' | 'commentsPerHours' | 'commentsPerTrihours',
+    type: PieType,
   }
 
   render() {
-    const { metric, type, title } = this.props;
+    const { metric, type } = this.props;
 
-    const fixType = type || 'activitiesPerDay';
+    const dateEnd = moment(metric.dateEnd);
+    const dateStart = moment(metric.dateStart);
+    let fixDateStart;
+    if (dateEnd.isSame(dateStart, 'd') && dateEnd.isSame(dateStart, 'M') && dateEnd.isSame(dateStart, 'y')) {
+      fixDateStart = null;
+    } else if (dateEnd.isSame(dateStart, 'M') && dateEnd.isSame(dateStart, 'y')) {
+      fixDateStart = dateStart.clone().format('ddd, DD');
+    } else if (dateEnd.isSame(dateStart, 'y')) {
+      fixDateStart = dateStart.clone().format('ddd, DD MMM');
+    } else {
+      fixDateStart = dateStart.clone().format('ddd, DD MMM YYYY');
+    }
+    const fixDateEnd = dateEnd.clone().format('ddd, DD MMM YYYY');
+    const date = fixDateStart ? `${fixDateStart} - ${fixDateEnd}` : fixDateEnd;
 
-    const columns = calculate(fixType, metric).map(col => [col.key, col.value]);
+    const columns = calculate(type, metric).map(col => [col.key, col.value]);
 
     const config = {
       data: {
         columns,
         type: 'pie',
       },
+      tooltip: {
+        format: {
+          value: function (value, ratio, id) {
+            return `${value} (${(ratio * 100).toFixed(2)}%)`;
+          }
+        }
+      }
     };
 
     const id = `id-${(Math.random() * 1000000000000000000).toFixed(0)}`
@@ -112,7 +168,8 @@ class PostsPie extends React.Component {
       <Card>
         <div className="row">
           <div className="col-12 text-center">
-            {title ? <h5>{title}</h5> : ''}
+            <h5>{generateTitle(type)}</h5>
+            {date}
           </div>
           <div className="col-12">
             <C3 id={id} config={config} />
