@@ -58,8 +58,8 @@ export const timeSeriesMetric = (dateStart: Date, dateEnd: Date, granularity: mo
 }
 
 export const extractDateRangeFromPosts = (posts: Post[], granularity: moment.unitOfTime.Base): { dateStart: Date, dateEnd: Date } => {
-  const start: Date = new Date((_.sortBy(posts, 'created_time')[0] || {}).created_time);
-  const end: Date = new Date((_.sortBy(posts, 'created_time').reverse()[0] || {}).created_time);
+  const start: string = (_.sortBy(posts, 'created_time')[0] || {}).created_time;
+  const end: string = (_.sortBy(posts, 'created_time').reverse()[0] || {}).created_time;
   const startOf = moment(start).startOf(granularity);
   const endOf = moment(end).endOf(granularity);
   return {
