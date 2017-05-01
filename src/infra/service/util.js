@@ -1,7 +1,7 @@
 // @flow
 import _ from 'lodash';
 
-export const syncToPromise = (func: Function) => new Promise((resolve, reject) => {
+export const syncToPromise = <T>(func: Function): Promise<T> => new Promise((resolve, reject) => {
   setTimeout(() => {
     try {
       resolve(func());
