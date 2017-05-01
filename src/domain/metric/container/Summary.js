@@ -11,7 +11,7 @@ import type { FormObject } from 'infra/component/Form';
 import timeRangeMetricer, { timeSeriesMetric as timeSeriesMetricer, extractDateRangeFromPosts } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
 import LineChart, { LineChartTypes } from '../component/LineChart';
-import Pie from '../component/Pie';
+import Pie, { PieTypes } from '../component/Pie';
 import WordCloud from '../component/WordCloud';
 
 const mapStateToProps = state => ({
@@ -135,7 +135,7 @@ class MetricSummary extends React.Component {
         </div>
 
         <div className="col-md-6">
-          <Pie title="Activity by day" metric={metric} type="activitiesPerDay" />
+          <Pie metric={metric} type={PieTypes.ACTIVITIES_PERDAY} />
           <Card>
             <p>Time range {moment(data.dateStart).format('YYYY-MM-DD HH:mm:ss')} - {moment(data.dateEnd).format('YYYY-MM-DD HH:mm:ss')}</p>
             <p>Total posts: {metric.postsMetric.totalPosts()}</p>
@@ -149,7 +149,7 @@ class MetricSummary extends React.Component {
         </div>
 
         <div className="col-md-6">
-          <Pie title="Activity by 3 hourly" metric={metric} type="activitiesPerTrihours" />
+          <Pie metric={metric} type={PieTypes.ACTIVITIES_PERTRIHOUR} />
           <WordCloud title="Word cloud posts" metric={metric} type="posts" />
         </div>
 
