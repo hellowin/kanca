@@ -1007,6 +1007,10 @@ buffer@^4.9.0:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
+bugsnag-js@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/bugsnag-js/-/bugsnag-js-3.2.0.tgz#920f5e3f6b434e05b46b99315d92f0cd0dd74a3f"
+
 builtin-modules@^1.0.0, builtin-modules@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
