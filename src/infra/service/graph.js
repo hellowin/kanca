@@ -91,7 +91,7 @@ const getUser = () => get('/me?fields=id,name,email,picture')
     const errors = err.message.split(':');
     switch (errors[1]) {
       default:
-        reportError(err);
+        reportError(new Error(err.message));
         throw err;
     }
   });
@@ -116,7 +116,7 @@ const getUserManagedGroups = (): Promise<Group[]> => get('/me/groups?fields=id,n
     const errors = err.message.split(':');
     switch (errors[1]) {
       default:
-        reportError(err);
+        reportError(new Error(err.message));
         throw err;
     }
   });
@@ -142,7 +142,7 @@ const getGroup = (groupId: string): Promise<Group> => get(`/${groupId}?fields=id
       case '803':
         throw new Error('Group ID is not valid.');
       default:
-        reportError(err);
+        reportError(new Error(err.message));
         throw err;
     }
   });
@@ -155,7 +155,7 @@ const getGroupFeed = (groupId: string, pages: number): Promise<{}[]> => {
       const errors = err.message.split(':');
       switch (errors[1]) {
         default:
-          reportError(err);
+          reportError(new Error(err.message));
           throw err;
       }
     });
@@ -191,7 +191,7 @@ const getGroupComments = (posts: Object[]): Promise<any> => {
       const errors = err.message.split(':');
       switch (errors[1]) {
         default:
-          reportError(err);
+          reportError(new Error(err.message));
           throw err;
       }
     });
@@ -205,7 +205,7 @@ const getGroupMembers = (groupId: string, pages: number): Promise<{}[]> => {
       const errors = err.message.split(':');
       switch (errors[1]) {
         default:
-          reportError(err);
+          reportError(new Error(err.message));
           throw err;
       }
     });
