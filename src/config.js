@@ -7,4 +7,5 @@ export default {
   feedPages: process.env.REACT_APP_FEED_PAGES || 10,
   groupIds: process.env.REACT_APP_GROUP_IDS || '1920036621597031',
   version: process.env.REACT_APP_VERSION || 'development',
+  bugsnagAPIKey: process.env.REACT_APP_BUGSNAG,
 };
