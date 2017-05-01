@@ -17,7 +17,7 @@ const Post = (props: UserMetric) => {
   const maxName = 40;
 
   return (
-    <div style={{ width: '20rem', float: 'left', margin: '0px 10px 15px 0px', height: '10rem' }}>
+    <div style={{ width: '20rem', float: 'left', margin: '0px 10px 10px 0px', height: '15rem' }}>
       <Card>
         <div className="row">
 
@@ -28,10 +28,19 @@ const Post = (props: UserMetric) => {
           {picture ? <div className="col-md-4"><img src={picture} className="rounded" alt="Prof pic" style={{ width: '100%' }} /></div> : ''}
 
           <div className={picture ? 'col-md-6' : 'col-md-12'}>
-            <div>Total posts: {postsCount}</div>
-            <div>Posts likes: {postsLikesCount}</div>
-            <div>Posts shares: {postsSharesCount}</div>
-            <div>Total comments: {commentsCount}</div>
+            <dl>
+              <dt>Posts</dt>
+              <dd>
+                Total: {postsCount}<br />
+                Likes: {postsLikesCount}<br />
+                Shares: {postsSharesCount}<br />
+              </dd>
+
+              <dt>Comments</dt>
+              <dd>
+                Total: {commentsCount}
+              </dd>
+            </dl>
           </div>
 
         </div>
