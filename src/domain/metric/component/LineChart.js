@@ -11,15 +11,24 @@ const defaultShow = [
   { column: 'usersPosts', label: 'Unique User Posts' },
 ];
 
-const calculate = (column: string, metrics: TimeRangeMetric[]): number[] => {
+export const LineChartTypes = {
+  TOTAL_POSTS: 'TOTAL_POSTS',
+  USERS_POSTS: 'USERS_POSTS',
+  TOTAL_COMMENTS: 'TOTAL_COMMENTS',
+  USERS_COMMENTS: 'USERS_COMMENTS',
+};
+
+declare type LineChartType = $Keys<typeof LineChartTypes>
+
+const calculate = (column: LineChartType, metrics: TimeRangeMetric[]): number[] => {
   switch (column) {
-    case 'totalPosts':
+    case LineChartTypes.TOTAL_POSTS:
       return metrics.map(met => met.postsMetric.totalPosts());
-    case 'usersPosts':
+    case LineChartTypes.USERS_POSTS:
       return metrics.map(met => met.usersMetric.uniqueUsersPosts().length);
-    case 'totalComments':
+    case LineChartTypes.TOTAL_COMMENTS:
       return metrics.map(met => met.postsMetric.totalComments());
-    case 'usersComments':
+    case LineChartTypes.USERS_COMMENTS:
       return metrics.map(met => met.usersMetric.uniqueUsersComments().length);
     default:
       return [];
@@ -32,7 +41,7 @@ class PostsTimeSeries extends React.Component {
     title: string,
     metrics: TimeRangeMetric[],
     show: {
-      column: 'totalPosts' | 'usersPosts' | 'totalComments' | 'usersComments',
+      column: LineChartType,
       label: string,
     }[],
   }
@@ -58,7 +67,7 @@ class PostsTimeSeries extends React.Component {
         x: {
           type: 'timeseries',
           tick: {
-            format: d => moment(d).format('ddd, DD MMM YY'),
+            format: d => moment(d).format('ddd, DD MMM YYYY'),
           },
         },
       },

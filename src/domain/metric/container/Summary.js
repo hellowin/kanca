@@ -10,7 +10,7 @@ import type { FormObject } from 'infra/component/Form';
 
 import timeRangeMetricer, { timeSeriesMetric as timeSeriesMetricer, extractDateRangeFromPosts } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
-import PostsTimeSeries from '../component/PostsTimeSeries';
+import LineChart, { LineChartTypes } from '../component/LineChart';
 import Pie from '../component/Pie';
 import WordCloud from '../component/WordCloud';
 
@@ -126,11 +126,11 @@ class MetricSummary extends React.Component {
         </div>
 
         <div className="col-md-12">
-          <PostsTimeSeries title="Activity" metrics={metrics} show={[
-            { column: 'totalPosts', label: 'Total Posts' },
-            { column: 'usersPosts', label: 'Unique User Posts' },
-            { column: 'totalComments', label: 'Total Comments' },
-            { column: 'usersComments', label: 'Unique User Comments' },
+          <LineChart title="Group Activities" metrics={metrics} show={[
+            { column: LineChartTypes.TOTAL_POSTS, label: 'Total Posts' },
+            { column: LineChartTypes.USERS_POSTS, label: 'Unique User Posts' },
+            { column: LineChartTypes.TOTAL_COMMENTS, label: 'Total Comments' },
+            { column: LineChartTypes.USERS_COMMENTS, label: 'Unique User Comments' },
           ]} />
         </div>
 
