@@ -29,14 +29,14 @@ const Post = (props: UserMetric) => {
 
           <div className={picture ? 'col-md-6' : 'col-md-12'}>
             <dl>
-              <dt>Posts</dt>
+              <dt><i className="fa fa-pencil-square-o mr-1" />Posts</dt>
               <dd>
                 Total: {postsCount}<br />
                 Likes: {postsLikesCount}<br />
                 Shares: {postsSharesCount}<br />
               </dd>
 
-              <dt>Comments</dt>
+              <dt><i className="fa fa-commenting mr-1" />Comments</dt>
               <dd>
                 Total: {commentsCount}
               </dd>
