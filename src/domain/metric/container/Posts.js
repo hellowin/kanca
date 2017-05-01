@@ -9,7 +9,7 @@ import Card from 'infra/component/Card';
 
 import timeRangeMetricer, { timeSeriesMetric as timeSeriesMetricer, extractDateRangeFromPosts } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
-import PostsTimeSeries from '../component/PostsTimeSeries';
+import LineChart, { LineChartTypes } from '../component/LineChart';
 import PostActivityTop from '../component/PostActivityTop';
 import UserActivityTop from '../component/UserActivityTop';
 import Pie from '../component/Pie';
@@ -72,9 +72,9 @@ class PostsMetricPage extends React.Component {
         </div>
 
         <div className="col-12">
-          <PostsTimeSeries title="Posts" metrics={metrics} show={[
-            { column: 'totalPosts', label: 'Total Posts' },
-            { column: 'usersPosts', label: 'Unique User Posts' },
+          <LineChart title="Posts" metrics={metrics} show={[
+            { column: LineChartTypes.TOTAL_POSTS, label: 'Total Posts' },
+            { column: LineChartTypes.USERS_POSTS, label: 'Unique User Posts' },
           ]} />
         </div>
 

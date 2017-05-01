@@ -9,7 +9,7 @@ import type { FormObject } from 'infra/component/Form';
 
 import timeRangeMetricer, { timeSeriesMetric as timeSeriesMetricer, extractDateRangeFromPosts } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
-import PostsTimeSeries from '../component/PostsTimeSeries';
+import LineChart, { LineChartTypes } from '../component/LineChart';
 import CommentActivityTop from '../component/CommentActivityTop';
 import UserActivityTop from '../component/UserActivityTop';
 import Pie from '../component/Pie';
@@ -72,9 +72,9 @@ class CommentsMetricPage extends React.Component {
         </div>
 
         <div className="col-12">
-          <PostsTimeSeries title="Comments" metrics={metrics} show={[
-            { column: 'totalComments', label: 'Total Comments' },
-            { column: 'usersComments', label: 'Unique User Comments' },
+          <LineChart title="Comments" metrics={metrics} show={[
+            { column: LineChartTypes.TOTAL_COMMENTS, label: 'Total Comments' },
+            { column: LineChartTypes.USERS_COMMENTS, label: 'Unique User Comments' },
           ]} />
         </div>
 
