@@ -12,7 +12,7 @@ import type { TimeRangeMetric } from '../service/timeRangeMetric';
 import LineChart, { LineChartTypes } from '../component/LineChart';
 import CommentActivityTop from '../component/CommentActivityTop';
 import UserActivityTop from '../component/UserActivityTop';
-import Pie from '../component/Pie';
+import Pie, { PieTypes } from '../component/Pie';
 import WordCloud from '../component/WordCloud';
 
 const mapStateToProps = state => ({
@@ -79,13 +79,13 @@ class CommentsMetricPage extends React.Component {
         </div>
 
         <div className="col-md-6">
-          <Pie metric={metric} type="commentsPerDay" />
+          <Pie metric={metric} type={PieTypes.COMMENTS_PERDAY} />
           <WordCloud metric={metric} type="comments" />
           <CommentActivityTop metric={metric} type="likes" title="Comments Likes" subTitle="Top 10 most liked comments." />
         </div>
 
         <div className="col-md-6">
-          <Pie metric={metric} type="commentsPerTrihours" />
+          <Pie metric={metric} type={PieTypes.COMMENTS_PERTRIHOUR} />
           <UserActivityTop metric={metric} type="comments" title="Comments" subTitle="Top 10 user posts count." />
         </div>
 
