@@ -79,7 +79,7 @@ class MembersMetricPage extends React.Component {
 
         <div className="col-12">
           <h1 className="h3 mb-1">Group Members</h1>
-          <Pagination list={list} ChildNode={Member} />
+          <Pagination list={list.filter(li => li.name)} perPage={9} ChildNode={Member} />
         </div>
 
       </div>

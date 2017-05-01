@@ -42,11 +42,11 @@ class Pagination extends React.Component {
 
     // handle list
     const start = (page - 1) * fixPerPage;
-    const end = start + fixPerPage - 1;
+    const end = start + fixPerPage;
     const currentList = list.slice(start, end);
 
     // handle pagination details
-    const totalPage = Math.ceil(list.length / fixPerPage)
+    const totalPage = Math.ceil(list.length / fixPerPage);
     const max = 3;
     const startPage: number = page - max <= 1 ? 1 : page - max;
     const endPage: number = page + max >= totalPage ? totalPage : page + max;
@@ -96,7 +96,7 @@ class Pagination extends React.Component {
       <div className="col-12">
         <div className="row">
           <div className="col-md-6" style={{ lineHeight: 3 }}>
-            Page {page} of {totalPage}.
+            Page {page} of {totalPage}. Item {start + 1} to {end}.
           </div>
           <div className="col-md-6">
             {pagination}
