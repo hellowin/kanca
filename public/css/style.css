@@ -2761,10 +2761,10 @@ header.navbar {
     padding: 0.5rem 1rem;
     margin-right: 0;
     background-color: #fff;
-    background-image: url("../img/logo.png");
+    background-image: url("../img/logo.png"); 
     background-repeat: no-repeat;
     background-position: center center;
-    background-size: 70px auto;
+    background-size: 87px auto;
     border-bottom: 1px solid #cfd8dc; }
   header.navbar .navbar-nav {
     flex-direction: row;
