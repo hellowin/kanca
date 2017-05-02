@@ -1,4 +1,4 @@
-# Kanca
+![Kanca logo](https://github.com/hellowin/kanca/blob/master/public/img/logo.png)
 
 [![Build Status](https://travis-ci.org/hellowin/kanca.svg?branch=master)](https://travis-ci.org/hellowin/kanca)
 [![codecov](https://codecov.io/gh/hellowin/kanca/branch/master/graph/badge.svg)](https://codecov.io/gh/hellowin/kanca)
