@@ -15,6 +15,10 @@ window.fbAsyncInit = function() {
   });
   window.FB.AppEvents.logPageView();
 
+  // Google Analytics
+  window.ga('create', config.GoogleAnalyticsID, 'auto');
+  window.ga('send', 'pageview');
+
   // initialize React application
   ReactDOM.render(
     <Provider store={store}>
