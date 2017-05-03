@@ -16,7 +16,7 @@ window.fbAsyncInit = function() {
   window.FB.AppEvents.logPageView();
 
   // Google Analytics
-  window.ga('create', config.GoogleAnalyticsID, 'auto');
+  window.ga('create', config.GAID, 'auto');
   window.ga('send', 'pageview');
 
   // initialize React application
