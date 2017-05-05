@@ -40,7 +40,7 @@ export type FormObject = {
 }
 
 // handler
-const handleChange = (model: string, callback: Function, valLoc: ValueType = ValueTypes.TEXT) => event => {
+const handleChange = (model: string, callback?: Function, valLoc: ValueType = ValueTypes.TEXT) => event => {
   let val;
   switch (valLoc) {
     case ValueTypes.BOOLEAN:
@@ -106,7 +106,7 @@ export default class Form extends React.Component {
 
   props: {
     forms: FormObject[],
-    onChange: Function,
+    onChange?: Function,
   }
 
   render() {

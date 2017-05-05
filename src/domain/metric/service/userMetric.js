@@ -2,6 +2,7 @@
 import _ from 'lodash';
 
 export type UserMetric = {
+  member?: Member,
   id: string,
   name: string,
   picture: string,
@@ -14,7 +15,8 @@ export type UserMetric = {
   postsLikesCount: number,
 }
 
-const userFactory = (id: string, name: string, picture: string, url?: string): UserMetric => ({
+const userFactory = (member?: Member, id: string, name: string, picture: string, url?: string): UserMetric => ({
+  member,
   id,
   name,
   picture,
@@ -27,7 +29,7 @@ const userFactory = (id: string, name: string, picture: string, url?: string): U
   postsLikesCount: 0,
 });
 
-export default (members: Member[], posts: Post[], comments: Comment[]): UserMetric[] => {
+export const userMetric = (members: Member[], posts: Post[], comments: Comment[]): UserMetric[] => {
   // create user mapping
   const users = {};
   _.each(members, member => {
@@ -35,7 +37,7 @@ export default (members: Member[], posts: Post[], comments: Comment[]): UserMetr
     const name = member.name;
     const picture = member.picture.data.url;
     const url = member.link;
-    const user = userFactory(id, name, picture, url);
+    const user = userFactory(member, id, name, picture, url);
     users[id] = user;
   });
   
@@ -44,7 +46,7 @@ export default (members: Member[], posts: Post[], comments: Comment[]): UserMetr
     const userId = (feed.from || {}).id;
     const userName = (feed.from || {}).name;
     // create empty user posts mapping
-    if (!users[userId]) users[userId] = userFactory(userId, userName, '');
+    if (!users[userId]) users[userId] = userFactory(undefined, userId, userName, '');
     if (feed.from) users[userId].posts.push(feed);
   });
 
@@ -53,7 +55,7 @@ export default (members: Member[], posts: Post[], comments: Comment[]): UserMetr
     const userId = (comment.from || {}).id;
     const userName = (comment.from || {}).name;
     // create empty user comments mapping
-    if (!users[userId]) users[userId] = userFactory(userId, userName, '');
+    if (!users[userId]) users[userId] = userFactory(undefined, userId, userName, '');
 
     if (comment.from) users[userId].comments.push(comment);
   });
@@ -72,3 +74,5 @@ export default (members: Member[], posts: Post[], comments: Comment[]): UserMetr
 
   return _.values(users);
 };
+
+export default userMetric;

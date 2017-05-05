@@ -14,6 +14,7 @@ export type UsersMetric = {
   sortByCommentsCount(): UserMetric[],
   sortByPostsLikesCount(): UserMetric[],
   sortByPostsSharesCount(): UserMetric[],
+  getById(userId: string): UserMetric,
 }
 
 export default (members: Member[], posts: Post[], comments: Comment[]): UsersMetric => {
@@ -30,5 +31,6 @@ export default (members: Member[], posts: Post[], comments: Comment[]): UsersMet
     sortByCommentsCount: () => _.sortBy(userMetrics, 'commentsCount').reverse(),
     sortByPostsLikesCount: () => _.sortBy(userMetrics, 'postsLikesCount').reverse(),
     sortByPostsSharesCount: () => _.sortBy(userMetrics, 'postsSharesCount').reverse(),
+    getById: (userId: string) => userMetrics.filter(met => met.id === userId)[0],
   };
 };
