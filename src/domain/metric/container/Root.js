@@ -16,7 +16,7 @@ const checkMetricAvailability = props => {
 
 class Metric extends React.Component {
 
-  componentDidMount() {
+  componentWillMount() {
     checkMetricAvailability(this.props);
   }
 
@@ -25,9 +25,9 @@ class Metric extends React.Component {
   }
 
   render(){
-    const { loading, children } = this.props;
+    const { loading, children, feeds } = this.props;
 
-    return !loading ? children : <Loading />;
+    return !loading && feeds.length > 0 ? children : <Loading />;
   }
 
 }
