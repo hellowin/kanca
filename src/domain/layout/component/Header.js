@@ -76,7 +76,7 @@ class Header extends Component {
               <DropdownMenu className="dropdown-menu-right">
                 <DropdownItem header className="text-center"><strong>Account</strong></DropdownItem>
 
-                <DropdownItem onClick={() => loc.push('/user/profile')}><i className="fa fa-user"></i> Profile</DropdownItem>
+                <DropdownItem onClick={() => loc.push('/metric/user-profile')}><i className="fa fa-user"></i> Profile</DropdownItem>
                 <DropdownItem onClick={() => userRepo.logout()}><i className="fa fa-lock"></i> Logout</DropdownItem>
 
               </DropdownMenu>
