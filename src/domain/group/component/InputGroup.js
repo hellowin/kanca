@@ -59,11 +59,11 @@ class InputGroup extends React.Component {
     return (
       <div className="row">
         <div className="col-md-12 mb-1 mt-1">
-          <MediaQuery minDeviceWidth={320} maxDeviceWidth={480}>
-            {(match) => {
+          <MediaQuery minDeviceWidth={320} maxWidthDevice={736} minWidth={320} maxWidth={736}>
+            {(matches) => {
               return (
                 <form className="form-inline">
-                  {match ? [
+                  {matches ? [
                     <label style={{ marginBottom: '0', marginRight: '.5rem' }}>Group ID</label>,
                     <input
                       type="text"
