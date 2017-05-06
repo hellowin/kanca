@@ -6,9 +6,9 @@ import Group from './Root';
 import GroupSelection from './Selection';
 import GroupFeed from './Feed';
 
-export default (
+export default () => (
   <Route path="group" component={Group}>
-    <IndexRedirect to="welcome" />
+    <IndexRedirect to="selection" />
     <Route path="selection" component={GroupSelection} />
     <Route path="feed" component={GroupFeed} />
   </Route>

@@ -8,13 +8,14 @@ export const Route = GroupRoute;
 
 const mapStateToProps = state => ({
   user: state.user,
+  posts: state.group.feeds,
 });
 
 const checkValidity = props => {
-  const { user } = props;
+  const { user, posts } = props;
   const loggedIn = user.loggedIn;
 
-  if (!loggedIn) loc.push('/welcome');
+  if (!loggedIn && posts.length < 1) loc.push('/welcome');
 };
 
 class Group extends React.Component {

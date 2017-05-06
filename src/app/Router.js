@@ -21,8 +21,8 @@ const RouterComp = () => (
     <Route path={prefix} component={App}>
       <IndexRedirect to="welcome" />
       <Route path="welcome" component={Welcome} />
-      {GroupRoute}
-      {MetricRoute}
+      {GroupRoute()}
+      {MetricRoute()}
     </Route>
     <Route path={prefix + '/login'} component={Login} />
     <Redirect from="*" to={prefix} />

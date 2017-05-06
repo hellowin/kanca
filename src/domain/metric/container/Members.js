@@ -18,7 +18,7 @@ const mapStateToProps = state => ({
 
 const setDefaultData = props => {
   return {
-    sort: 'name',
+    sort: 'score',
   };
 };
 
@@ -41,6 +41,7 @@ class MembersMetricPage extends React.Component {
     const forms = [
       { type: FormTypes.SELECT, label: 'Sort by', value: data.sort, model: 'sort', col: 12, selectOptions: [
         { text: 'Name', value: 'name' },
+        { text: 'Score', value: 'score' },
         { text: 'Posts count', value: 'postsCount' },
         { text: 'Comments count', value: 'commentsCount' },
       ] },
@@ -53,6 +54,9 @@ class MembersMetricPage extends React.Component {
         break;
       case 'postsCount':
         list = _.sortBy(metric.userMetrics, user => user.postsCount).reverse();
+        break;
+      case 'score':
+        list = _.sortBy(metric.userMetrics, user => user.getScore()).reverse();
         break;
       case 'name':
       default:
