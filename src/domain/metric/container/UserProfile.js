@@ -57,7 +57,7 @@ class MetricSummary extends React.Component {
       { type: FormTypes.TEXT, label: 'Name', value: profile.name, disabled: true, col: 6 },
       { type: FormTypes.TEXT, label: 'Email', value: profile.email, disabled: true, col: 6 },
     ];
-    
+
     const forms: FormObject[] = [
       { type: FormTypes.DATE, label: 'Date start', value: data.dateStart, model: 'dateStart', col: 6 },
       { type: FormTypes.DATE, label: 'Date end', value: data.dateEnd, model: 'dateEnd', col: 6 },

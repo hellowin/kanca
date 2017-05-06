@@ -3,20 +3,26 @@ import React from 'react';
 import { connect } from 'react-redux';
 import loc from 'infra/service/location';
 import Loading from 'infra/component/Loading';
+import MetricRoute from './Route';
+
+export const Route = MetricRoute;
 
 const mapStateToProps = state => ({
+  loggedIn: state.user.loggedIn,
   feeds: state.group.feeds,
+  comments: state.group.comments,
+  members: state.group.members,
   loading: state.group.loading,
 });
 
 const checkMetricAvailability = props => {
-  const { feeds } = props;
-  if (feeds.length < 1) loc.push('/');
+  const { loggedIn, loading, feeds, comments, members } = props;
+  if (!loggedIn && !loading && feeds.length < 1 && comments.length < 1 && members.length < 1) loc.push('/welcome');
 }
 
 class Metric extends React.Component {
 
-  componentWillMount() {
+  componentDidMount() {
     checkMetricAvailability(this.props);
   }
 
@@ -25,9 +31,10 @@ class Metric extends React.Component {
   }
 
   render(){
-    const { loading, children, feeds } = this.props;
+    const { loggedIn, loading, children, feeds, comments, members } = this.props;
+    console.log(feeds, comments, members);
 
-    return !loading && feeds.length > 0 ? children : <Loading />;
+    return !loggedIn && !loading && feeds.length > 0 && comments.length > 0 && members.length > 0 ? children : <Loading />;
   }
 
 }
