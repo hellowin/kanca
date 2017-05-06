@@ -1,4 +1,5 @@
 import React from 'react';
+import MediaQuery from 'react-responsive';
 import graph from 'infra/service/graph';
 import groupRepo from 'infra/repo/group';
 
@@ -58,11 +59,29 @@ class InputGroup extends React.Component {
     return (
       <div className="row">
         <div className="col-md-12 mb-1 mt-1">
-          <form className="form-inline">
-            <label className="mr-sm-2">Group ID</label>
-            <input type="text" className="form-control mb-2 mr-sm-2 mb-sm-0 col-4" placeholder="example: 1920036621597031" value={data.groupId} onChange={onFormChange('groupId')} />
-            <button type="submit" className="btn btn-primary" onClick={lookUpGroup(data.groupId)}>Look Up</button>
-          </form>
+          <MediaQuery minDeviceWidth={320} maxDeviceWidth={480}>
+            {(match) => {
+              return (
+                <form className="form-inline">
+                  {match ? [
+                    <label style={{ marginBottom: '0', marginRight: '.5rem' }}>Group ID</label>,
+                    <input
+                      type="text"
+                      className="form-control mr-sm-2 mb-sm-0 col-4"
+                      style={{ marginRight: '.5rem' }}
+                      placeholder="example: 1920036621597031"
+                      value={data.groupId}
+                      onChange={onFormChange('groupId')}
+                    />
+                  ] : [
+                    <label className="mr-sm-2">Group ID</label>,
+                    <input type="text" className="form-control mr-sm-2 mb-sm-0 col-4" placeholder="example: 1920036621597031" value={data.groupId} onChange={onFormChange('groupId')} />
+                  ]}
+                  <button type="submit" className="btn btn-primary" onClick={lookUpGroup(data.groupId)}>Look Up</button>
+                </form>
+              );
+            }}
+          </MediaQuery>
         </div>
         {error ? (<div className="col-md-12">
           <div className="alert alert-danger" role="alert">
