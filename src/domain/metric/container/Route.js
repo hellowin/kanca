@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, IndexRedirect } from 'react-router';
 
 import Metric from './Root';
 import MetricSummary from './Summary';
@@ -9,8 +9,9 @@ import MetricComments from './Comments';
 import MetricMembers from './Members';
 import MetricUserProfile from './UserProfile';
 
-export default (
+export default () => (
   <Route path="metric" component={Metric}>
+    <IndexRedirect to="summary" />
     <Route path="summary" component={MetricSummary} />
     <Route path="members" component={MetricMembers} />
     <Route path="posts" component={MetricPosts} />

@@ -1,33 +1,45 @@
 // @flow
 import _ from 'lodash';
 
-export type UserMetric = {
-  member?: Member,
-  id: string,
-  name: string,
-  picture: string,
-  url?: string,
-  posts: Post[],
-  comments: Comment[],
-  postsCount: number,
-  commentsCount: number,
-  postsSharesCount: number,
-  postsLikesCount: number,
+export class UserMetric {
+
+  member: Member | void
+  id: string
+  name: string
+  picture: string
+  url: string | void
+  posts: Post[]
+  comments: Comment[]
+  postsCount: number
+  commentsCount: number
+  postsSharesCount: number
+  postsLikesCount: number
+  getScore: (postWeight?: number, commentWeight?: number, postShareWeight?: number, postLikeWeight?: number) => number
+
+  constructor(member?: Member, id: string, name: string, picture: string, url?: string) {
+    this.member = member;
+    this.id = id;
+    this.name = name;
+    this.picture = picture;
+    this.url = url;
+    this.posts = [];
+    this.comments = [];
+    this.postsCount = 0;
+    this.commentsCount = 0;
+    this.postsSharesCount = 0;
+    this.postsLikesCount = 0;
+
+    this.getScore = (postWeight = 1, commentWeight = 1, postShareWeight = 1, postLikeWeight = 1): number => {
+      return this.postsCount * postWeight
+        + this.commentsCount * commentWeight
+        + this.postsSharesCount * postShareWeight
+        + this.postsLikesCount * postLikeWeight;
+    };
+  }
 }
 
-const userFactory = (member?: Member, id: string, name: string, picture: string, url?: string): UserMetric => ({
-  member,
-  id,
-  name,
-  picture,
-  url,
-  posts: [],
-  comments: [],
-  postsCount: 0,
-  commentsCount: 0,
-  postsSharesCount: 0,
-  postsLikesCount: 0,
-});
+const userFactory = (member?: Member, id: string, name: string, picture: string, url?: string): UserMetric =>
+  new UserMetric(member, id, name, picture, url);
 
 export const userMetric = (members: Member[], posts: Post[], comments: Comment[]): UserMetric[] => {
   // create user mapping
