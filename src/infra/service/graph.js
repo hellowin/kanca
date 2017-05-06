@@ -100,7 +100,7 @@ const getUser = () => get('/me?fields=id,name,email,picture')
     }
   });
 
-const getUserManagedGroups = (): Promise<Group[]> => get('/me/groups?fields=id,name,privacy,cover,description,owner&limit=100')
+const getUserManagedGroups = (): Promise<Group[]> => get('/me/groups?fields=id,name,privacy,cover,description,owner&limit=5')
   .then(res => {
     const rawGroups = res.data;
     if (rawGroups.length < 1) return [];
@@ -146,7 +146,7 @@ const getGroup = (groupId: string): Promise<Group> => get(`/${groupId}?fields=id
       case '190':
       case '104':
         throw new Error('Access token required. Try to refresh your token with re-login.');
-      case '100':
+      case '5':
       case '803':
         throw new Error('Group ID is not valid.');
       default:
@@ -156,7 +156,7 @@ const getGroup = (groupId: string): Promise<Group> => get(`/${groupId}?fields=id
   });
 
 const getGroupFeed = (groupId: string, pages: number): Promise<{}[]> => {
-  const url = `/${groupId}/feed?fields=created_time,id,message,updated_time,caption,story,description,from,link,name,picture,status_type,type,shares,permalink_url,likes.limit(100),comments.limit(100){id,from,message,created_time,likes.limit(100),comments.limit(100){id,from,message,created_time,likes.limit(100)}}&limit=100`;
+  const url = `/${groupId}/feed?fields=created_time,id,message,updated_time,caption,story,description,from,link,name,picture,status_type,type,shares,permalink_url,likes.limit(5),comments.limit(5){id,from,message,created_time,likes.limit(5),comments.limit(5){id,from,message,created_time,likes.limit(5)}}&limit=5`;
   const list = new GraphList();
   return list.fetchForward(url, pages)
     .catch(err => {
@@ -206,7 +206,7 @@ const getGroupComments = (posts: Object[]): Promise<any> => {
 };
 
 const getGroupMembers = (groupId: string, pages: number): Promise<{}[]> => {
-  const url = `/${groupId}/members?fields=id,name,administrator,picture,link&limit=100`;
+  const url = `/${groupId}/members?fields=id,name,administrator,picture,link&limit=5`;
   const list = new GraphList();
   return list.fetchForward(url, pages)
     .catch(err => {
