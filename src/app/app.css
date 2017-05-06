@@ -24,5 +24,5 @@
 }
 
 .app > .app-body > main.main {
-  max-width: 100vw !important;
+  max-width: 100vw;
 }
