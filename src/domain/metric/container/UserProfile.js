@@ -49,6 +49,8 @@ class MetricSummary extends React.Component {
     const { feeds, members, comments, profile } = this.props;
     const { data } = this.state;
     const userMetric: UserMetric = usersMetricer(members, feeds, comments).getById(profile.facebookId);
+    if (!userMetric) return <div>Wait...</div>
+
     const mems: Member[] = userMetric.member ? [userMetric.member] : [];
     const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, userMetric.posts, mems, userMetric.comments);
     const metrics: TimeRangeMetric[] = timeSeriesMetricer(data.dateStart, data.dateEnd, 'd', userMetric.posts, mems, userMetric.comments);
@@ -99,13 +101,11 @@ class MetricSummary extends React.Component {
           <Pie metric={metric} type={PieTypes.ACTIVITIES_PERDAY} />
           <Card>
             <p>Time range {moment(data.dateStart).format('YYYY-MM-DD HH:mm:ss')} - {moment(data.dateEnd).format('YYYY-MM-DD HH:mm:ss')}</p>
-            <p>Total posts: {metric.postsMetric.totalPosts()}</p>
-            <p>Total posts shares: {metric.postsMetric.totalShares()}</p>
-            <p>Total posts likes: {metric.postsMetric.totalLikes()}</p>
-            <p>Total comments: {metric.commentsMetric.totalComments()}</p>
-            <p>Total members: {metric.usersMetric.totalMembers()}</p>
-            <p>Total unique member posting: {metric.usersMetric.uniqueUsersPosts().length}</p>
-            <p>Total unique member commenting: {metric.usersMetric.uniqueUsersComments().length}</p>
+            <p>Total posts: {userMetric.postsCount}</p>
+            <p>Total posts shares: {userMetric.postsSharesCount}</p>
+            <p>Total posts likes: {userMetric.postsLikesCount}</p>
+            <p>Total comments: {userMetric.commentsCount}</p>
+            <p>Total score: {userMetric.getScore()}</p>
           </Card>
         </div>
 

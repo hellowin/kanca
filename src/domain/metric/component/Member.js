@@ -12,12 +12,13 @@ const Post = (props: UserMetric) => {
     commentsCount,
     postsLikesCount,
     postsSharesCount,
+    getScore,
   } = props;
 
   const maxName = 40;
 
   return (
-    <div style={{ width: '20rem', float: 'left', margin: '0px 10px 10px 0px', height: '15rem' }}>
+    <div style={{ width: '20rem', float: 'left', margin: '0px 10px 10px 0px', height: '20rem' }}>
       <Card>
         <div className="row">
 
@@ -40,6 +41,12 @@ const Post = (props: UserMetric) => {
               <dd>
                 Total: {commentsCount}
               </dd>
+
+              <dt><i className="fa fa-star mr-1" />Score</dt>
+              <dd>
+                Total: {getScore()}
+              </dd>
+
             </dl>
           </div>
 
