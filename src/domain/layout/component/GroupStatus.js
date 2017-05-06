@@ -25,21 +25,21 @@ class GroupStatus extends React.Component {
     super(props);
 
     this.getTime = this.getTime.bind(this);
-
     const { updatedTime } = props;
-    this.getTime(updatedTime);
 
-    this.state = {
-      deltaTime: moment(new Date(updatedTime)).toNow(),
-      diffTime: moment(new Date(updatedTime)).diff(moment()),
-    };
+    this.state = this.refresh(updatedTime);
+  }
+
+  refresh(updatedTime) {
+    const deltaTime = moment(new Date(updatedTime)).toNow();
+    const diffTime = moment(new Date(updatedTime)).diff(moment());
+    return { deltaTime, diffTime };
   }
 
   getTime(updatedTime) {
+    this.setState(this.refresh(updatedTime));
     this.intervalTime = setInterval(() => {
-      const deltaTime = moment(new Date(updatedTime)).toNow();
-      const diffTime = moment(new Date(updatedTime)).diff(moment());
-      this.setState({ deltaTime, diffTime });
+      this.setState(this.refresh(updatedTime));
     }, 5000);
   }
 
