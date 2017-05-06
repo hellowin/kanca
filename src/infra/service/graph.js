@@ -90,6 +90,7 @@ const getUser = () => get('/me?fields=id,name,email,picture')
   .catch(err => {
     const errors = err.message.split(':');
     switch (errors[1]) {
+      case '2500':
       case '190':
       case '104':
         throw new Error('Access token required. Try to refresh your token with re-login.');
