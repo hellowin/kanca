@@ -2,6 +2,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import loc from 'infra/service/location';
+import GroupRoute from './Route';
+
+export const Route = GroupRoute;
 
 const mapStateToProps = state => ({
   user: state.user,
