@@ -26,8 +26,10 @@ const GroupPost = (props: Post) => {
   return (
     <Card>
       <div className="row">
-        {picture ? <div className="col-md-2"><img src={picture} className="rounded float-left" alt="Post pic" style={{ width: '100%' }} /></div> : ''}
+        {picture ? <div className="col-md-2"><img src={picture} className="rounded float-left img-responsive" alt="Post pic" /></div> : ''}
         <div className={picture ? 'col-md-10' : 'col-md-12'}>
+          {from ? <span><i className="fa fa-user"></i> <b>{from.name}</b> </span> : ''}
+          {created_time ? <span className="text-muted"><i className="fa fa-clock-o"></i> {moment(created_time).format('YYYY-MM-DD HH:mm:ss')} </span> : ''}
           <p className="card-text">{message}</p>
           {description ? (
             <blockquote className="blockquote">
@@ -36,21 +38,18 @@ const GroupPost = (props: Post) => {
             </blockquote>
           ) : ''}
           {story ? <p>{story}</p> : ''}
-          {from ? <span><i className="fa fa-user"></i> <b>{from.name}</b> </span> : ''}
-          {created_time ? <span><i className="fa fa-clock-o"></i> {moment(created_time).format('YYYY-MM-DD HH:mm:ss')} </span> : ''}
-          {type ? <span><i className="fa fa-tag"></i> {type} </span> : ''}
-          {shares ? <span><i className="fa fa-share"></i> {shares.count} </span> : ''}
-          {likes ? <span><i className="fa fa-thumbs-up"></i> {likes.data.length} </span> : ''}
+          {type ? <span className="text-muted"><i className="fa fa-tag"></i> {type} </span> : ''}
+          {shares ? <span className="text-muted"><i className="fa fa-share"></i> {shares.count} </span> : ''}
+          {likes ? <span className="text-muted"><i className="fa fa-thumbs-up"></i> {likes.data.length} </span> : ''}
+          <a href={permalink_url} target="_blank" className="btn btn-primary btn-sm">Open in FB</a>
         </div>
       </div>
-      {validComments.length > 0 ? (<div className="card-block row">
+      {validComments.length > 0 ? (<div className="row">
         <div className="col-md-12">
-          <Pagination list={validComments} ChildNode={Comment} hideNavigationOnSinglePage />
+          <hr />
+          <Pagination list={validComments} ChildNode={Comment} hideNavigationOnSinglePage perPage={5} />
         </div>
       </div>) : ''}
-      <div className="card-block" style={{ textAlign: 'right' }}>
-        <a href={permalink_url} target="_blank" className="btn btn-primary btn-sm">Open in FB</a>
-      </div>
     </Card>
   );
 }
