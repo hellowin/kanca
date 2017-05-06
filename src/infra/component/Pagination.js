@@ -93,14 +93,12 @@ class Pagination extends React.Component {
     );
 
     const navigation = hideNavigationOnSinglePage && totalPage === 1 ? '' : (
-      <div className="col-12">
-        <div className="row">
-          <div className="col-md-6" style={{ lineHeight: 3 }}>
-            Page {page} of {totalPage}. Item {start + 1} to {end}.
-          </div>
-          <div className="col-md-6">
-            {pagination}
-          </div>
+      <div className="row">
+        <div className="col-md-6" style={{ lineHeight: 3 }}>
+          Page {page} of {totalPage}. Item {start + 1} to {end}.
+        </div>
+        <div className="col-md-6">
+          {pagination}
         </div>
       </div>
     );
@@ -110,7 +108,9 @@ class Pagination extends React.Component {
         <div className="col-12">
           {currentList.map((props, key) => <ChildNode key={key} {...props} />)}
         </div>
-        {navigation}
+        <div className="col-12">
+          {navigation}
+        </div>
       </div>
     );
   }

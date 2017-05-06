@@ -14,12 +14,14 @@ const mapStateToProps = state => ({
 const GroupFeed = props => {
   const { loading, feeds } = props;
 
-  if (!loading && feeds.length < 1) loc.push('/group/selection');
+  if (!loading && feeds.length < 1) loc.push('/welcome');
 
   return !loading ? (
-    <div>
-      <h1 className="h3">Group Feed</h1>
-      <Pagination list={feeds} ChildNode={Post} />
+    <div className="row">
+      <div className="col-12" style={{ marginRight: '-45px' }}>
+        <h1 className="h3">Group Feed</h1>
+        <Pagination list={feeds} ChildNode={Post} />
+      </div>
     </div>
   ) : <Loading />;
 };
