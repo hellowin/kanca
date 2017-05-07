@@ -4,11 +4,9 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import Card from 'infra/component/Card';
-import Pagination from 'infra/component/Pagination';
 import Form, { FormTypes, withForm } from 'infra/component/Form';
-
-import Member from '../component/Member';
 import usersMetricer from '../service/usersMetric';
+import MemberList from '../component/MemberList';
 
 const mapStateToProps = state => ({
   members: state.group.members,
@@ -63,6 +61,8 @@ class MembersMetricPage extends React.Component {
         list = _.sortBy(metric.userMetrics, user => user.name);
     }
 
+    const validList = list.filter(li => li.name).slice(0, 100);
+
     return (
       <div className="row">
 
@@ -82,8 +82,7 @@ class MembersMetricPage extends React.Component {
         </div>
 
         <div className="col-12">
-          <h1 className="h3 mb-1">Group Members</h1>
-          <Pagination list={list.filter(li => li.name)} perPage={9} ChildNode={Member} />
+          <MemberList list={validList} />
         </div>
 
       </div>
