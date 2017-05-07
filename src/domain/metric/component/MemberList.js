@@ -17,7 +17,6 @@ class MemberList extends React.Component {
       profile: (<div>
         <img src={li.picture} alt="user avatar" className="mr-1" />{li.name}
       </div>),
-      score: li.getScore(),
       posts: (
         <dd>
           Total: {li.postsCount}<br />
@@ -30,6 +29,7 @@ class MemberList extends React.Component {
           Total: {li.commentsCount}
         </dd>
       ),
+      score: li.getScore(),
     }));
 
     const columns = [
