@@ -67,7 +67,6 @@ class InputGroup extends React.Component {
                   {matches ? [
                     <label style={{ marginBottom: '0', marginRight: '.5rem' }} key={uuid.v4()}>Group ID</label>,
                     <input
-                      key="input"
                       type="text"
                       className="form-control mr-sm-2 mb-sm-0 col-4"
                       style={{ marginRight: '.5rem' }}
