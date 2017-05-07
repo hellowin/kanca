@@ -10,14 +10,13 @@ import type { FormObject } from 'infra/component/Form';
 
 import timeRangeMetricer, { timeSeriesMetric as timeSeriesMetricer, extractDateRangeFromPosts } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
-import usersMetricer from '../service/usersMetric';
 import type { UserMetric }  from '../service/userMetric';
 import LineChart, { LineChartTypes } from '../component/LineChart';
 import Pie, { PieTypes } from '../component/Pie';
 import WordCloud from '../component/WordCloud';
 
 const mapStateToProps = state => ({
-  feeds: state.group.feeds,
+  posts: state.group.feeds,
   members: state.group.members,
   comments: state.group.comments,
   profile: state.user.profile,
@@ -46,14 +45,13 @@ class MetricSummary extends React.Component {
   onFormChange: Function
 
   render() {
-    const { feeds, members, comments, profile } = this.props;
+    const { posts, members, comments, profile } = this.props;
     const { data } = this.state;
-    const userMetric: UserMetric = usersMetricer(members, feeds, comments).getById(profile.facebookId);
-    if (!userMetric) return <div>Wait...</div>
 
-    const mems: Member[] = userMetric.member ? [userMetric.member] : [];
-    const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, userMetric.posts, mems, userMetric.comments);
-    const metrics: TimeRangeMetric[] = timeSeriesMetricer(data.dateStart, data.dateEnd, 'd', userMetric.posts, mems, userMetric.comments);
+    const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, posts, members, comments);
+    const userMetric: UserMetric = metric.usersMetric.getById(profile.facebookId);
+    if (!userMetric) return <div>Wait...</div>;
+    const metrics: TimeRangeMetric[] = timeSeriesMetricer(data.dateStart, data.dateEnd, 'd', userMetric.posts, members, userMetric.comments);
 
     const profileForms = [
       { type: FormTypes.TEXT, label: 'Name', value: profile.name, disabled: true, col: 6 },
@@ -111,7 +109,7 @@ class MetricSummary extends React.Component {
 
         <div className="col-md-6">
           <Pie metric={metric} type={PieTypes.ACTIVITIES_PERTRIHOUR} />
-          <WordCloud title="Word cloud posts" metric={metric} type="posts" />
+          <WordCloud title="Word cloud" metric={metric} type="all" />
         </div>
 
       </div>
