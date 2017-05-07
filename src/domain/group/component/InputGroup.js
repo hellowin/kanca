@@ -1,5 +1,6 @@
 import React from 'react';
 import MediaQuery from 'react-responsive';
+import uuid from 'uuid';
 import graph from 'infra/service/graph';
 import groupRepo from 'infra/repo/group';
 
@@ -64,7 +65,7 @@ class InputGroup extends React.Component {
               return (
                 <form className="form-inline">
                   {matches ? [
-                    <label style={{ marginBottom: '0', marginRight: '.5rem' }}>Group ID</label>,
+                    <label style={{ marginBottom: '0', marginRight: '.5rem' }} key={uuid.v4()}>Group ID</label>,
                     <input
                       type="text"
                       className="form-control mr-sm-2 mb-sm-0 col-4"
@@ -72,10 +73,18 @@ class InputGroup extends React.Component {
                       placeholder="example: 1920036621597031"
                       value={data.groupId}
                       onChange={onFormChange('groupId')}
+                      key={uuid.v4()}
                     />
                   ] : [
-                    <label className="mr-sm-2">Group ID</label>,
-                    <input type="text" className="form-control mr-sm-2 mb-sm-0 col-4" placeholder="example: 1920036621597031" value={data.groupId} onChange={onFormChange('groupId')} />
+                    <label className="mr-sm-2" key={uuid.v4()}>Group ID</label>,
+                    <input
+                      type="text"
+                      className="form-control mr-sm-2 mb-sm-0 col-4"
+                      placeholder="example: 1920036621597031"
+                      value={data.groupId}
+                      onChange={onFormChange('groupId')}
+                      key={uuid.v4()}
+                    />
                   ]}
                   <button type="submit" className="btn btn-primary" onClick={lookUpGroup(data.groupId)}>Look Up</button>
                 </form>

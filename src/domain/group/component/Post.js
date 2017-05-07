@@ -2,6 +2,7 @@
 import React from 'react';
 import moment from 'moment-timezone';
 import MediaQuery from 'react-responsive';
+import uuid from 'uuid';
 import Comment from './Comment';
 import Pagination from 'infra/component/Pagination';
 import Card from 'infra/component/Card';
@@ -79,8 +80,8 @@ const GroupPost = (props: Post) => {
               <div className="row">
                 <div className="col-md-12">
                   {validComments && validComments.length > 0 ? [
-                    <hr />,
-                    <Pagination list={validComments} ChildNode={Comment} hideNavigationOnSinglePage perPage={5} />
+                    <hr key={uuid.v4()} />,
+                    <Pagination list={validComments} ChildNode={Comment} hideNavigationOnSinglePage perPage={5} key={uuid.v4()} />
                   ] : <null />}
                 </div>
               </div>
@@ -90,6 +91,6 @@ const GroupPost = (props: Post) => {
       </MediaQuery>
     </Card>
   );
-}
+};
 
 export default GroupPost;
