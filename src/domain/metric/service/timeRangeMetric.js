@@ -29,6 +29,9 @@ export const timeRangeMetric = (dateStart: Date, dateEnd: Date, posts: Post[], m
 
   // time series
   const getTimeSeries = (granularity: moment.unitOfTime.Base): TimeRangeMetric[] => {
+    // handle wrong input
+    if (granularity === undefined || granularity === null) return [];
+
     // define start and end time
     const start = moment(dateStart).startOf(granularity);
     const end = moment(dateEnd).endOf(granularity);
