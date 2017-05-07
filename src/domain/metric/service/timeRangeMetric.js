@@ -19,8 +19,8 @@ export type TimeRangeMetric = {
 
 export const timeRangeMetric = (dateStart: Date, dateEnd: Date, posts: Post[], members: Member[], comments: Comment[]): TimeRangeMetric => {
   // pick date
-  const filteredPosts = posts.filter(post => new Date(post.created_time) >= dateStart && new Date(post.created_time) < dateEnd);
-  const filteredComments = comments.filter(comm => new Date(comm.created_time) >= dateStart && new Date(comm.created_time) < dateEnd);
+  const filteredPosts = posts.filter(post => moment(post.created_time) >= dateStart && moment(post.created_time) < dateEnd);
+  const filteredComments = comments.filter(comm => moment(comm.created_time) >= dateStart && moment(comm.created_time) < dateEnd);
   
   // calculate metrics
   const postsMetric = postsMetricer(filteredPosts);

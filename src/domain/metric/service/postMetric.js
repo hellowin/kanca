@@ -26,7 +26,7 @@ export default (posts: Post[]): PostMetric[] => {
     const commentsCount = preCommentsCount + subCommentsCount;
 
     const text = post.message || post.story || post.message || '';
-    
+
     return {
       post,
       id: post.id,
