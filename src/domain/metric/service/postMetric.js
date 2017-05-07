@@ -1,5 +1,4 @@
 // @flow
-import moment from 'moment-timezone';
 
 export type PostMetric = {
   post: Post,
@@ -27,11 +26,11 @@ export default (posts: Post[]): PostMetric[] => {
     const commentsCount = preCommentsCount + subCommentsCount;
 
     const text = post.message || post.story || post.message || '';
-    
+
     return {
       post,
       id: post.id,
-      createdTime: moment(post.created_time).format(),
+      createdTime: new Date(post.created_time),
       text,
       from: post.from,
       picture: post.picture,
