@@ -8,7 +8,7 @@ import Card from 'infra/component/Card';
 import Form, { FormTypes, withForm } from 'infra/component/Form';
 import type { FormObject } from 'infra/component/Form';
 
-import timeRangeMetricer, { timeSeriesMetric as timeSeriesMetricer, extractDateRangeFromPosts } from '../service/timeRangeMetric';
+import timeRangeMetricer, { extractDateRangeFromPosts } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
 import LineChart, { LineChartTypes } from '../component/LineChart';
 import Pie, { PieTypes } from '../component/Pie';
@@ -98,7 +98,7 @@ class MetricSummary extends React.Component {
     const { feeds, members, comments } = this.props;
     const { data } = this.state;
     const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, feeds, members, comments);
-    const metrics: TimeRangeMetric[] = timeSeriesMetricer(data.dateStart, data.dateEnd, 'd', feeds, members, comments);
+    const metrics: TimeRangeMetric[] = metric.getTimeSeries('d');
     
     const forms: FormObject[] = [
       { type: FormTypes.DATE, label: 'Date start', value: data.dateStart, model: 'dateStart', col: 6 },

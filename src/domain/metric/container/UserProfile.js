@@ -8,8 +8,9 @@ import Card from 'infra/component/Card';
 import Form, { FormTypes, withForm } from 'infra/component/Form';
 import type { FormObject } from 'infra/component/Form';
 
-import timeRangeMetricer, { timeSeriesMetric as timeSeriesMetricer, extractDateRangeFromPosts } from '../service/timeRangeMetric';
+import timeRangeMetricer, { extractDateRangeFromPosts } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
+import usersMetricer from '../service/usersMetric';
 import type { UserMetric }  from '../service/userMetric';
 import LineChart, { LineChartTypes } from '../component/LineChart';
 import Pie, { PieTypes } from '../component/Pie';
@@ -50,10 +51,11 @@ class MetricSummary extends React.Component {
     const { posts, members, comments, profile } = this.props;
     const { data } = this.state;
 
-    const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, posts, members, comments);
-    const userMetric: UserMetric = metric.usersMetric.getById(profile.facebookId);
+    const userMetric: UserMetric = usersMetricer(members, posts, comments).getById(profile.facebookId);
     if (!userMetric) return <div>Wait...</div>;
-    const metrics: TimeRangeMetric[] = timeSeriesMetricer(data.dateStart, data.dateEnd, data.granularity, userMetric.posts, members, userMetric.comments);
+    const mems: Member[] = userMetric.member ? [userMetric.member] : [];
+    const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, userMetric.posts, mems, userMetric.comments);
+    const metrics: TimeRangeMetric[] = metric.getTimeSeries(data.granularity);
 
     const profileForms = [
       { type: FormTypes.TEXT, label: 'Name', value: profile.name, disabled: true, col: 6 },

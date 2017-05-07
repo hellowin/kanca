@@ -7,7 +7,7 @@ import Form, { FormTypes, withForm } from 'infra/component/Form';
 import type { FormObject } from 'infra/component/Form';
 import Card from 'infra/component/Card';
 
-import timeRangeMetricer, { timeSeriesMetric as timeSeriesMetricer, extractDateRangeFromPosts } from '../service/timeRangeMetric';
+import timeRangeMetricer, { extractDateRangeFromPosts } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
 import LineChart, { LineChartTypes } from '../component/LineChart';
 import PostActivityTop from '../component/PostActivityTop';
@@ -48,8 +48,8 @@ class PostsMetricPage extends React.Component {
   render() {
     const { members, posts, comments } = this.props;
     const { data } = this.state;
-    const metrics: TimeRangeMetric[] = timeSeriesMetricer(data.dateStart, data.dateEnd, data.granularity, posts, members, comments);
     const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, posts, members, comments);
+    const metrics: TimeRangeMetric[] = metric.getTimeSeries(data.granularity);
 
     const forms: FormObject[] = [
       { type: FormTypes.DATE, label: 'Date start', value: data.dateStart, model: 'dateStart', col: 4 },
