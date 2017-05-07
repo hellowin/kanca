@@ -100,11 +100,9 @@ class MetricSummary extends React.Component {
         </div>
 
         <div className="col-md-12">
-          <LineChart title="Group Activities" metrics={metrics} show={[
+          <LineChart title="User Activities" metrics={metrics} show={[
             { column: LineChartTypes.TOTAL_POSTS, label: 'Total Posts' },
-            { column: LineChartTypes.USERS_POSTS, label: 'Unique User Posts' },
             { column: LineChartTypes.TOTAL_COMMENTS, label: 'Total Comments' },
-            { column: LineChartTypes.USERS_COMMENTS, label: 'Unique User Comments' },
           ]} />
         </div>
 
