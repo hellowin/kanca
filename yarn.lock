@@ -4727,9 +4727,9 @@ react-faux-dom@^3.0.0:
     query-selector "^1.0.9"
     style-attr "^1.0.1"
 
-react-loading@0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/react-loading/-/react-loading-0.0.9.tgz#e9fba6948915ba7742a508193828b6c73eb04956"
+react-loading@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/react-loading/-/react-loading-0.1.2.tgz#4da95b3d4b55904fd8294c1eb40f8512a6ca04f6"
 
 react-measure@^1.4.7:
   version "1.4.7"
@@ -5705,7 +5705,7 @@ uuid@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-2.0.3.tgz#67e2e863797215530dff318e5bf9dcebfd47b21a"
 
-uuid@^3.0.0:
+uuid@^3.0.0, uuid@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
 
