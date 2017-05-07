@@ -13,7 +13,7 @@ import type { TimeRangeMetric } from '../service/timeRangeMetric';
 import LineChart, { LineChartTypes } from '../component/LineChart';
 import Pie, { PieTypes } from '../component/Pie';
 import WordCloud, { WordCloudTypes } from '../component/WordCloud';
-import UserActivityTop from '../component/UserActivityTop';
+import TopUserActivity, { TopUserActivityTypes } from '../component/TopUserActivity';
 
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
@@ -86,7 +86,7 @@ class MetricSummary extends React.Component {
 
         <div className="col-md-6">
           <Pie metric={metric} type={PieTypes.ACTIVITIES_PERDAY} />
-          <UserActivityTop metric={metric} type="score" />
+          <TopUserActivity metric={metric} type={TopUserActivityTypes.SCORE} />
           <Card>
             <p>Time range {moment(data.dateStart).format('YYYY-MM-DD HH:mm:ss')} - {moment(data.dateEnd).format('YYYY-MM-DD HH:mm:ss')}</p>
             <p>Total posts: {metric.postsMetric.totalPosts()}</p>
