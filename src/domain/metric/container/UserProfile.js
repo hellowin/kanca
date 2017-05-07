@@ -25,11 +25,12 @@ const mapStateToProps = state => ({
 const setDefaultData = props => {
   const { feeds } = props;
     const { dateEnd } = extractDateRangeFromPosts(feeds, 'd');
-    const dateStart = moment(dateEnd).startOf('M').toDate();
+    const dateStart = moment(dateEnd).add(-1, 'M').startOf('M').toDate();
 
     return {
       dateStart,
       dateEnd,
+      granularity: 'w',
     };
 }
 
@@ -39,6 +40,7 @@ class MetricSummary extends React.Component {
     data: {
       dateStart: Date,
       dateEnd: Date,
+      granularity: moment.unitOfTime.Base,
     },
   }
 
@@ -51,7 +53,7 @@ class MetricSummary extends React.Component {
     const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, posts, members, comments);
     const userMetric: UserMetric = metric.usersMetric.getById(profile.facebookId);
     if (!userMetric) return <div>Wait...</div>;
-    const metrics: TimeRangeMetric[] = timeSeriesMetricer(data.dateStart, data.dateEnd, 'd', userMetric.posts, members, userMetric.comments);
+    const metrics: TimeRangeMetric[] = timeSeriesMetricer(data.dateStart, data.dateEnd, data.granularity, userMetric.posts, members, userMetric.comments);
 
     const profileForms = [
       { type: FormTypes.TEXT, label: 'Name', value: profile.name, disabled: true, col: 6 },
@@ -59,8 +61,14 @@ class MetricSummary extends React.Component {
     ];
 
     const forms: FormObject[] = [
-      { type: FormTypes.DATE, label: 'Date start', value: data.dateStart, model: 'dateStart', col: 6 },
-      { type: FormTypes.DATE, label: 'Date end', value: data.dateEnd, model: 'dateEnd', col: 6 },
+      { type: FormTypes.DATE, label: 'Date start', value: data.dateStart, model: 'dateStart', col: 4 },
+      { type: FormTypes.DATE, label: 'Date end', value: data.dateEnd, model: 'dateEnd', col: 4 },
+      { type: FormTypes.SELECT, label: 'Granularity', value: data.granularity, model: 'granularity', col: 4, selectOptions: [
+        { text: 'Daily', value: 'd' },
+        { text: 'Weekly', value: 'w' },
+        { text: 'Monthly', value: 'M' },
+        { text: 'Annually', value: 'y' },
+      ] },
     ];
 
     return (
@@ -79,7 +87,7 @@ class MetricSummary extends React.Component {
         <div className="col-md-12">
           <Card>
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-12">
                 <Form forms={forms} onChange={this.onFormChange} />
               </div>
             </div>
