@@ -37,6 +37,7 @@ class GroupStatus extends React.Component {
   }
 
   getTime(updatedTime) {
+    clearInterval(this.intervalTime);
     this.setState(this.refresh(updatedTime));
     this.intervalTime = setInterval(() => {
       this.setState(this.refresh(updatedTime));
