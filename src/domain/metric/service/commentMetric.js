@@ -1,4 +1,5 @@
 // @flow
+import moment from 'moment-timezone';
 
 export type CommentMetric = {
   comment: Comment,
@@ -20,7 +21,7 @@ export default (comments: Comment[]): CommentMetric[] => {
       comment,
       id: comment.id,
       parent: comment.parent,
-      createdTime: new Date(comment.created_time),
+      createdTime: moment(comment.created_time).toDate(),
       text: comment.message,
       from: {
         id: comment.from.id,

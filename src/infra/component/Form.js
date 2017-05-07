@@ -50,7 +50,7 @@ const handleChange = (model: string, callback?: Function, valLoc: ValueType = Va
       val = parseFloat(event.target.value);
       break;
     case ValueTypes.DATE:
-      val = new Date(event.target.value);
+      val = moment(event.target.value).toDate();
       break;
     case ValueTypes.TEXT:
     default:
