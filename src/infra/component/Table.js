@@ -5,7 +5,7 @@ import _ from 'lodash';
 class Table extends React.Component {
   props: {
     data: { [string]: any }[],
-    columns: { key: string, label: string }[],
+    columns: { key: string, label: any }[],
   }
 
   render() {

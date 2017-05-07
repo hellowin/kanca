@@ -13,13 +13,35 @@ class MemberList extends React.Component {
   render() {
     const { list } = this.props;
 
+    const parsedList = list.map((li: UserMetric) => ({
+      profile: (<div>
+        <img src={li.picture} alt="user avatar" className="mr-1" />{li.name}
+      </div>),
+      score: li.getScore(),
+      posts: (
+        <dd>
+          Total: {li.postsCount}<br />
+          Likes: {li.postsLikesCount}<br />
+          Shares: {li.postsSharesCount}<br />
+        </dd>
+      ),
+      comments: (
+        <dd>
+          Total: {li.commentsCount}
+        </dd>
+      ),
+    }));
+
     const columns = [
-      { key: 'name', label: 'Name' },
+      { key: 'profile', label: 'Profile' },
+      { key: 'posts', label: <span><i className="fa fa-pencil-square-o mr-1" />Posts</span> },
+      { key: 'comments', label: <span><i className="fa fa-commenting mr-1" />Comments</span> },
+      { key: 'score', label: <span><i className="fa fa-star mr-1" />Score</span> },
     ];
 
     return (
       <Card title="Member List">
-        <Table data={list} columns={columns} />
+        <Table data={parsedList} columns={columns} />
       </Card>
     );
   }
