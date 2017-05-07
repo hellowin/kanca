@@ -13,7 +13,7 @@ import LineChart, { LineChartTypes } from '../component/LineChart';
 import PostActivityTop from '../component/PostActivityTop';
 import UserActivityTop from '../component/UserActivityTop';
 import Pie, { PieTypes } from '../component/Pie';
-import WordCloud from '../component/WordCloud';
+import WordCloud, { WordCloudTypes } from '../component/WordCloud';
 
 const mapStateToProps = state => ({
   members: state.group.members,
@@ -80,7 +80,7 @@ class PostsMetricPage extends React.Component {
 
         <div className="col-md-6">
           <Pie metric={metric} type={PieTypes.POSTS_PERDAY} />
-          <WordCloud metric={metric} type="posts" />
+          <WordCloud metric={metric} type={WordCloudTypes.POSTS} />
           <PostActivityTop metric={metric} type="likes" title="Posts Likes" subTitle="Top 10 most liked posts." />
         </div>
 

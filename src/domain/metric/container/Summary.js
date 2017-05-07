@@ -12,7 +12,7 @@ import timeRangeMetricer, { extractDateRangeFromPosts } from '../service/timeRan
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
 import LineChart, { LineChartTypes } from '../component/LineChart';
 import Pie, { PieTypes } from '../component/Pie';
-import WordCloud from '../component/WordCloud';
+import WordCloud, { WordCloudTypes } from '../component/WordCloud';
 
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
@@ -150,7 +150,7 @@ class MetricSummary extends React.Component {
 
         <div className="col-md-6">
           <Pie metric={metric} type={PieTypes.ACTIVITIES_PERTRIHOUR} />
-          <WordCloud title="Word cloud posts" metric={metric} type="posts" />
+          <WordCloud metric={metric} type={WordCloudTypes.ALL} />
         </div>
 
       </div>

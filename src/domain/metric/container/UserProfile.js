@@ -14,7 +14,7 @@ import usersMetricer from '../service/usersMetric';
 import type { UserMetric }  from '../service/userMetric';
 import LineChart, { LineChartTypes } from '../component/LineChart';
 import Pie, { PieTypes } from '../component/Pie';
-import WordCloud from '../component/WordCloud';
+import WordCloud, { WordCloudTypes } from '../component/WordCloud';
 import UserProfileSummary from '../component/UserProfileSummary';
 
 const mapStateToProps = state => ({
@@ -114,7 +114,7 @@ class MetricSummary extends React.Component {
         </div>
 
         <div className="col-md-6">
-          <WordCloud title="Word cloud" metric={metric} type="all" />
+          <WordCloud metric={metric} type={WordCloudTypes.ALL} />
           <Pie metric={metric} type={PieTypes.ACTIVITIES_PERTRIHOUR} />
         </div>
 
