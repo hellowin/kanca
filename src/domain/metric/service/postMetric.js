@@ -1,4 +1,5 @@
 // @flow
+import moment from 'moment-timezone';
 
 export type PostMetric = {
   post: Post,
@@ -30,7 +31,7 @@ export default (posts: Post[]): PostMetric[] => {
     return {
       post,
       id: post.id,
-      createdTime: new Date(post.created_time),
+      createdTime: moment(post.created_time).toDate(),
       text,
       from: post.from,
       picture: post.picture,
