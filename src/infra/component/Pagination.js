@@ -12,6 +12,7 @@ class Pagination extends React.Component {
     ChildNode: any,
     perPage?: number,
     hideNavigationOnSinglePage?: boolean,
+    Wrapper?: any,
   }
 
   goToPage: Function
@@ -34,7 +35,7 @@ class Pagination extends React.Component {
   }
 
   render() {
-    const { list, ChildNode, hideNavigationOnSinglePage, perPage } = this.props;
+    const { list, ChildNode, hideNavigationOnSinglePage, perPage, Wrapper } = this.props;
     const { page } = this.state;
 
     // handle default props
@@ -103,10 +104,16 @@ class Pagination extends React.Component {
       </div>
     );
 
+    const content = Wrapper ? (
+      <Wrapper>
+        {currentList.map((props, key) => <ChildNode key={key} {...props} />)}
+      </Wrapper>
+    ) : currentList.map((props, key) => <ChildNode key={key} {...props} />);
+
     return (
       <div className="row">
         <div className="col-12">
-          {currentList.map((props, key) => <ChildNode key={key} {...props} />)}
+          {content}
         </div>
         <div className="col-12">
           {navigation}

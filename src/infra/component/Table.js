@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import _ from 'lodash';
+import Pagination from 'infra/component/Pagination';
 
 class Table extends React.Component {
   props: {
@@ -15,21 +16,27 @@ class Table extends React.Component {
       ...this.props,
     };
 
-    return (
+    const Row = dt => (
+      <tr>
+        {columns.map((col, key) => 
+          <td key={key}>{dt[col.key]}</td>
+        )}
+      </tr>
+    );
+
+    const Wrapper = props => (
       <table className="table table-striped">
         <thead><tr>
           {columns.map((col, key) => <th key={key}>{col.label}</th>)}
         </tr></thead>
         <tbody>
-          {data.map((dt, rec) =>
-            (<tr key={rec}>
-              {columns.map((col, key) => 
-                <td key={key}>{dt[col.key]}</td>
-              )}
-            </tr>)
-          )}
+          {props.children}
         </tbody>
       </table>
+    );
+
+    return (
+      <Pagination list={data} ChildNode={Row} Wrapper={Wrapper} />
     );
   }
 
