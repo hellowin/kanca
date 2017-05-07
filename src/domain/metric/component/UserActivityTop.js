@@ -13,6 +13,9 @@ type UserTop = {
 
 const getUsers = (metric: TimeRangeMetric, type: string): UserTop[] => {
   switch (type) {
+    case 'score':
+      return metric.usersMetric.userMetrics.sort((a, b) => b.getScore() - a.getScore()).slice(0, 10)
+        .map(user => ({ ...user, total: user.getScore(), percent: +((user.getScore()/metric.usersMetric.userMetrics.map(usr => usr.getScore()).reduce((pre, cur) => pre + cur, 0))*100).toFixed(2) }));
     case 'posts':
       return metric.usersMetric.sortByPostsCount().slice(0, 10)
         .map(user => ({ ...user, total: user.postsCount, percent: +((user.postsCount/metric.postsMetric.totalPosts())*100).toFixed(2) }));
@@ -34,8 +37,8 @@ class UserActivityTop extends React.Component {
   props: {
     metric: TimeRangeMetric,
     type: string,
-    title: string,
-    subTitle: string,
+    title?: string,
+    subTitle?: string,
   }
 
   render() {
