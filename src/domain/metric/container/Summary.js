@@ -14,6 +14,7 @@ import LineChart, { LineChartTypes } from '../component/LineChart';
 import Pie, { PieTypes } from '../component/Pie';
 import WordCloud, { WordCloudTypes } from '../component/WordCloud';
 import TopUserActivity, { TopUserActivityTypes } from '../component/TopUserActivity';
+import TimeRangeSummary from '../component/TimeRangeSummary';
 
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
@@ -82,21 +83,12 @@ class MetricSummary extends React.Component {
             { column: LineChartTypes.TOTAL_COMMENTS, label: 'Total Comments' },
             { column: LineChartTypes.USERS_COMMENTS, label: 'Unique User Comments' },
           ]} />
+          <TimeRangeSummary metric={metric} />
         </div>
 
         <div className="col-md-6">
           <Pie metric={metric} type={PieTypes.ACTIVITIES_PERDAY} />
           <TopUserActivity metric={metric} type={TopUserActivityTypes.SCORE} />
-          <Card>
-            <p>Time range {moment(data.dateStart).format('YYYY-MM-DD HH:mm:ss')} - {moment(data.dateEnd).format('YYYY-MM-DD HH:mm:ss')}</p>
-            <p>Total posts: {metric.postsMetric.totalPosts()}</p>
-            <p>Total posts shares: {metric.postsMetric.totalShares()}</p>
-            <p>Total posts likes: {metric.postsMetric.totalLikes()}</p>
-            <p>Total comments: {metric.commentsMetric.totalComments()}</p>
-            <p>Total members: {metric.usersMetric.totalMembers()}</p>
-            <p>Total unique member posting: {metric.usersMetric.uniqueUsersPosts().length}</p>
-            <p>Total unique member commenting: {metric.usersMetric.uniqueUsersComments().length}</p>
-          </Card>
         </div>
 
         <div className="col-md-6">
