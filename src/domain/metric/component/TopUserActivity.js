@@ -3,6 +3,7 @@ import React from 'react';
 import Card from 'infra/component/Card';
 import { timeRangeToString } from 'infra/service/util';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
+import uuid from 'uuid';
 
 type UserTop = {
   name: string,
@@ -75,8 +76,10 @@ class TopUserActivity extends React.Component {
         <p>{generateTitle(type).subTitle}, time range {timeRangeToString(metric.dateStart, metric.dateEnd)}.</p>
 
         <ul className="list-group">
-          {getUsers(metric, type).filter(user => user.total > 0).map((user, key) => {
-            switch (key) {
+          {getUsers(metric, type).filter(user => user.total > 0).map((user, index) => {
+            const key = uuid.v4();
+
+            switch (index) {
               case 0:
                 return (
                   <li key={key} className="list-group-item">
