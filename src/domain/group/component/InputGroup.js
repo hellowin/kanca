@@ -60,12 +60,13 @@ class InputGroup extends React.Component {
       <div className="row">
         <div className="col-md-12 mb-1 mt-1">
           <MediaQuery minDeviceWidth={320} maxWidthDevice={736} minWidth={320} maxWidth={736}>
-            {(matches) => {
+            {(matches, key) => {
               return (
-                <form className="form-inline">
+                <form className="form-inline" key={key}>
                   {matches ? [
-                    <label style={{ marginBottom: '0', marginRight: '.5rem' }}>Group ID</label>,
+                    <label style={{ marginBottom: '0', marginRight: '.5rem' }} key="label">Group ID</label>,
                     <input
+                      key="input"
                       type="text"
                       className="form-control mr-sm-2 mb-sm-0 col-4"
                       style={{ marginRight: '.5rem' }}
@@ -74,8 +75,8 @@ class InputGroup extends React.Component {
                       onChange={onFormChange('groupId')}
                     />
                   ] : [
-                    <label className="mr-sm-2">Group ID</label>,
-                    <input type="text" className="form-control mr-sm-2 mb-sm-0 col-4" placeholder="example: 1920036621597031" value={data.groupId} onChange={onFormChange('groupId')} />
+                    <label className="mr-sm-2" key="label">Group ID</label>,
+                    <input key="input" type="text" className="form-control mr-sm-2 mb-sm-0 col-4" placeholder="example: 1920036621597031" value={data.groupId} onChange={onFormChange('groupId')} />
                   ]}
                   <button type="submit" className="btn btn-primary" onClick={lookUpGroup(data.groupId)}>Look Up</button>
                 </form>

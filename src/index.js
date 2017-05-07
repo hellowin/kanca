@@ -11,7 +11,7 @@ import config from 'config';
 window.fbAsyncInit = function() {
   window.FB.init({
     appId: config.FBAppID,
-    version: 'v2.8',
+    version: 'v2.9',
   });
   window.FB.AppEvents.logPageView();
 

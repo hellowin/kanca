@@ -79,8 +79,8 @@ const GroupPost = (props: Post) => {
               <div className="row">
                 <div className="col-md-12">
                   {validComments && validComments.length > 0 ? [
-                    <hr />,
-                    <Pagination list={validComments} ChildNode={Comment} hideNavigationOnSinglePage perPage={5} />
+                    <hr key="hr" />,
+                    <Pagination key="comments" list={validComments} ChildNode={Comment} hideNavigationOnSinglePage perPage={5} />
                   ] : <null />}
                 </div>
               </div>

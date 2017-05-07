@@ -3,7 +3,7 @@ import React from 'react';
 import _ from 'lodash';
 import C3 from 'infra/component/C3';
 import Card from 'infra/component/Card';
-import moment from 'moment-timezone';
+import { timeRangeToString } from 'infra/service/util';
 
 import type { TimeRangeMetric } from '../service/timeRangeMetric'
 
@@ -131,20 +131,7 @@ class PostsPie extends React.Component {
   render() {
     const { metric, type } = this.props;
 
-    const dateEnd = moment(metric.dateEnd);
-    const dateStart = moment(metric.dateStart);
-    let fixDateStart;
-    if (dateEnd.isSame(dateStart, 'd') && dateEnd.isSame(dateStart, 'M') && dateEnd.isSame(dateStart, 'y')) {
-      fixDateStart = null;
-    } else if (dateEnd.isSame(dateStart, 'M') && dateEnd.isSame(dateStart, 'y')) {
-      fixDateStart = dateStart.clone().format('ddd, DD');
-    } else if (dateEnd.isSame(dateStart, 'y')) {
-      fixDateStart = dateStart.clone().format('ddd, DD MMM');
-    } else {
-      fixDateStart = dateStart.clone().format('ddd, DD MMM YYYY');
-    }
-    const fixDateEnd = dateEnd.clone().format('ddd, DD MMM YYYY');
-    const date = fixDateStart ? `${fixDateStart} - ${fixDateEnd}` : fixDateEnd;
+    const date = timeRangeToString(metric.dateStart, metric.dateEnd);
 
     const columns = calculate(type, metric).map(col => [col.key, col.value]);
 
@@ -165,10 +152,9 @@ class PostsPie extends React.Component {
     const id = `id-${(Math.random() * 1000000000000000000).toFixed(0)}`
 
     return (
-      <Card>
+      <Card title={generateTitle(type)}>
         <div className="row">
           <div className="col-12 text-center">
-            <h5>{generateTitle(type)}</h5>
             {date}
           </div>
           <div className="col-12">

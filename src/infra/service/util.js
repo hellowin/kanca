@@ -1,5 +1,6 @@
 // @flow
 import _ from 'lodash';
+import moment from 'moment-timezone';
 
 export const syncToPromise = <T>(func: Function): Promise<T> => new Promise((resolve, reject) => {
   setTimeout(() => {
@@ -22,7 +23,27 @@ export const wordCounter = (string: string): Promise<{ word: string, count: numb
   return _.sortBy(_.values(count), 'count').reverse().slice(0, 300);
 });
 
+export const timeRangeToString = (dateStart: Date, dateEnd: Date): string => {
+    const end = moment(dateEnd);
+    const start = moment(dateStart);
+    let fixDateStart;
+
+    if (end.isSame(start, 'd') && end.isSame(start, 'M') && end.isSame(start, 'y')) {
+      fixDateStart = null;
+    } else if (end.isSame(start, 'M') && end.isSame(start, 'y')) {
+      fixDateStart = start.clone().format('ddd, DD');
+    } else if (end.isSame(start, 'y')) {
+      fixDateStart = start.clone().format('ddd, DD MMM');
+    } else {
+      fixDateStart = start.clone().format('ddd, DD MMM YYYY');
+    }
+    const fixDateEnd = end.clone().format('ddd, DD MMM YYYY');
+
+    return fixDateStart ? `${fixDateStart} - ${fixDateEnd}` : fixDateEnd;
+}
+
 export default {
   syncToPromise,
   wordCounter,
+  timeRangeToString,
 };

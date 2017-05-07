@@ -8,17 +8,25 @@ import { syncToPromise } from 'infra/service/util';
 
 import type { TimeRangeMetric } from '../service/timeRangeMetric'
 
-const calculate = (type: string, metric: TimeRangeMetric): Promise<{ word: string, count: number }[]> => {
+export const WordCloudTypes = {
+  POSTS: 'POSTS',
+  COMMENTS: 'COMMENTS',
+  ALL: 'ALL',
+};
+
+export type WordCloudType = $Keys<typeof WordCloudTypes>
+
+const calculate = (type: WordCloudType, metric: TimeRangeMetric): Promise<{ word: string, count: number }[]> => {
   let promises = [];
 
   switch (type) {
-    case 'posts':
+    case WordCloudTypes.POSTS:
       promises = [metric.postsMetric.wordCount()];
       break;
-    case 'comments':
+    case WordCloudTypes.COMMENTS:
       promises = [metric.commentsMetric.wordCount()];
       break;
-    case 'all':
+    case WordCloudTypes.ALL:
     default:
       promises = [metric.postsMetric.wordCount(), metric.commentsMetric.wordCount()];
   }
@@ -34,18 +42,47 @@ const calculate = (type: string, metric: TimeRangeMetric): Promise<{ word: strin
     }));
 };
 
-const generateWidth = (rawWidth?: number) => {
+const generateWidth = (rawWidth?: number): number => {
   if (!rawWidth) return 400;
   if (rawWidth === 400) return 273;
   return rawWidth;
-}
+};
+
+const generateHeight = (data: any[]): number => {
+  const length = data.length;
+
+  let height = 400;
+  if (length < 30) {
+    height = 200;
+  } else if (length < 50) {
+    height = 250;
+  } else if (length < 80) {
+    height = 300;
+  } else if (length < 120) {
+    height = 350;
+  }
+
+  return height;
+};
+
+const generateTitle = (type: WordCloudType): string => {
+  switch (type) {
+    case WordCloudTypes.ALL:
+      return 'Word Cloud from Posts and Comments';
+    case WordCloudTypes.POSTS:
+      return 'Word Cloud from Posts';
+    case WordCloudTypes.COMMENTS:
+      return 'Word Cloud from Comments';
+    default:
+      return 'Word Cloud';
+  }
+};
 
 class WordCloud extends React.Component {
 
   props: {
-    title?: string,
     metric: TimeRangeMetric,
-    type: 'all' | 'posts' | 'comments',
+    type: WordCloudType,
   }
 
   state : {
@@ -76,11 +113,12 @@ class WordCloud extends React.Component {
 
   generateData(props: Object) {
     this.setState({ loading: true, data: [] });
-    const { metric, type } = props;
+    const { metric, type } = {
+      type: WordCloudTypes.ALL,
+      ...props,
+    };
 
-    const fixType = type || 'all';
-
-    calculate(fixType, metric)
+    calculate(type, metric)
       .then(res => {
         const rawData = res.map(wor => ({ text: wor.word, value: wor.count }));
         const data = _.sortBy(rawData, 'value')
@@ -94,7 +132,7 @@ class WordCloud extends React.Component {
   }
 
   render() {
-    const { title } = this.props;
+    const { type } = this.props;
     const { loading, data } = this.state;
 
    let content;
@@ -104,6 +142,7 @@ class WordCloud extends React.Component {
         { dimensions => (
           <Cloud
             width={generateWidth(dimensions.width)}
+            height={generateHeight(data)}
             data={data}
           />
         )}
@@ -115,8 +154,7 @@ class WordCloud extends React.Component {
     }
 
     return (
-      <Card>
-        <h3>{title}</h3>
+      <Card title={generateTitle(type)}>
         {content}
       </Card>
     );
