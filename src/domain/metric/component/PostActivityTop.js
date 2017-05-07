@@ -35,8 +35,7 @@ class PostActivityTop extends React.Component {
     const { metric, type, title, subTitle } = this.props;
 
     return (
-      <Card>
-        <h4 className="card-title">{title}</h4>
+      <Card title={title}>
         <p>{subTitle}</p>
         <ul className="list-group">
           {getPosts(metric, type).filter(post => post.total > 0).map((post, key) => {

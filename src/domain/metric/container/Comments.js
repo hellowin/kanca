@@ -7,13 +7,13 @@ import Form, { FormTypes, withForm } from 'infra/component/Form';
 import Card from 'infra/component/Card';
 import type { FormObject } from 'infra/component/Form';
 
-import timeRangeMetricer, { timeSeriesMetric as timeSeriesMetricer, extractDateRangeFromPosts } from '../service/timeRangeMetric';
+import timeRangeMetricer, { extractDateRangeFromPosts } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
 import LineChart, { LineChartTypes } from '../component/LineChart';
 import CommentActivityTop from '../component/CommentActivityTop';
 import UserActivityTop from '../component/UserActivityTop';
 import Pie, { PieTypes } from '../component/Pie';
-import WordCloud from '../component/WordCloud';
+import WordCloud, { WordCloudTypes } from '../component/WordCloud';
 
 const mapStateToProps = state => ({
   members: state.group.members,
@@ -48,8 +48,8 @@ class CommentsMetricPage extends React.Component {
   render() {
     const { members, posts, comments } = this.props;
     const { data } = this.state;
-    const metrics: TimeRangeMetric[] = timeSeriesMetricer(data.dateStart, data.dateEnd, data.granularity, posts, members, comments);
     const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, posts, members, comments);
+    const metrics: TimeRangeMetric[] = metric.getTimeSeries(data.granularity)
 
     const forms: FormObject[] = [
       { type: FormTypes.DATE, label: 'Date start', value: data.dateStart, model: 'dateStart', col: 4 },
@@ -80,7 +80,7 @@ class CommentsMetricPage extends React.Component {
 
         <div className="col-md-6">
           <Pie metric={metric} type={PieTypes.COMMENTS_PERDAY} />
-          <WordCloud metric={metric} type="comments" />
+          <WordCloud metric={metric} type={WordCloudTypes.COMMENTS} />
           <CommentActivityTop metric={metric} type="likes" title="Comments Likes" subTitle="Top 10 most liked comments." />
         </div>
 
