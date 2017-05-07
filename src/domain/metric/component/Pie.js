@@ -165,10 +165,9 @@ class PostsPie extends React.Component {
     const id = `id-${(Math.random() * 1000000000000000000).toFixed(0)}`
 
     return (
-      <Card>
+      <Card title={generateTitle(type)}>
         <div className="row">
           <div className="col-12 text-center">
-            <h5>{generateTitle(type)}</h5>
             {date}
           </div>
           <div className="col-12">

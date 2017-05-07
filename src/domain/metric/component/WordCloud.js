@@ -115,8 +115,7 @@ class WordCloud extends React.Component {
     }
 
     return (
-      <Card>
-        <h3>{title}</h3>
+      <Card title={title}>
         {content}
       </Card>
     );
