@@ -74,4 +74,28 @@ export const extractDateRangeFromPosts = (posts: Post[], granularity: moment.uni
   };
 };
 
+export const extractDateRangeFromComments = (comments: Comment[], granularity: moment.unitOfTime.Base): { dateStart: Date, dateEnd: Date } => {
+  const start: string = (_.sortBy(comments, 'created_time')[0] || {}).created_time;
+  const end: string = (_.sortBy(comments, 'created_time').reverse()[0] || {}).created_time;
+  const startOf = moment(start).startOf(granularity);
+  const endOf = moment(end).endOf(granularity);
+  return {
+    dateStart: startOf.toDate(),
+    dateEnd: endOf.toDate(),
+  };
+};
+
+export const extractDateRange = (posts: Post[], comments: Comment[], granularity: moment.unitOfTime.Base): { dateStart: Date, dateEnd: Date } => {
+  const post = extractDateRangeFromPosts(posts, granularity);
+  const comment = extractDateRangeFromComments(comments, granularity);
+
+  const dateStart = post.dateStart.valueOf() < comment.dateStart.valueOf() ? post.dateStart : comment.dateStart;
+  const dateEnd = post.dateEnd.valueOf() > comment.dateEnd.valueOf() ? post.dateEnd : comment.dateEnd;
+
+  return {
+    dateStart,
+    dateEnd,
+  };
+};
+
 export default timeRangeMetric;

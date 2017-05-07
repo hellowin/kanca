@@ -34,11 +34,28 @@ const calculate = (type: string, metric: TimeRangeMetric): Promise<{ word: strin
     }));
 };
 
-const generateWidth = (rawWidth?: number) => {
+const generateWidth = (rawWidth?: number): number => {
   if (!rawWidth) return 400;
   if (rawWidth === 400) return 273;
   return rawWidth;
-}
+};
+
+const generateHeight = (data: any[]): number => {
+  const length = data.length;
+
+  let height = 400;
+  if (length < 30) {
+    height = 200;
+  } else if (length < 50) {
+    height = 250;
+  } else if (length < 80) {
+    height = 300;
+  } else if (length < 120) {
+    height = 350;
+  }
+
+  return height;
+};
 
 class WordCloud extends React.Component {
 
@@ -104,6 +121,7 @@ class WordCloud extends React.Component {
         { dimensions => (
           <Cloud
             width={generateWidth(dimensions.width)}
+            height={generateHeight(data)}
             data={data}
           />
         )}

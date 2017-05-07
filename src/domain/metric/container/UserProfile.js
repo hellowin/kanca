@@ -15,6 +15,7 @@ import type { UserMetric }  from '../service/userMetric';
 import LineChart, { LineChartTypes } from '../component/LineChart';
 import Pie, { PieTypes } from '../component/Pie';
 import WordCloud from '../component/WordCloud';
+import UserProfileSummary from '../component/UserProfileSummary';
 
 const mapStateToProps = state => ({
   posts: state.group.feeds,
@@ -51,7 +52,9 @@ class MetricSummary extends React.Component {
     const { posts, members, comments, profile } = this.props;
     const { data } = this.state;
 
-    const userMetric: UserMetric = usersMetricer(members, posts, comments).getById(profile.facebookId);
+    const userId = profile.facebookId;
+
+    const userMetric: UserMetric = usersMetricer(members, posts, comments).getById(userId);
     if (!userMetric) return <div>Wait...</div>;
     const mems: Member[] = userMetric.member ? [userMetric.member] : [];
     const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, userMetric.posts, mems, userMetric.comments);
@@ -77,7 +80,7 @@ class MetricSummary extends React.Component {
       <div className="row">
 
         <div className="col-md-12">
-          <Card>
+          <Card title="Profile">
             <div className="row">
               <div className="col-md-12">
                 <Form forms={profileForms} />
@@ -87,7 +90,7 @@ class MetricSummary extends React.Component {
         </div>
 
         <div className="col-md-12">
-          <Card>
+          <Card title="Options">
             <div className="row">
               <div className="col-md-12">
                 <Form forms={forms} onChange={this.onFormChange} />
@@ -106,20 +109,13 @@ class MetricSummary extends React.Component {
         </div>
 
         <div className="col-md-6">
+          <UserProfileSummary metric={metric} userId={userId} />
           <Pie metric={metric} type={PieTypes.ACTIVITIES_PERDAY} />
-          <Card>
-            <p>Time range {moment(data.dateStart).format('YYYY-MM-DD HH:mm:ss')} - {moment(data.dateEnd).format('YYYY-MM-DD HH:mm:ss')}</p>
-            <p>Total posts: {userMetric.postsCount}</p>
-            <p>Total posts shares: {userMetric.postsSharesCount}</p>
-            <p>Total posts likes: {userMetric.postsLikesCount}</p>
-            <p>Total comments: {userMetric.commentsCount}</p>
-            <p>Total score: {userMetric.getScore()}</p>
-          </Card>
         </div>
 
         <div className="col-md-6">
-          <Pie metric={metric} type={PieTypes.ACTIVITIES_PERTRIHOUR} />
           <WordCloud title="Word cloud" metric={metric} type="all" />
+          <Pie metric={metric} type={PieTypes.ACTIVITIES_PERTRIHOUR} />
         </div>
 
       </div>
