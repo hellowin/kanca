@@ -11,7 +11,7 @@ import timeRangeMetricer, { extractDateRangeFromPosts } from '../service/timeRan
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
 import LineChart, { LineChartTypes } from '../component/LineChart';
 import CommentActivityTop from '../component/CommentActivityTop';
-import UserActivityTop from '../component/UserActivityTop';
+import TopUserActivity, { TopUserActivityTypes } from '../component/TopUserActivity';
 import Pie, { PieTypes } from '../component/Pie';
 import WordCloud, { WordCloudTypes } from '../component/WordCloud';
 
@@ -86,7 +86,7 @@ class CommentsMetricPage extends React.Component {
 
         <div className="col-md-6">
           <Pie metric={metric} type={PieTypes.COMMENTS_PERTRIHOUR} />
-          <UserActivityTop metric={metric} type="comments" title="Comments" subTitle="Top 10 user posts count." />
+          <TopUserActivity metric={metric} type={TopUserActivityTypes.COMMENTS} title="Comments" subTitle="Top 10 user posts count." />
         </div>
 
       </div>

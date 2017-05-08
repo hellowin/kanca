@@ -1,25 +1,23 @@
 // @flow
 import moment from 'moment-timezone';
 
-export type PostMetric = {
-  post: Post,
-  id: string,
-  createdTime: Date,
-  text: string,
-  from?: {
+export class PostMetric {
+  post: Post
+  id: string
+  createdTime: Date
+  text: string
+  from: {
     id: string,
     name: string,
-  },
-  picture?: string,
-  url: string,
-  sharesCount: number,
-  likesCount: number,
-  commentsCount: number,
-}
+  } | void
+  picture: string | void
+  url: string
+  sharesCount: number
+  likesCount: number
+  commentsCount: number
+  getScore: () => number
 
-export default (posts: Post[]): PostMetric[] => {
-  // calculate post
-  return posts.map((post: Post): PostMetric => {
+  constructor(post: Post) {
     const sharesCount: number = ((post.shares || {}).count || 0);
     const likesCount: number = (((post.likes || {}).data || []).length || 0);
     const preCommentsCount: number = (((post.comments || {}).data || []).length || 0);
@@ -28,17 +26,23 @@ export default (posts: Post[]): PostMetric[] => {
 
     const text = post.message || post.story || post.message || '';
 
-    return {
-      post,
-      id: post.id,
-      createdTime: moment(post.created_time).toDate(),
-      text,
-      from: post.from,
-      picture: post.picture,
-      url: post.permalink_url,
-      sharesCount,
-      likesCount,
-      commentsCount,
-    };
-  });
+    this.post = post;
+    this.id = post.id;
+    this.createdTime = moment(post.created_time).toDate();
+    this.text = text;
+    this.from = post.from;
+    this.picture = post.picture;
+    this.url = post.permalink_url;
+    this.sharesCount = sharesCount;
+    this.likesCount = likesCount;
+    this.commentsCount = commentsCount;
+    this.getScore = () => {
+      return likesCount + sharesCount + commentsCount;
+    }
+  }
+}
+
+export default (posts: Post[]): PostMetric[] => {
+  // calculate post
+  return posts.map((post: Post) => new PostMetric(post));
 };

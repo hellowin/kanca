@@ -13,6 +13,10 @@ import type { TimeRangeMetric } from '../service/timeRangeMetric';
 import LineChart, { LineChartTypes } from '../component/LineChart';
 import Pie, { PieTypes } from '../component/Pie';
 import WordCloud, { WordCloudTypes } from '../component/WordCloud';
+import TopUserActivity, { TopUserActivityTypes } from '../component/TopUserActivity';
+import TopPostActivity, { TopPostActivityTypes } from '../component/TopPostActivity';
+import TimeRangeSummary from '../component/TimeRangeSummary';
+import FancyButton from '../component/FancyButton';
 
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
@@ -28,6 +32,7 @@ const setDefaultData = props => {
     return {
       dateStart,
       dateEnd,
+      granularity: 'd',
     };
 }
 
@@ -37,89 +42,37 @@ class MetricSummary extends React.Component {
     data: {
       dateStart: Date,
       dateEnd: Date,
+      granularity: moment.unitOfTime.Base,
     },
   }
 
   onFormChange: Function
-  autoPickDate: Function
-
-  constructor(props) {
-    super(props);
-
-    this.autoPickDate = this.autoPickDate.bind(this);
-  }
-
-  autoPickDate(name: string) {
-    return e => {
-      e.preventDefault();
-      const { feeds } = this.props;
-      const { data } = this.state;
-
-      let date: { dateStart: Date, dateEnd: Date } = extractDateRangeFromPosts(feeds, 'd');
-      switch (name) {
-        case 'thisWeek':
-          date = {
-            dateStart: moment().startOf('w').toDate(),
-            dateEnd: moment().toDate(),
-          };
-          break;
-        case 'lastWeek':
-          date = {
-            dateStart: moment().add(-1, 'w').startOf('w').toDate(),
-            dateEnd: moment().add(-1, 'w').endOf('w').toDate(),
-          };
-          break;
-        case 'thisMonth':
-          date = {
-            dateStart: moment().startOf('M').toDate(),
-            dateEnd: moment().toDate(),
-          };
-          break;
-        case 'lastMonth':
-          date = {
-            dateStart: moment().add(-1, 'M').startOf('M').toDate(),
-            dateEnd: moment().add(-1, 'M').endOf('M').toDate(),
-          };
-          break;
-        case 'totalTime':
-          date = extractDateRangeFromPosts(feeds, 'd');
-          break;
-        default:
-          date.dateStart = moment(date.dateEnd).startOf('M').toDate();
-      }
-      
-      data.dateStart = date.dateStart;
-      data.dateEnd = date.dateEnd;
-      this.setState({ data });
-    };
-  }
 
   render() {
     const { feeds, members, comments } = this.props;
     const { data } = this.state;
     const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, feeds, members, comments);
-    const metrics: TimeRangeMetric[] = metric.getTimeSeries('d');
+    const metrics: TimeRangeMetric[] = metric.getTimeSeries(data.granularity);
     
     const forms: FormObject[] = [
-      { type: FormTypes.DATE, label: 'Date start', value: data.dateStart, model: 'dateStart', col: 6 },
-      { type: FormTypes.DATE, label: 'Date end', value: data.dateEnd, model: 'dateEnd', col: 6 },
+      { type: FormTypes.DATE, label: 'Date start', value: data.dateStart, model: 'dateStart', col: 4 },
+      { type: FormTypes.DATE, label: 'Date end', value: data.dateEnd, model: 'dateEnd', col: 4 },
+      { type: FormTypes.SELECT, label: 'Granularity', value: data.granularity, model: 'granularity', col: 4, selectOptions: [
+        { text: 'Daily', value: 'd' },
+        { text: 'Weekly', value: 'w' },
+        { text: 'Monthly', value: 'M' },
+        { text: 'Annually', value: 'y' },
+      ] },
     ];
 
     return (
       <div className="row">
 
         <div className="col-md-12">
-          <Card>
+          <Card title="Options">
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-12">
                 <Form forms={forms} onChange={this.onFormChange} />
-              </div>
-              <div className="col-md-6">
-                <button className="btn btn-primary mr-1 mb-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('thisWeek')}>This Week</button>
-                <button className="btn btn-primary mr-1 mb-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('lastWeek')}>Last Week</button>
-                <button className="btn btn-primary mr-1 mb-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('thisMonth')}>This Month</button>
-                <button className="btn btn-primary mr-1 mb-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('lastMonth')}>Last Month</button>
-                <button className="btn btn-primary mr-1 mb-1" style={{ cursor: 'pointer' }} onClick={this.autoPickDate('totalTime')}>Total Time</button>
               </div>
             </div>
           </Card>
@@ -132,25 +85,40 @@ class MetricSummary extends React.Component {
             { column: LineChartTypes.TOTAL_COMMENTS, label: 'Total Comments' },
             { column: LineChartTypes.USERS_COMMENTS, label: 'Unique User Comments' },
           ]} />
+          <TimeRangeSummary metric={metric} />
+        </div>
+
+        <div className="col-md-12">
+          <div className="row">
+
+            <div className="col-md-3">
+              <FancyButton title="Posts" subTitle="Posts metric details" icon="fa fa-edit" target="/metric/posts" />
+            </div>
+
+            <div className="col-md-3">
+              <FancyButton title="Comments" subTitle="Comments metric details" icon="fa fa-comments" target="/metric/comments" />
+            </div>
+
+            <div className="col-md-3">
+              <FancyButton title="Members" subTitle="Members metric details" icon="fa fa-users" target="/metric/members" />
+            </div>
+
+            <div className="col-md-3">
+              <FancyButton title="My Profile" subTitle="User metric details" icon="fa fa-user" target="/metric/user-profile" />
+            </div>
+
+          </div>
         </div>
 
         <div className="col-md-6">
           <Pie metric={metric} type={PieTypes.ACTIVITIES_PERDAY} />
-          <Card>
-            <p>Time range {moment(data.dateStart).format('YYYY-MM-DD HH:mm:ss')} - {moment(data.dateEnd).format('YYYY-MM-DD HH:mm:ss')}</p>
-            <p>Total posts: {metric.postsMetric.totalPosts()}</p>
-            <p>Total posts shares: {metric.postsMetric.totalShares()}</p>
-            <p>Total posts likes: {metric.postsMetric.totalLikes()}</p>
-            <p>Total comments: {metric.commentsMetric.totalComments()}</p>
-            <p>Total members: {metric.usersMetric.totalMembers()}</p>
-            <p>Total unique member posting: {metric.usersMetric.uniqueUsersPosts().length}</p>
-            <p>Total unique member commenting: {metric.usersMetric.uniqueUsersComments().length}</p>
-          </Card>
+          <TopUserActivity metric={metric} type={TopUserActivityTypes.SCORE} />
         </div>
 
         <div className="col-md-6">
           <Pie metric={metric} type={PieTypes.ACTIVITIES_PERTRIHOUR} />
           <WordCloud metric={metric} type={WordCloudTypes.ALL} />
+          <TopPostActivity metric={metric} type={TopPostActivityTypes.SCORE} />
         </div>
 
       </div>
