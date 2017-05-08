@@ -26,3 +26,28 @@
 .app > .app-body > main.main {
   max-width: 100vw;
 }
+
+.gh-count:after,.gh-count:before {
+  right: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.gh-count:before {
+  border-color: rgba(212, 212, 212, 0);
+  border-right-color: #d4d4d4;
+  border-width: 5px;
+  margin-top: -6px;
+}
+
+.gh-count:after {
+  border-color: rgba(239, 243, 246, 0);
+  border-right-color: #eff3f6;
+  border-width: 3px;
+  margin-top: -4px;
+}

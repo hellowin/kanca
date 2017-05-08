@@ -7,6 +7,7 @@ import Sidebar from 'domain/layout/component/Sidebar';
 import Footer from 'domain/layout/component/Footer';
 import { connect } from 'react-redux';
 import Auth from 'domain/user/component/Auth';
+import { githubStar } from 'infra/service/util';
 
 const mapStateToProps = state => ({
   profile: state.user.profile,
@@ -14,6 +15,26 @@ const mapStateToProps = state => ({
 });
 
 class App extends React.Component {
+  state: {
+    starCount: number,
+  };
+  
+  constructor() {
+    super();
+    
+    this.state = {
+      starCount: 0,
+    };
+  }
+  
+  componentDidMount() {
+    githubStar()
+      .then(response => {
+        this.setState({
+          starCount: response.stargazers_count,
+        })
+      })
+  }
 
   render() {
     const children = this.props.children;
@@ -30,7 +51,7 @@ class App extends React.Component {
               </div>
             </main>
           </div>
-          <Footer />
+          <Footer starCount={this.state.starCount} />
         </div>
       </Auth>
     );
