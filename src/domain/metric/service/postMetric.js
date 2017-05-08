@@ -1,4 +1,5 @@
 // @flow
+import moment from 'moment-timezone';
 
 export class PostMetric {
   post: Post
