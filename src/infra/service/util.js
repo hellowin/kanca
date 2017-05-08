@@ -40,10 +40,19 @@ export const timeRangeToString = (dateStart: Date, dateEnd: Date): string => {
     const fixDateEnd = end.clone().format('ddd, DD MMM YYYY');
 
     return fixDateStart ? `${fixDateStart} - ${fixDateEnd}` : fixDateEnd;
-}
+};
+
+export const githubStar = () => {
+  return fetch('https://api.github.com/repos/hellowin/kanca')
+    .then(response => response.json())
+    .then(json => {
+      return json;
+    });
+};
 
 export default {
   syncToPromise,
   wordCounter,
   timeRangeToString,
+  githubStar,
 };
