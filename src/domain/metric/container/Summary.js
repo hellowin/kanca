@@ -16,6 +16,7 @@ import WordCloud, { WordCloudTypes } from '../component/WordCloud';
 import TopUserActivity, { TopUserActivityTypes } from '../component/TopUserActivity';
 import TopPostActivity, { TopPostActivityTypes } from '../component/TopPostActivity';
 import TimeRangeSummary from '../component/TimeRangeSummary';
+import FancyButton from '../component/FancyButton';
 
 const mapStateToProps = state => ({
   feeds: state.group.feeds,
@@ -85,6 +86,28 @@ class MetricSummary extends React.Component {
             { column: LineChartTypes.USERS_COMMENTS, label: 'Unique User Comments' },
           ]} />
           <TimeRangeSummary metric={metric} />
+        </div>
+
+        <div className="col-md-12">
+          <div className="row">
+
+            <div className="col-md-3">
+              <FancyButton title="Posts" subTitle="Posts metric details" icon="fa fa-edit" target="/metric/posts" />
+            </div>
+
+            <div className="col-md-3">
+              <FancyButton title="Comments" subTitle="Comments metric details" icon="fa fa-comments" target="/metric/comments" />
+            </div>
+
+            <div className="col-md-3">
+              <FancyButton title="Members" subTitle="Members metric details" icon="fa fa-users" target="/metric/members" />
+            </div>
+
+            <div className="col-md-3">
+              <FancyButton title="My Profile" subTitle="User metric details" icon="fa fa-user" target="/metric/user-profile" />
+            </div>
+
+          </div>
         </div>
 
         <div className="col-md-6">
