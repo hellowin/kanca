@@ -28,7 +28,7 @@ export class PostMetric {
 
     this.post = post;
     this.id = post.id;
-    this.createdTime = new Date(post.created_time);
+    this.createdTime = moment(post.created_time).toDate();
     this.text = text;
     this.from = post.from;
     this.picture = post.picture;
