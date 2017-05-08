@@ -14,6 +14,7 @@ import LineChart, { LineChartTypes } from '../component/LineChart';
 import Pie, { PieTypes } from '../component/Pie';
 import WordCloud, { WordCloudTypes } from '../component/WordCloud';
 import TopUserActivity, { TopUserActivityTypes } from '../component/TopUserActivity';
+import TopPostActivity, { TopPostActivityTypes } from '../component/TopPostActivity';
 import TimeRangeSummary from '../component/TimeRangeSummary';
 
 const mapStateToProps = state => ({
@@ -94,6 +95,7 @@ class MetricSummary extends React.Component {
         <div className="col-md-6">
           <Pie metric={metric} type={PieTypes.ACTIVITIES_PERTRIHOUR} />
           <WordCloud metric={metric} type={WordCloudTypes.ALL} />
+          <TopPostActivity metric={metric} type={TopPostActivityTypes.SCORE} />
         </div>
 
       </div>

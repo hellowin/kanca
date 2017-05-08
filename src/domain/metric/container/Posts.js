@@ -10,7 +10,7 @@ import Card from 'infra/component/Card';
 import timeRangeMetricer, { extractDateRangeFromPosts } from '../service/timeRangeMetric';
 import type { TimeRangeMetric } from '../service/timeRangeMetric';
 import LineChart, { LineChartTypes } from '../component/LineChart';
-import PostActivityTop from '../component/PostActivityTop';
+import TopPostActivity, { TopPostActivityTypes } from '../component/TopPostActivity';
 import TopUserActivity, { TopUserActivityTypes } from '../component/TopUserActivity';
 import Pie, { PieTypes } from '../component/Pie';
 import WordCloud, { WordCloudTypes } from '../component/WordCloud';
@@ -81,13 +81,13 @@ class PostsMetricPage extends React.Component {
         <div className="col-md-6">
           <Pie metric={metric} type={PieTypes.POSTS_PERDAY} />
           <WordCloud metric={metric} type={WordCloudTypes.POSTS} />
-          <PostActivityTop metric={metric} type="likes" title="Posts Likes" subTitle="Top 10 most liked posts." />
+          <TopPostActivity metric={metric} type={TopPostActivityTypes.LIKES} />
         </div>
 
         <div className="col-md-6">
           <Pie metric={metric} type={PieTypes.POSTS_PERTRIHOUR} />
           <TopUserActivity metric={metric} type={TopUserActivityTypes.POSTS} title="Posts" subTitle="Top 10 user posts count." />
-          <PostActivityTop metric={metric} type="shares" title="Posts Shares" subTitle="Top 10 most shared posts." />
+          <TopPostActivity metric={metric} type={TopPostActivityTypes.SHARES} />
         </div>
 
       </div>

@@ -78,7 +78,7 @@ class PostsTimeSeries extends React.Component {
     return (
       <Card title={title}>
         <div className="row">
-          <div className="col-12" style={{ overflowX: 'auto', overflowY: 'none' }}>
+          <div className="col-12" style={{ overflowX: 'auto', overflowY: 'hidden' }}>
             <div style={{ minWidth: '1000px' }}>
               <C3 id={id} config={config} />
             </div>
