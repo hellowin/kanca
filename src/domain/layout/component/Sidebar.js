@@ -34,10 +34,10 @@ class Sidebar extends Component {
               <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-people"></i> Group</a>
               <ul className="nav-dropdown-items">
                 <li className="nav-item">
-                  <NavLink className="nav-link" to={loc.urlPrefix('/group/selection')}>Selection</NavLink>
+                  <NavLink className="nav-link" to={loc.getUrl('/group/selection')}>Selection</NavLink>
                 </li>
                 {feeds.length > 0 ? <li className="nav-item">
-                  <NavLink className="nav-link" to={loc.urlPrefix('/group/feed')}>Feed</NavLink>
+                  <NavLink className="nav-link" to={loc.getUrl('/group/feed')}>Feed</NavLink>
                 </li> : ''}
               </ul>
             </li>
@@ -46,17 +46,17 @@ class Sidebar extends Component {
               <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-graph"></i> Metric</a>
               <ul className="nav-dropdown-items">
                 <li className="nav-item">
-                  <NavLink className="nav-link" to={loc.urlPrefix('/metric/summary')}>Summary</NavLink>
+                  <NavLink className="nav-link" to={loc.getUrl('/metric/summary')}>Summary</NavLink>
                 </li>
                 {feeds.length > 0 && [
                   <li className="nav-item" key={uuid.v4()}>
-                    <NavLink className="nav-link" to={loc.urlPrefix('/metric/posts')}>Posts</NavLink>
+                    <NavLink className="nav-link" to={loc.getUrl('/metric/posts')}>Posts</NavLink>
                   </li>,
                   <li className="nav-item" key={uuid.v4()}>
-                    <NavLink className="nav-link" to={loc.urlPrefix('/metric/comments')}>FeedComments</NavLink>
+                    <NavLink className="nav-link" to={loc.getUrl('/metric/comments')}>FeedComments</NavLink>
                   </li>,
                   <li className="nav-item" key={uuid.v4()}>
-                  <NavLink className="nav-link" to={loc.urlPrefix('/metric/members')}>Members</NavLink>
+                  <NavLink className="nav-link" to={loc.getUrl('/metric/members')}>Members</NavLink>
                   </li>
                 ]}
               </ul>
