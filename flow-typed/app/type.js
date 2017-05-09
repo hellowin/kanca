@@ -9,7 +9,7 @@ declare type Group = {
   id: string,
   name: string,
   privacy: string,
-  cover: string,
+  cover?: string,
   description: string,
   owner: {
     id: string,
