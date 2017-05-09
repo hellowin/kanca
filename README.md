@@ -46,7 +46,6 @@ It would be better if you install this [Flow plugin](https://marketplace.visuals
 
 ## Environment Variable Explanation
 
-- `NODE_PATH` default is `src`, this is `Create React App` standard to mark directories as our node.js modules.
 - `REACT_APP_FB_APP_ID` it's Facebook Developer's Application ID, look at your application dashboard on https://developers.facebook.com.
 - `REACT_APP_URL_PREFIX` default is `/kanca`, it's used as a `url prefix`, mostly used if we published as project page at GitHub pages.
 - `REACT_APP_FEED_PAGES` default is `10`, it's used to set how many pages of group feed do we want to fetch by default.
