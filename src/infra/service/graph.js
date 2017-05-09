@@ -135,7 +135,7 @@ const getGroup = (groupId: string): Promise<Group> => get(`/${groupId}?fields=id
       id: res.id,
       name: res.name,
       privacy: res.privacy,
-      cover: res.cover.source,
+      cover: (res.cover || {}).source,
       description: res.description,
       owner: {
         id: res.owner.id,
