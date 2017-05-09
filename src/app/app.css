@@ -27,6 +27,10 @@
   max-width: 100vw;
 }
 
+.sidebar .nav .nav-item .nav-link.active {
+  background-color: #56616d !important;
+}
+
 .gh-count:after,.gh-count:before {
   right: 100%;
   top: 50%;
