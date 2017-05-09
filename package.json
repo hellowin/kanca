@@ -38,9 +38,9 @@
     "uuid": "^3.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "start": "NODE_PATH=./src:./public react-scripts start",
+    "build": "NODE_PATH=./src:./public react-scripts build",
+    "test": "NODE_PATH=./src:./public react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "flow": "flow",
     "predeploy": "npm run build",
