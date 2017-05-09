@@ -36,7 +36,7 @@ class Login extends React.Component {
                   <div style={styles.header}>
                     <a href="https://hellowin.github.io/kanca" style={styles.siteName}>Kanca</a>
                     <a href="https://github.com/hellowin/kanca">
-                      <img src={`${prefix}/img/github-logo.png`} alt="github-logo" style={styles.logoGithub}/>
+                      <img src={`${prefix}/img/github-logo.png`} alt="github-logo" style={styles.logoGithub} />
                     </a>
                   </div>
                   <div style={styles.content}>
