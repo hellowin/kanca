@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import NavLink from './NavLink';
 import uuid from 'uuid';
+import './Sidebar.css';
 
 import loc from 'infra/service/location';
 
@@ -42,25 +43,23 @@ class Sidebar extends Component {
               </ul>
             </li>
 
-            {feeds.length > 0 ? <li className={this.activeRoute("/metric")}>
+            {feeds.length > 0 ? (<li className={this.activeRoute("/metric")}>
               <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-graph"></i> Metric</a>
               <ul className="nav-dropdown-items">
                 <li className="nav-item">
                   <NavLink className="nav-link" to={loc.getUrl('/metric/summary')}>Summary</NavLink>
                 </li>
-                {feeds.length > 0 && [
-                  <li className="nav-item" key={uuid.v4()}>
-                    <NavLink className="nav-link" to={loc.getUrl('/metric/posts')}>Posts</NavLink>
-                  </li>,
-                  <li className="nav-item" key={uuid.v4()}>
-                    <NavLink className="nav-link" to={loc.getUrl('/metric/comments')}>Comments</NavLink>
-                  </li>,
-                  <li className="nav-item" key={uuid.v4()}>
+                <li className="nav-item" key={uuid.v4()}>
+                  <NavLink className="nav-link" to={loc.getUrl('/metric/posts')}>Posts</NavLink>
+                </li>
+                <li className="nav-item" key={uuid.v4()}>
+                  <NavLink className="nav-link" to={loc.getUrl('/metric/comments')}>Comments</NavLink>
+                </li>
+                <li className="nav-item" key={uuid.v4()}>
                   <NavLink className="nav-link" to={loc.getUrl('/metric/members')}>Members</NavLink>
-                  </li>
-                ]}
+                </li>
               </ul>
-            </li> : ''}
+            </li>) : ''}
 
           </ul>
         </nav>
