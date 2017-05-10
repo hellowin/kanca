@@ -34,7 +34,7 @@ const GroupPost = (props: Post) => {
               <div className="row">
                 {picture ?
                   <div className={`col-md-2 ${matches && 'd-flex justify-content-center'}`}>
-                    <img src={picture} className="rounded float-left img-responsive" alt="Post pic" />
+                    <img src={picture} className="rounded float-left img-responsive" alt="Post pic" style={{ maxWidth: '150px' }} />
                   </div> : ''}
                 <div className={picture ? 'col-md-10' : 'col-md-12'}>
                   {matches ? <div>
