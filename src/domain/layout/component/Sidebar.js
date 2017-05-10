@@ -53,7 +53,7 @@ class Sidebar extends Component {
                     <NavLink className="nav-link" to={loc.getUrl('/metric/posts')}>Posts</NavLink>
                   </li>,
                   <li className="nav-item" key={uuid.v4()}>
-                    <NavLink className="nav-link" to={loc.getUrl('/metric/comments')}>FeedComments</NavLink>
+                    <NavLink className="nav-link" to={loc.getUrl('/metric/comments')}>Comments</NavLink>
                   </li>,
                   <li className="nav-item" key={uuid.v4()}>
                   <NavLink className="nav-link" to={loc.getUrl('/metric/members')}>Members</NavLink>
