@@ -55,9 +55,9 @@ class Header extends Component {
 
     return (
       <header className="app-header navbar" style={{ paddingRight: '15px' }}>
-        <button className="navbar-toggler mobile-sidebar-toggler hidden-lg-up" onClick={this.mobileSidebarToggle} type="button">&#9776;</button>
+        <button className="navbar-toggler mobile-sidebar-toggler d-lg-none" onClick={this.mobileSidebarToggle} type="button">&#9776;</button>
         <a className="navbar-brand" href="#"></a>
-        <ul className="nav navbar-nav d-sm-down-none">
+        <ul className="nav navbar-nav d-md-down-none">
           <li className="nav-item">
             <a className="nav-link navbar-toggler sidebar-toggler" onClick={this.sidebarToggle} href="#">&#9776;</a>
           </li>
@@ -70,7 +70,7 @@ class Header extends Component {
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
               <a onClick={this.toggle} className="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
                 <img src={profile.picture} className="img-avatar" alt={profile.name}/>
-                <span className="d-sm-down-none">{profile.name}</span>
+                <span className="d-md-down-none">{profile.name}</span>
               </a>
 
               <DropdownMenu className="dropdown-menu-right">
