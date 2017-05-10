@@ -41,7 +41,10 @@ const userRepo = {
       .then(res => (login = res))
       .then(() => graph.getUser())
       .then(res => (profile = res))
-      .then(() => store.dispatch(action.userSet({ profile, login, loggedIn: true, loading: false })))
+      .then(() => {
+        if (profile.facebookId) window.ga('set', 'userId', profile.facebookId);
+        store.dispatch(action.userSet({ profile, login, loggedIn: true, loading: false }));
+      })
       .catch(err => store.dispatch(action.userSet({ profile: emptyProfile, login: {}, loggedIn: false, loading: false })));
   },
 
