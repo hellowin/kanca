@@ -38,9 +38,8 @@ class InputGroup extends React.Component {
           // validate group object
           const name = res.name;
           const privacy = res.privacy;
-          const owner = res.owner;
 
-          if (!name || ! privacy || !owner) throw new Error('ID is not a valid Facebook Group ID.');
+          if (!name || ! privacy) throw new Error('ID is not a valid Facebook Group ID.');
 
           groupRepo.addInput(res);
 
