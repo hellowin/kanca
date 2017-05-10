@@ -68,7 +68,7 @@ class InputGroup extends React.Component {
                     <label style={{ marginBottom: '0', marginRight: '.5rem' }} key={uuid.v4()}>Group ID</label>,
                     <input
                       type="text"
-                      className="form-control mr-sm-2 mb-sm-0 col-4"
+                      className="form-control mr-sm-2 mb-1 col-4"
                       style={{ marginRight: '.5rem' }}
                       placeholder="example: 1920036621597031"
                       value={data.groupId}
@@ -79,7 +79,7 @@ class InputGroup extends React.Component {
                     <label className="mr-sm-2" key={uuid.v4()}>Group ID</label>,
                     <input
                       type="text"
-                      className="form-control mr-sm-2 mb-sm-0 col-4"
+                      className="form-control mr-sm-2 mb-1 col-4"
                       placeholder="example: 1920036621597031"
                       value={data.groupId}
                       onChange={onFormChange('groupId')}

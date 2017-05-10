@@ -69,26 +69,6 @@ class MetricSummary extends React.Component {
       <div className="row">
 
         <div className="col-md-12">
-          <Card title="Options">
-            <div className="row">
-              <div className="col-md-12">
-                <Form forms={forms} onChange={this.onFormChange} />
-              </div>
-            </div>
-          </Card>
-        </div>
-
-        <div className="col-md-12">
-          <LineChart title="Group Activities" metrics={metrics} show={[
-            { column: LineChartTypes.TOTAL_POSTS, label: 'Total Posts' },
-            { column: LineChartTypes.USERS_POSTS, label: 'Unique User Posts' },
-            { column: LineChartTypes.TOTAL_COMMENTS, label: 'Total Comments' },
-            { column: LineChartTypes.USERS_COMMENTS, label: 'Unique User Comments' },
-          ]} />
-          <TimeRangeSummary metric={metric} />
-        </div>
-
-        <div className="col-md-12">
           <div className="row">
 
             <div className="col-md-3">
@@ -108,6 +88,26 @@ class MetricSummary extends React.Component {
             </div>
 
           </div>
+        </div>
+
+        <div className="col-md-12">
+          <Card title="Options">
+            <div className="row">
+              <div className="col-md-12">
+                <Form forms={forms} onChange={this.onFormChange} />
+              </div>
+            </div>
+          </Card>
+        </div>
+
+        <div className="col-md-12">
+          <LineChart title="Group Activities" metrics={metrics} show={[
+            { column: LineChartTypes.TOTAL_POSTS, label: 'Total Posts' },
+            { column: LineChartTypes.USERS_POSTS, label: 'Unique User Posts' },
+            { column: LineChartTypes.TOTAL_COMMENTS, label: 'Total Comments' },
+            { column: LineChartTypes.USERS_COMMENTS, label: 'Unique User Comments' },
+          ]} />
+          <TimeRangeSummary metric={metric} />
         </div>
 
         <div className="col-md-6">
