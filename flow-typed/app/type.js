@@ -11,7 +11,7 @@ declare type Group = {
   privacy: string,
   cover?: string,
   description: string,
-  owner: {
+  owner?: {
     id: string,
     name: string,
   }
