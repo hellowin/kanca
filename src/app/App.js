@@ -8,6 +8,8 @@ import Footer from 'domain/layout/component/Footer';
 import { connect } from 'react-redux';
 import Auth from 'domain/user/component/Auth';
 import { githubStar } from 'infra/service/util';
+import groupRepo from 'infra/repo/group';
+import loc from 'infra/service/location';
 
 const mapStateToProps = state => ({
   profile: state.user.profile,
@@ -32,8 +34,14 @@ class App extends React.Component {
       .then(response => {
         this.setState({
           starCount: response.stargazers_count,
-        })
+        });
       })
+      .then(() => {
+        groupRepo.restoreGroup();
+      })
+      .then(() => {
+        loc.push('/metric/summary');
+      });
   }
 
   render() {
