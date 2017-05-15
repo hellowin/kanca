@@ -4,7 +4,7 @@ import _ from 'lodash';
 import Measure from 'react-measure';
 import Cloud from './Cloud';
 import Card from 'infra/component/Card';
-import { syncToPromise } from 'infra/service/util';
+import { syncToPromise, cancelablePromise } from 'infra/service/util';
 
 import type { TimeRangeMetric } from '../service/timeRangeMetric'
 
@@ -16,7 +16,9 @@ export const WordCloudTypes = {
 
 export type WordCloudType = $Keys<typeof WordCloudTypes>
 
-const calculate = (type: WordCloudType, metric: TimeRangeMetric): Promise<{ word: string, count: number }[]> => {
+type WordCount = { word: string, count: number }
+
+const calculate = (type: WordCloudType, metric: TimeRangeMetric): Promise<WordCount[]> => {
   let promises = [];
 
   switch (type) {
@@ -90,6 +92,8 @@ class WordCloud extends React.Component {
     data: { text: string, value: number }[],
   }
 
+  cancelable: { promise: Promise<WordCount[]>, cancel: Function }
+
   generateData: Function
 
   constructor(props: Object) {
@@ -118,7 +122,9 @@ class WordCloud extends React.Component {
       ...props,
     };
 
-    calculate(type, metric)
+    this.cancelable = cancelablePromise(calculate(type, metric));
+
+    this.cancelable.promise
       .then(res => {
         const rawData = res.map(wor => ({ text: wor.word, value: wor.count }));
         const data = _.sortBy(rawData, 'value')
@@ -128,7 +134,13 @@ class WordCloud extends React.Component {
         return data;
       })
       .then(data => this.setState({ loading: false, data }))
-      .catch(() => this.setState({ loading: false }));
+      .catch(err => {
+        if (err.message !== 'cancelled') this.setState({ loading: false });
+      });
+  }
+
+  componentWillUnmount() {
+    this.cancelable.cancel();
   }
 
   render() {

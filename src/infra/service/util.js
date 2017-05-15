@@ -12,6 +12,22 @@ export const syncToPromise = <T>(func: Function): Promise<T> => new Promise((res
   }, 0);
 });
 
+export const cancelablePromise = <T>(promise: Promise<T>): { promise: Promise<T>, cancel: Function } => {
+  let hasCanceled = false;
+
+  const wrappedPromise = new Promise((resolve, reject) => {
+    promise.then((val) => (hasCanceled ? reject(new Error('cancelled')) : resolve(val)));
+    promise.catch((error) => (hasCanceled ? reject(new Error('cancelled')) : reject(error)));
+  });
+
+  return {
+    promise: wrappedPromise,
+    cancel() {
+      hasCanceled = true;
+    },
+  };
+};
+
 export const wordCounter = (string: string): Promise<{ word: string, count: number }[]> => syncToPromise(() => {
   const count: { [string]: { word: string, count: number } } = {};
   
@@ -52,6 +68,7 @@ export const githubStar = () => {
 
 export default {
   syncToPromise,
+  cancelablePromise,
   wordCounter,
   timeRangeToString,
   githubStar,

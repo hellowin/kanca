@@ -9,8 +9,4 @@ class NavLink extends Component {
   }
 }
 
-NavLink.contextTypes = {
-  router: React.PropTypes.object
-};
-
 export default NavLink;
