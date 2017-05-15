@@ -2,7 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import loc from 'infra/service/location';
-import groupRepo from 'infra/repo/group';
 import Card from 'infra/component/Card';
 
 const mapStateToProps = state => ({
@@ -12,13 +11,9 @@ const mapStateToProps = state => ({
 const goTo = path => e => {
   e.preventDefault();
   loc.push(path);
-}
+};
 
 class Dashboard extends React.Component {
-
-  componentDidMount() {
-    groupRepo.restoreGroup();
-  }
 
   render() {
     const { posts } = this.props;

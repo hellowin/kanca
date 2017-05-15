@@ -18,7 +18,7 @@ const mapStateToProps = state => ({
 const checkMetricAvailability = props => {
   const { loggedIn, loading, posts, comments, members } = props;
   if (!loggedIn && !loading && posts.length < 1 && comments.length < 1 && members.length < 1) loc.push('/welcome');
-}
+};
 
 class Metric extends React.Component {
 

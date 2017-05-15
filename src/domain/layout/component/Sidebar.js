@@ -30,6 +30,9 @@ class Sidebar extends Component {
       <div className="sidebar">
         <nav className="sidebar-nav">
           <ul className="nav">
+            <li className="nav-item">
+              <NavLink className="nav-link" to={loc.getUrl('/welcome')}><i className="icon-envelope-open"></i> Welcome</NavLink>
+            </li>
             
             <li className={this.activeRoute("/group")}>
               <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-people"></i> Group</a>
