@@ -4833,15 +4833,16 @@ reactstrap-tether@1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/reactstrap-tether/-/reactstrap-tether-1.3.4.tgz#86d94d30216ffa34ceb2c626f4b9912c0d193894"
 
-reactstrap@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/reactstrap/-/reactstrap-4.5.0.tgz#ce377eb46c2358d084d7d9bf881fb55f6fcf2a83"
+reactstrap@^4.6.1:
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/reactstrap/-/reactstrap-4.6.1.tgz#e29300f5e660b609e25cefd29caf97a626fd9c80"
   dependencies:
     classnames "^2.2.3"
     lodash.isfunction "^3.0.8"
     lodash.isobject "^3.0.2"
     lodash.omit "^4.4.1"
     lodash.tonumber "^4.0.3"
+    prop-types "^15.5.8"
     reactstrap-tether "1.3.4"
 
 read-pkg-up@^1.0.1:
