@@ -39,7 +39,7 @@ class App extends React.Component {
       })
       .then(() => syncToPromise(() => {
         groupRepo.restoreGroup();
-      })
+      }))
       .then(() => {
         loc.push('/metric/summary');
       });
