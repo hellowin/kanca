@@ -29,9 +29,13 @@ Kanca is an application to analyze `Facebook Group` activity. Its key features a
 1. Go to project root directory, copy `.env.template` to `.env` (edit it as you need, look at description below)
 2. Install its dependencies `$ npm install` or `$ yarn install`
 
-## IDE/ Text Editor Configuration
+## IDE/ Text Editor/ OS Configuration
 
-Since this project uses [Flow](https://flow.org/), some IDE or Text Editors needs additional configuration.
+Since this project uses [Flow](https://flow.org/), and some environment specific configuration, some IDE or Text Editors needs additional configuration.
+
+### Windows
+
+Please use `Bash on Ubuntu on Windows` or `Windows Subsystem Linux` for local development.
 
 ### VSCode
 
