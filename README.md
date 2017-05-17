@@ -4,6 +4,7 @@
 [![codecov](https://codecov.io/gh/hellowin/kanca/branch/master/graph/badge.svg)](https://codecov.io/gh/hellowin/kanca)
 [![Known Vulnerabilities](https://snyk.io/test/github/hellowin/kanca/badge.svg)](https://snyk.io/test/github/hellowin/kanca)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/34810083c2eb4046a67dba2959dcca9f)](https://www.codacy.com/app/hellowin/kanca?utm_source=github.com&utm_medium=referral&utm_content=hellowin/kanca&utm_campaign=badger)
+[![Code Climate](https://codeclimate.com/github/hellowin/kanca/badges/gpa.svg)](https://codeclimate.com/github/hellowin/kanca)
 
 [![bitHound Overall Score](https://www.bithound.io/github/hellowin/kanca/badges/score.svg)](https://www.bithound.io/github/hellowin/kanca)
 [![bitHound Dependencies](https://www.bithound.io/github/hellowin/kanca/badges/dependencies.svg)](https://www.bithound.io/github/hellowin/kanca/master/dependencies/npm)
