@@ -22,6 +22,7 @@ const user = (state = {
 
 const group = (state = {
   loading: false,
+  error: null,
   inputs: [],
   manages: [],
   features: [],

@@ -48,24 +48,28 @@ const groupRepo = {
   },
 
   fetchFeatures(groupIds: string[]): Promise<any> {
-    store.dispatch(action.groupSet({ loading: true }));
+    store.dispatch(action.groupSet({ error: null, loading: true, features: [], manages: [] }));
     const features = [];
     let manages = [];
 
     const promises = groupIds.map(id => graph.getGroup(id)
       .then(res => features.push(res))
-      .catch(console.log));
+      .catch(reportError));
     
     return Promise.all(promises)
       .then(() => graph.getUserManagedGroups())
       .then(res => (manages = res))
       .then(() => {
         store.dispatch(action.groupSet({ features, manages, loading: false }));
+      })
+      .catch(err => {
+        reportError(err);
+        store.dispatch(action.groupSet({ error: err, loading: false }));
       });
   },
 
   fetchFeeds(groupId: string, pages: number): Promise<any> {
-    store.dispatch(action.groupSet({ loading: true, feeds: [] }));
+    store.dispatch(action.groupSet({ error: null, loading: true, feeds: [], comments: [], members: [] }));
     let feeds;
     let comments;
     let members;
@@ -80,6 +84,10 @@ const groupRepo = {
         st.set('group.members', members);
         // store on redux
         store.dispatch(action.groupSet({ feeds, comments, members, loading: false }));
+      })
+      .catch(err => {
+        reportError(err);
+        store.dispatch(action.groupSet({ error: err, loading: false }));
       });
   },
 
