@@ -3,21 +3,17 @@ const styles = {
     minHeight: '100vh',
     backgroundColor: 'white'
   },
-  siteName: {
-    fontWeight: 'lighter',
-    letterSpacing: '2px',
-    fontSize: '12pt',
-    textDecoration: 'none',
-    color: 'black'
-  },
   header: {
-    display: 'flex',
-    alignItems: 'center',
+    textAlign: 'right',
     justifyContent: 'space-between',
     borderBottomWidth: 'thin',
     borderBottomStyle: 'solid',
     borderColor: '#8b9dc3',
     padding: '2vh 4vh'
+  },
+  logoGithub: {
+    width: '4vh',
+    height: '4vh'
   },
   content: {
     minHeight: '80vh',
@@ -36,10 +32,6 @@ const styles = {
     cursor: 'pointer',
     width: '30vh'
   },
-  logoGithub: {
-    width: '4vh',
-    height: '4vh'
-  }
 };
 
 export default styles;
