@@ -3,7 +3,7 @@ import store from 'infra/service/store';
 import action from 'infra/service/action';
 import graph from 'infra/service/graph';
 import config from 'config';
-import st from 'store';
+import st from '../service/persistent';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import { reportError } from 'infra/service/reporter';
