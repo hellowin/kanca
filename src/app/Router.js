@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Router, Route, browserHistory, Redirect } from 'react-router';
+import { Router, Route, browserHistory, Redirect, IndexRedirect } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import config from 'config';
 import store from 'infra/service/store';
@@ -19,6 +19,7 @@ const prefix = config.urlPrefix;
 const RouterComp = () => (
   <Router history={history}>
     <Route path={prefix} component={App}>
+      <IndexRedirect to="welcome" />
       <Route path="welcome" component={Welcome} />
       {GroupRoute()}
       {MetricRoute()}
