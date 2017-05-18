@@ -2,6 +2,7 @@
 import store from 'infra/service/store';
 import action from 'infra/service/action';
 import graph from 'infra/service/graph';
+import loc from 'infra/service/location';
 
 const userRepo = {
 
@@ -14,6 +15,7 @@ const userRepo = {
       .then(res => (profile = res))
       .then(() => {
         store.dispatch(action.userSet({ profile, login, loggedIn: true }))
+        loc.push('/')
       });
   },
 
@@ -24,7 +26,10 @@ const userRepo = {
       email: '',
     };
     return graph.logout()
-      .then(() => store.dispatch(action.userSet({ profile, login: {}, loggedIn: false })));
+      .then(() => {
+        store.dispatch(action.userSet({ profile, login: {}, loggedIn: false }));
+        loc.push('/login')
+      });
     
   },
 

@@ -3,12 +3,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import loc from 'infra/service/location';
 import GroupRoute from './Route';
+import Alert, { AlertLevels } from 'infra/component/Alert';
 
 export const Route = GroupRoute;
 
 const mapStateToProps = state => ({
   user: state.user,
   posts: state.group.feeds,
+  error: state.group.error,
 });
 
 const checkValidity = props => {
@@ -29,9 +31,14 @@ class Group extends React.Component {
   }
 
   render(){
-    const { children } = this.props;
+    const { children, error } = this.props;
 
-    return children;
+    return (
+      <div>
+        {error ? <Alert level={AlertLevels.DANGER}><b>Error</b>: {error.message || error}</Alert> : <null />}
+        {children}
+      </div>
+    );
   }
 
 }

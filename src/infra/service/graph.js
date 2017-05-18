@@ -163,6 +163,8 @@ const getGroupFeed = (groupId: string, pages: number): Promise<{}[]> => {
     .catch(err => {
       const errors = err.message.split(':');
       switch (errors[1]) {
+        case '1':
+          throw new Error('oAuth exception, try to refresh your browser manually.');
         default:
           reportError(new Error(err.message));
           throw err;
