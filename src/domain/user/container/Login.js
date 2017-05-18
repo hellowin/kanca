@@ -6,7 +6,7 @@ import githubLogo from 'img/github-logo.png';
 import kancaLogo from 'img/logo.png';
 import facebookLoginImg from 'img/facebook-login-button.png';
 
-const Login = (props: Object) => {
+const Login = () => {
   return (
     <div style={styles.container}>
         <MediaQuery minDeviceWidth={320} maxWidthDevice={736} minWidth={320} maxWidth={736}>
