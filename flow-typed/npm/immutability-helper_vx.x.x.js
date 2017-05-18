@@ -1,4 +1,4 @@
-// flow-typed signature: 345c0e20257dfde3be137e7a8569ec6f
+// flow-typed signature: 0e4fbff818e9ab734bf102c25cf313ef
 // flow-typed version: <<STUB>>/immutability-helper_v^2.1.2/flow_v0.45.0
 
 /**
@@ -22,7 +22,9 @@ declare module 'immutability-helper' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
-
+declare module 'immutability-helper/tmp' {
+  declare module.exports: any;
+}
 
 // Filename aliases
 declare module 'immutability-helper/index' {
@@ -30,4 +32,7 @@ declare module 'immutability-helper/index' {
 }
 declare module 'immutability-helper/index.js' {
   declare module.exports: $Exports<'immutability-helper'>;
+}
+declare module 'immutability-helper/tmp.js' {
+  declare module.exports: $Exports<'immutability-helper/tmp'>;
 }
