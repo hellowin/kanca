@@ -3,7 +3,7 @@ import store from 'infra/service/store';
 import action from 'infra/service/action';
 import graph from 'infra/service/graph';
 import config from 'config';
-import st from 'store';
+import st from '../service/persistent';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import { reportError } from 'infra/service/reporter';
@@ -17,11 +17,13 @@ const groupRepo = {
       .then(res => (group = res))
       .then(() => {
         const updatedTime = new Date();
-        // store on local storage
-        st.set('group.selected', group);
-        st.set('group.updatedTime', updatedTime);
         // store on redux
         store.dispatch(action.groupSet({ updatedTime, selected: group }));
+        // store on local storage
+        return Promise.all([
+          st.set('group.selected', group),
+          st.set('group.updatedTime', updatedTime),
+        ]);
       })
       .then(() => groupRepo.fetchFeeds(group.id, config.feedPages));
   },
@@ -42,9 +44,11 @@ const groupRepo = {
     const inputs = _.values(uniqueInputs);
 
     // store on local storage
-    st.set('group.inputs', inputs);
-    // store on redux
-    store.dispatch(action.groupSet({ inputs }));
+    st.set('group.inputs', inputs)
+      .then(() => {
+        // store on redux
+        store.dispatch(action.groupSet({ inputs }));
+      });
   },
 
   fetchFeatures(groupIds: string[]): Promise<any> {
@@ -78,12 +82,14 @@ const groupRepo = {
       .then(() => graph.getGroupMembers(groupId, pages)).then(res => (members = res))
       .then(() => graph.getGroupComments(feeds).then(res => (comments = res)))
       .then(() => {
-        // store on local storage
-        st.set('group.feeds', feeds);
-        st.set('group.comments', comments);
-        st.set('group.members', members);
         // store on redux
         store.dispatch(action.groupSet({ feeds, comments, members, loading: false }));
+        // store on local storage
+        return Promise.all([
+          st.set('group.feeds', feeds),
+          st.set('group.comments', comments),
+          st.set('group.members', members),
+        ]);
       })
       .catch(err => {
         reportError(err);
@@ -92,19 +98,24 @@ const groupRepo = {
   },
 
   restoreGroup() {
-    try {
-      store.dispatch(action.groupSet({ loading: true }));
-      const inputs = st.get('group.inputs') || [];
-      const selected = st.get('group.selected') || {};
-      let updatedTime = st.get('group.updatedTime') || null;
-      if (updatedTime && moment(updatedTime).isValid()) updatedTime = moment(updatedTime).toDate();
-      const feeds = st.get('group.feeds') || [];
-      const comments = st.get('group.comments') || [];
-      const members = st.get('group.members') || [];
-      store.dispatch(action.groupSet({ inputs, selected, updatedTime, feeds, comments, members, loading: false }));
-    } catch (err) {
-      reportError(err);
-    }
+    store.dispatch(action.groupSet({ loading: true }));
+    Promise
+      .all([
+        st.get('group.inputs') || Promise.resolve([]),
+        st.get('group.selected') || Promise.resolve({}),
+        st.get('group.updatedTime') || Promise.resolve(null),
+        st.get('group.feeds') || Promise.resolve([]),
+        st.get('group.comments') || Promise.resolve([]),
+        st.get('group.members') || Promise.resolve([]),
+      ])
+      .then(([inputs, selected, updatedTime, feeds, comments, members]) => {
+        if (updatedTime && moment(updatedTime).isValid()) updatedTime = moment(updatedTime).toDate();
+        store.dispatch(action.groupSet({ inputs, selected, updatedTime, feeds, comments, members, loading: false }));
+      })
+      .catch(err => {
+        reportError(err);
+        store.dispatch(action.groupSet({ loading: false }));
+      });
   },
 
 };
