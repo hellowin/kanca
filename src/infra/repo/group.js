@@ -101,16 +101,24 @@ const groupRepo = {
     store.dispatch(action.groupSet({ loading: true }));
     Promise
       .all([
-        st.get('group.inputs') || Promise.resolve([]),
-        st.get('group.selected') || Promise.resolve({}),
-        st.get('group.updatedTime') || Promise.resolve(null),
-        st.get('group.feeds') || Promise.resolve([]),
-        st.get('group.comments') || Promise.resolve([]),
-        st.get('group.members') || Promise.resolve([]),
+        st.get('group.inputs'),
+        st.get('group.selected'),
+        st.get('group.updatedTime'),
+        st.get('group.feeds'),
+        st.get('group.comments'),
+        st.get('group.members'),
       ])
       .then(([inputs, selected, updatedTime, feeds, comments, members]) => {
         if (updatedTime && moment(updatedTime).isValid()) updatedTime = moment(updatedTime).toDate();
-        store.dispatch(action.groupSet({ inputs, selected, updatedTime, feeds, comments, members, loading: false }));
+        store.dispatch(action.groupSet({
+          inputs: inputs || [],
+          selected: selected || {},
+          updatedTime,
+          feeds: feeds || [],
+          comments: comments || [],
+          members: members || [],
+          loading: false,
+        }));
       })
       .catch(err => {
         reportError(err);
