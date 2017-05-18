@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import Auth from 'domain/user/component/Auth';
 import { githubStar } from 'infra/service/util';
 import groupRepo from 'infra/repo/group';
-import loc from 'infra/service/location';
 import { syncToPromise } from 'infra/service/util';
 
 const mapStateToProps = state => ({
@@ -48,10 +47,7 @@ class App extends React.Component {
       })
       .then(() => syncToPromise(() => {
         groupRepo.restoreGroup();
-      }))
-      .then(() => {
-        loc.push('/metric/summary');
-      });
+      }));
   }
 
   render() {
