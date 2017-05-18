@@ -98,9 +98,9 @@ const groupRepo = {
   },
 
   restoreGroup() {
-    try {
-      store.dispatch(action.groupSet({ loading: true }));
-      Promise.all([
+    store.dispatch(action.groupSet({ loading: true }));
+    Promise
+      .all([
         st.get('group.inputs') || Promise.resolve([]),
         st.get('group.selected') || Promise.resolve({}),
         st.get('group.updatedTime') || Promise.resolve(null),
@@ -108,13 +108,14 @@ const groupRepo = {
         st.get('group.comments') || Promise.resolve([]),
         st.get('group.members') || Promise.resolve([]),
       ])
-        .then(([inputs, selected, updatedTime, feeds, comments, members]) => {
-          if (updatedTime && moment(updatedTime).isValid()) updatedTime = moment(updatedTime).toDate();
-          store.dispatch(action.groupSet({ inputs, selected, updatedTime, feeds, comments, members, loading: false }));
-        });
-    } catch (err) {
-      reportError(err);
-    }
+      .then(([inputs, selected, updatedTime, feeds, comments, members]) => {
+        if (updatedTime && moment(updatedTime).isValid()) updatedTime = moment(updatedTime).toDate();
+        store.dispatch(action.groupSet({ inputs, selected, updatedTime, feeds, comments, members, loading: false }));
+      })
+      .catch(err => {
+        reportError(err);
+        store.dispatch(action.groupSet({ loading: false }));
+      });
   },
 
 };
