@@ -22,30 +22,36 @@ class App extends React.Component {
   state: {
     starCount: number,
   };
+
+  restore: Function
   
-  constructor() {
-    super();
-    
+  constructor(props) {
+    super(props);
+
+    this.restore = this.restore.bind(this);
+
     this.state = {
       starCount: 0,
     };
   }
-  
+
   componentDidMount() {
-    if (this.props.loggedIn) {
-      githubStar()
-        .then(response => {
-          this.setState({
-            starCount: response.stargazers_count,
-          });
-        })
-        .then(() => syncToPromise(() => {
-          groupRepo.restoreGroup();
-        }))
-        .then(() => {
-          loc.push('/metric/summary');
+    this.restore(this.props);
+  }
+
+  restore (props) {
+    githubStar()
+      .then(response => {
+        this.setState({
+          starCount: response.stargazers_count,
         });
-    }
+      })
+      .then(() => syncToPromise(() => {
+        groupRepo.restoreGroup();
+      }))
+      .then(() => {
+        loc.push('/metric/summary');
+      });
   }
 
   render() {
