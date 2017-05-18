@@ -47,9 +47,7 @@ describe('word counting', () => {
         expect(pick(count, '&*yu').count).toEqual(undefined);
 
         // test valid words
-        expect(pick(count, 'kamu').count).toEqual(1);
         expect(pick(count, '8989').count).toEqual(1);
-        expect(pick(count, 'kami').count).toEqual(1);
         expect(pick(count, 'react').count).toEqual(2);
         expect(pick(count, 'redux').count).toEqual(1);
         expect(pick(count, 'native').count).toEqual(1);

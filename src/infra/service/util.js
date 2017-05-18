@@ -1,6 +1,8 @@
 // @flow
 import _ from 'lodash';
 import moment from 'moment-timezone';
+import stopWordsId from './stopwords.id';
+import stopWordsEn from './stopwords.en';
 
 export const syncToPromise = <T>(func: Function): Promise<T> => new Promise((resolve, reject) => {
   setTimeout(() => {
@@ -36,7 +38,11 @@ export const wordCounter = (string: string): Promise<{ word: string, count: numb
     if (!count[word]) count[word] = { word, count: 0 };
     count[word].count += 1;
   });
-  return _.sortBy(_.values(count), 'count').reverse().slice(0, 300);
+
+  // remove stopwords
+  const stopWords = [...stopWordsId.split('\n'), ...stopWordsEn.split('\n')].filter(word => word.length > 3);
+  const cleanCount = _.filter(_.values(count), ({ word }) => !_.includes(stopWords, word));
+  return _.sortBy(cleanCount, 'count').reverse().slice(0, 300);
 });
 
 export const timeRangeToString = (dateStart: Date, dateEnd: Date): string => {
