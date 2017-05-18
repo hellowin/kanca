@@ -13,6 +13,7 @@ import loc from 'infra/service/location';
 import { syncToPromise } from 'infra/service/util';
 
 const mapStateToProps = state => ({
+  loggedIn: state.user.loggedIn,
   profile: state.user.profile,
   pathname: state.routing.locationBeforeTransitions.pathname,
 });
@@ -31,18 +32,20 @@ class App extends React.Component {
   }
   
   componentDidMount() {
-    githubStar()
-      .then(response => {
-        this.setState({
-          starCount: response.stargazers_count,
+    if (this.props.loggedIn) {
+      githubStar()
+        .then(response => {
+          this.setState({
+            starCount: response.stargazers_count,
+          });
+        })
+        .then(() => syncToPromise(() => {
+          groupRepo.restoreGroup();
+        }))
+        .then(() => {
+          loc.push('/metric/summary');
         });
-      })
-      .then(() => syncToPromise(() => {
-        groupRepo.restoreGroup();
-      }))
-      .then(() => {
-        loc.push('/metric/summary');
-      });
+    }
   }
 
   render() {
