@@ -91,10 +91,7 @@ const groupRepo = {
           st.set('group.members', members),
         ]);
       })
-      .catch(err => {
-        reportError(err);
-        store.dispatch(action.groupSet({ error: err, loading: false }));
-      });
+      .catch(err => store.dispatch(action.groupSet({ error: err, loading: false })));
   },
 
   restoreGroup() {
