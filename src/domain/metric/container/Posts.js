@@ -35,19 +35,21 @@ const setDefaultData = props => {
 
 class PostsMetricPage extends React.Component {
 
-  onFormChange: Function
 
-  state: {
+  props: {
+    members: Member[],
+    posts: Post[],
+    comments: Comment[],
     data: {
       dateStart: Date,
       dateEnd: Date,
       granularity: string,
     },
+    onFormChange: Function,
   }
 
   render() {
-    const { members, posts, comments } = this.props;
-    const { data } = this.state;
+    const { members, posts, comments, data, onFormChange } = this.props;
     const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, posts, members, comments);
     const metrics: TimeRangeMetric[] = metric.getTimeSeries(data.granularity);
 
@@ -67,7 +69,7 @@ class PostsMetricPage extends React.Component {
 
         <div className="col-md-12">
           <Card>
-            <Form forms={forms} onChange={this.onFormChange} />
+            <Form forms={forms} onChange={onFormChange} />
           </Card>
         </div>
 
@@ -95,4 +97,4 @@ class PostsMetricPage extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(withForm(PostsMetricPage, setDefaultData));
+export default connect(mapStateToProps)(withForm(setDefaultData)(PostsMetricPage));

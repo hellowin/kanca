@@ -22,17 +22,19 @@ const setDefaultData = props => {
 
 class MembersMetricPage extends React.Component {
 
-  onFormChange: Function
 
-  state: {
+  props: {
+    members: Member[],
+    posts: Post[],
+    comments: Comment[],
     data: {
       sort: string,
     },
+    onFormChange: Function,
   }
 
   render() {
-    const { members, posts, comments } = this.props;
-    const { data } = this.state;
+    const { members, posts, comments, data, onFormChange } = this.props;
 
     const metric = usersMetricer(members, posts, comments);
 
@@ -68,7 +70,7 @@ class MembersMetricPage extends React.Component {
 
         <div className="col-md-6">
           <Card>
-            <Form forms={forms} onChange={this.onFormChange} />
+            <Form forms={forms} onChange={onFormChange} />
           </Card>
         </div>
 
@@ -91,4 +93,4 @@ class MembersMetricPage extends React.Component {
 
 }
 
-export default connect(mapStateToProps)(withForm(MembersMetricPage, setDefaultData));
+export default connect(mapStateToProps)(withForm(setDefaultData)(MembersMetricPage));

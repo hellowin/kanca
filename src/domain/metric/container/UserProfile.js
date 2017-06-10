@@ -36,21 +36,24 @@ const setDefaultData = props => {
     };
 }
 
-class MetricSummary extends React.Component {
+class MetricUserProfile extends React.Component {
 
-  state: {
+  props: {
+    posts: Post[],
+    members: Member[],
+    comments: Comment[],
+    profile: UserProfile,
     data: {
       dateStart: Date,
       dateEnd: Date,
       granularity: moment.unitOfTime.Base,
     },
+    onFormChange: Function,
   }
 
-  onFormChange: Function
 
   render() {
-    const { posts, members, comments, profile } = this.props;
-    const { data } = this.state;
+    const { posts, members, comments, profile, data, onFormChange } = this.props;
 
     const userId = profile.facebookId;
 
@@ -93,7 +96,7 @@ class MetricSummary extends React.Component {
           <Card title="Options">
             <div className="row">
               <div className="col-md-12">
-                <Form forms={forms} onChange={this.onFormChange} />
+                <Form forms={forms} onChange={onFormChange} />
               </div>
             </div>
           </Card>
@@ -122,4 +125,4 @@ class MetricSummary extends React.Component {
 
 }
 
-export default connect(mapStateToProps)(withForm(MetricSummary, setDefaultData));
+export default connect(mapStateToProps)(withForm(setDefaultData)(MetricUserProfile));

@@ -1,6 +1,5 @@
 import React from 'react';
 import MediaQuery from 'react-responsive';
-import uuid from 'uuid';
 import graph from 'infra/service/graph';
 import groupRepo from 'infra/repo/group';
 
@@ -60,31 +59,23 @@ class InputGroup extends React.Component {
       <div className="row">
         <div className="col-md-12 mb-1 mt-1">
           <MediaQuery minDeviceWidth={320} maxWidthDevice={736} minWidth={320} maxWidth={736}>
-            {(matches, key) => {
+            {(matches) => {
               return (
-                <form className="form-inline" key={key}>
-                  {matches ? [
-                    <label style={{ marginBottom: '0', marginRight: '.5rem' }} key={uuid.v4()}>Group ID</label>,
-                    <input
-                      type="text"
-                      className="form-control mr-sm-2 mb-1 col-4"
-                      style={{ marginRight: '.5rem' }}
-                      placeholder="example: 1920036621597031"
-                      value={data.groupId}
-                      onChange={onFormChange('groupId')}
-                      key={uuid.v4()}
-                    />
-                  ] : [
-                    <label className="mr-sm-2" key={uuid.v4()}>Group ID</label>,
-                    <input
-                      type="text"
-                      className="form-control mr-sm-2 mb-1 col-4"
-                      placeholder="example: 1920036621597031"
-                      value={data.groupId}
-                      onChange={onFormChange('groupId')}
-                      key={uuid.v4()}
-                    />
-                  ]}
+                <form className="form-inline">
+                  <label
+                    className={matches ? '' : 'mr-sm-2'}
+                    style={matches ? { marginBottom: '0', marginRight: '.5rem' } : {}}
+                  >
+                    Group ID
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control mr-sm-2 mb-1 col-4"
+                    style={matches ? { marginRight: '.5rem' } : {}}
+                    placeholder="example: 1920036621597031"
+                    value={data.groupId}
+                    onChange={onFormChange('groupId')}
+                  />
                   <button type="submit" className="btn btn-primary" onClick={lookUpGroup(data.groupId)}>Look Up</button>
                 </form>
               );

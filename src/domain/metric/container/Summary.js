@@ -38,19 +38,20 @@ const setDefaultData = props => {
 
 class MetricSummary extends React.Component {
 
-  state: {
+  props: {
+    feeds: Post[],
+    members: Member[],
+    comments: Comment[],
     data: {
       dateStart: Date,
       dateEnd: Date,
       granularity: moment.unitOfTime.Base,
     },
+    onFormChange: Function,
   }
 
-  onFormChange: Function
-
   render() {
-    const { feeds, members, comments } = this.props;
-    const { data } = this.state;
+    const { feeds, members, comments, data, onFormChange } = this.props;
     const metric: TimeRangeMetric = timeRangeMetricer(data.dateStart, data.dateEnd, feeds, members, comments);
     const metrics: TimeRangeMetric[] = metric.getTimeSeries(data.granularity);
     
@@ -94,7 +95,7 @@ class MetricSummary extends React.Component {
           <Card title="Options">
             <div className="row">
               <div className="col-md-12">
-                <Form forms={forms} onChange={this.onFormChange} />
+                <Form forms={forms} onChange={onFormChange} />
               </div>
             </div>
           </Card>
@@ -127,4 +128,4 @@ class MetricSummary extends React.Component {
 
 }
 
-export default connect(mapStateToProps)(withForm(MetricSummary, setDefaultData));
+export default connect(mapStateToProps)(withForm(setDefaultData)(MetricSummary));
