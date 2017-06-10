@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import moment from 'moment-timezone';
+import './Form.css';
 
 // Types
 export const FormTypes = {
