@@ -127,4 +127,4 @@ class MetricSummary extends React.Component {
 
 }
 
-export default connect(mapStateToProps)(withForm(MetricSummary, setDefaultData));
+export default connect(mapStateToProps)(withForm(setDefaultData)(MetricSummary));

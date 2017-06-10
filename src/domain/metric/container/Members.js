@@ -91,4 +91,4 @@ class MembersMetricPage extends React.Component {
 
 }
 
-export default connect(mapStateToProps)(withForm(MembersMetricPage, setDefaultData));
+export default connect(mapStateToProps)(withForm(setDefaultData)(MembersMetricPage));

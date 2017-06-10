@@ -95,4 +95,4 @@ class PostsMetricPage extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(withForm(PostsMetricPage, setDefaultData));
+export default connect(mapStateToProps)(withForm(setDefaultData)(PostsMetricPage));

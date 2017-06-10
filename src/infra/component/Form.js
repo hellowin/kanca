@@ -76,7 +76,7 @@ const defaultForm = {
 }
 
 // Form higher order component (HOC)
-export const withForm = (HigherComponent: Class<*>, setDefaultData: Function = () => {}) =>
+export const withForm = (setDefaultData: Function = () => {}) => (HigherComponent: Class<*>) =>
   class WithForm extends HigherComponent {
 
     onFormChange: Function

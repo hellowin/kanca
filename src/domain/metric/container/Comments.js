@@ -94,4 +94,4 @@ class CommentsMetricPage extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(withForm(CommentsMetricPage, setDefaultData));
+export default connect(mapStateToProps)(withForm(setDefaultData)(CommentsMetricPage));
