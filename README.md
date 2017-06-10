@@ -24,6 +24,7 @@ Kanca is an application to analyze `Facebook Group` activity. Its key features a
 
 1. Node.js 6+
 2. Facebook Developer's Application, create it at [https://developers.facebook.com](https://developers.facebook.com) for free
+3. Make sure you enabled Facebook Login feature and put `http://localhost:3000` exist in your `Valid OAuth redirect URIs` (Facebook Login -> Settings)
 
 ## Installation
 
