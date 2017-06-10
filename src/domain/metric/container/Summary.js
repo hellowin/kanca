@@ -39,6 +39,9 @@ const setDefaultData = props => {
 class MetricSummary extends React.Component {
 
   props: {
+    feeds: Post[],
+    members: Member[],
+    comments: Comment[],
     data: {
       dateStart: Date,
       dateEnd: Date,

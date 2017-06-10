@@ -39,6 +39,10 @@ const setDefaultData = props => {
 class MetricUserProfile extends React.Component {
 
   props: {
+    posts: Post[],
+    members: Member[],
+    comments: Comment[],
+    profile: UserProfile,
     data: {
       dateStart: Date,
       dateEnd: Date,

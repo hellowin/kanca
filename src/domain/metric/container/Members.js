@@ -23,7 +23,10 @@ const setDefaultData = props => {
 class MembersMetricPage extends React.Component {
 
 
-  state: {
+  props: {
+    members: Member[],
+    posts: Post[],
+    comments: Comment[],
     data: {
       sort: string,
     },
@@ -31,8 +34,7 @@ class MembersMetricPage extends React.Component {
   }
 
   render() {
-    const { members, posts, comments, onFormChange } = this.props;
-    const { data } = this.state;
+    const { members, posts, comments, data, onFormChange } = this.props;
 
     const metric = usersMetricer(members, posts, comments);
 

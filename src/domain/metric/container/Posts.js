@@ -37,6 +37,9 @@ class PostsMetricPage extends React.Component {
 
 
   props: {
+    members: Member[],
+    posts: Post[],
+    comments: Comment[],
     data: {
       dateStart: Date,
       dateEnd: Date,
