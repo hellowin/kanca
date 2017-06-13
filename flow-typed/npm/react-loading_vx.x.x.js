@@ -1,4 +1,4 @@
-// flow-typed signature: 055c71a50056c8774221d086b753dd91
+// flow-typed signature: 58e26b3437875c44bf3bed5134fb03ef
 // flow-typed version: <<STUB>>/react-loading_v^0.1.2/flow_v0.45.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

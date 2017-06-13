@@ -1,4 +1,4 @@
-// flow-typed signature: 87882843af43a1480ad45858dd4d893a
+// flow-typed signature: 47c5bbc3e922e64bbb2fdc523e3a5f63
 // flow-typed version: <<STUB>>/react-d3-cloud_v^0.4.1/flow_v0.45.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

@@ -1,4 +1,4 @@
-// flow-typed signature: 0e4fbff818e9ab734bf102c25cf313ef
+// flow-typed signature: 588e01f8b451c9982393909f6cfbd750
 // flow-typed version: <<STUB>>/immutability-helper_v^2.1.2/flow_v0.45.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

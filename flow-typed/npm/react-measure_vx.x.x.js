@@ -1,4 +1,4 @@
-// flow-typed signature: 044a3e2f18fd04e4ea2cfab66bf44863
+// flow-typed signature: eec3b8fa04a048f4b5d4caaa7d3bd745
 // flow-typed version: <<STUB>>/react-measure_v^1.4.7/flow_v0.45.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

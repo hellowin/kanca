@@ -1,4 +1,4 @@
-// flow-typed signature: 3f758bc2d82c260a9653c3dc0bc91089
+// flow-typed signature: 27566c11c717a726f291b15f980cfee5
 // flow-typed version: <<STUB>>/reactstrap_v^4.6.1/flow_v0.45.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 
