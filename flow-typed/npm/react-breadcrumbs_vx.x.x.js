@@ -1,4 +1,4 @@
-// flow-typed signature: a00d4e05aaef8c814351dedc9e3f6724
+// flow-typed signature: ce8c47fbccea5515c4c020f7ea30a7cd
 // flow-typed version: <<STUB>>/react-breadcrumbs_v^1.6.6/flow_v0.45.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 
