@@ -14,7 +14,7 @@
     "react-scripts": "0.9.5"
   },
   "dependencies": {
-    "blangko": "^0.0.4",
+    "blangko": "^0.0.5",
     "bugsnag-js": "^3.2.0",
     "c3": "^0.4.11",
     "immutability-helper": "^2.1.2",
