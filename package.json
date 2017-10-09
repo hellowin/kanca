@@ -11,7 +11,7 @@
     "eslint-plugin-react": "^7.1.0",
     "flow-bin": "^0.45.0",
     "gh-pages": "1",
-    "react-scripts": "0.9.5"
+    "react-scripts": "1.0.14"
   },
   "dependencies": {
     "blangko": "^0.0.5",
@@ -41,15 +41,11 @@
   "scripts": {
     "start": "NODE_PATH=./src:./public react-scripts start",
     "build": "NODE_PATH=./src:./public react-scripts build",
-    "test": "NODE_PATH=./src:./public react-scripts test --env=jsdom",
+    "test": "NODE_PATH=./src:./public react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject",
     "flow": "flow",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://hellowin.github.io/kanca/",
-  "jest": {
-    "coverageDirectory": "./coverage/",
-    "collectCoverage": true
-  }
+  "homepage": "https://hellowin.github.io/kanca/"
 }
