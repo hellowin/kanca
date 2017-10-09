@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import _ from 'lodash';
 import Pagination from 'infra/component/Pagination';
 
 class Table extends React.Component {

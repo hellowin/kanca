@@ -33,7 +33,7 @@ const Card = props => {
               <div className="card-block pt-0" style={{ textAlign: 'right' }}>
                 <a href={`https://www.facebook.com/groups/${id}/`} target="_blank" className="btn btn-primary btn-sm">Open in FB</a>
                 &nbsp;
-                <a href="#" onClick={selectGroup(id)} className="btn btn-primary btn-sm">Select</a>
+                <a onClick={selectGroup(id)} className="btn btn-primary btn-sm no-href-link">Select</a>
               </div>
             </div>
           );

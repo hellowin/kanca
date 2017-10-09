@@ -3,3 +3,22 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+/**
+ * CSS util for a11y
+ */
+.no-href-link {
+  cursor: pointer;
+  color: #20a8d8;
+}
+
+.no-href-link:not([href]):not([tabindex]) {
+  color: #20a8d8;
+  text-decoration: none;
+}
+
+.no-href-link:not([href]):not([tabindex]):focus,
+.no-href-link:not([href]):not([tabindex]):hover {
+  color: #20a8d8;
+  text-decoration: none;
+}
