@@ -35,7 +35,7 @@ class Sidebar extends Component {
             </li>
             
             <li className={this.activeRoute("/group")}>
-              <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-people"></i> Group</a>
+              <a className="nav-link nav-dropdown-toggle no-href-link" onClick={this.handleClick.bind(this)}><i className="icon-people"></i> Group</a>
               <ul className="nav-dropdown-items">
                 <li className="nav-item">
                   <NavLink className="nav-link" to={loc.getUrl('/group/selection')}>Selection</NavLink>
@@ -47,7 +47,7 @@ class Sidebar extends Component {
             </li>
 
             {feeds.length > 0 ? (<li className={this.activeRoute("/metric")}>
-              <a className="nav-link nav-dropdown-toggle" href="#" onClick={this.handleClick.bind(this)}><i className="icon-graph"></i> Metric</a>
+              <a className="nav-link nav-dropdown-toggle no-href-link" onClick={this.handleClick.bind(this)}><i className="icon-graph"></i> Metric</a>
               <ul className="nav-dropdown-items">
                 <li className="nav-item">
                   <NavLink className="nav-link" to={loc.getUrl('/metric/summary')}>Summary</NavLink>

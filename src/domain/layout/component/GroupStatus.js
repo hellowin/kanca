@@ -37,9 +37,9 @@ class GroupStatus extends React.Component {
   }
 
   getTime(updatedTime) {
-    clearInterval(this.intervalTime);
+    window.clearInterval(this.intervalTime);
     this.setState(this.refresh(updatedTime));
-    this.intervalTime = setInterval(() => {
+    this.intervalTime = window.setInterval(() => {
       this.setState(this.refresh(updatedTime));
     }, 5000);
   }
@@ -50,7 +50,7 @@ class GroupStatus extends React.Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.intervalTime);
+    window.clearInterval(this.intervalTime);
   }
 
   render() {

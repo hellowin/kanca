@@ -36,9 +36,9 @@ class Dashboard extends React.Component {
             </div>
             <div className="col-md-8 offset-md-2">
               <p>Kanca is an open sourced application to analyze Facebook Group.</p>
-              <p>Start analyzing group by selecting a group in <a href="#" onClick={goTo('/group/selection')}>Group Selection</a> page.</p>
-              {exist ? <p>We found you have selected a group from the past, you can directly go analyze it.<br />Go to <a href="#" onClick={goTo('/metric/summary')}>Summary Metric</a>.</p> : <null />}
-              <p>If you found this project is interesting, don't forget to give star on our <a href="https://github.com/hellowin/kanca" target="_blank">GitHub Repo</a>.</p>
+              <p>Start analyzing group by selecting a group in <a className="no-href-link" onClick={goTo('/group/selection')}>Group Selection</a> page.</p>
+              {exist ? <p>We found you have selected a group from the past, you can directly go analyze it.<br />Go to <a className="no-href-link" onClick={goTo('/metric/summary')}>Summary Metric</a>.</p> : <null />}
+              <p>If you found this project is interesting, don't forget to give star on our <a href="https://github.com/hellowin/kanca" target="_blank" rel="noopener noreferrer">GitHub Repo</a>.</p>
             </div>
           </Card>
         </div>

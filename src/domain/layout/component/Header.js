@@ -56,10 +56,10 @@ class Header extends Component {
     return (
       <header className="app-header navbar" style={{ paddingRight: '15px' }}>
         <button className="navbar-toggler mobile-sidebar-toggler d-lg-none" onClick={this.mobileSidebarToggle} type="button">&#9776;</button>
-        <a className="navbar-brand" href="#"></a>
+        <span className="navbar-brand no-href-link"></span>
         <ul className="nav navbar-nav d-md-down-none">
           <li className="nav-item">
-            <a className="nav-link navbar-toggler sidebar-toggler" onClick={this.sidebarToggle} href="#">&#9776;</a>
+            <a className="nav-link navbar-toggler sidebar-toggler no-href-link" onClick={this.sidebarToggle}>&#9776;</a>
           </li>
           <li className="nav-item">
             <GroupStatus />
@@ -68,7 +68,7 @@ class Header extends Component {
         {!loading ? (<ul className="nav navbar-nav ml-auto">
           <li className="nav-item">
             <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-              <a onClick={this.toggle} className="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
+              <a onClick={this.toggle} className="nav-link dropdown-toggle nav-link no-href-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded={this.state.dropdownOpen}>
                 <img src={profile.picture} className="img-avatar" alt={profile.name}/>
                 <span className="d-md-down-none">{profile.name}</span>
               </a>

@@ -2,21 +2,22 @@
   "name": "kanca",
   "version": "0.0.0",
   "devDependencies": {
-    "babel-eslint": "^7.0.0",
-    "eslint": "^3.8.1",
-    "eslint-config-react-app": "^0.6.2",
-    "eslint-plugin-flowtype": "^2.21.0",
-    "eslint-plugin-import": "^2.0.1",
-    "eslint-plugin-jsx-a11y": "^4.0.0",
-    "eslint-plugin-react": "^6.4.1",
+    "babel-eslint": "^7.2.3",
+    "eslint": "^4.1.1",
+    "eslint-config-react-app": "^2.0.1",
+    "eslint-plugin-flowtype": "^2.34.1",
+    "eslint-plugin-import": "^2.6.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0",
     "flow-bin": "^0.45.0",
     "gh-pages": "1",
-    "react-scripts": "0.9.5"
+    "react-scripts": "1.0.14"
   },
   "dependencies": {
     "blangko": "^0.0.5",
     "bugsnag-js": "^3.2.0",
     "c3": "^0.4.11",
+    "eslint-loader": "^1.9.0",
     "immutability-helper": "^2.1.2",
     "lodash": "^4.17.4",
     "moment-timezone": "^0.5.13",
@@ -40,15 +41,11 @@
   "scripts": {
     "start": "NODE_PATH=./src:./public react-scripts start",
     "build": "NODE_PATH=./src:./public react-scripts build",
-    "test": "NODE_PATH=./src:./public react-scripts test --env=jsdom",
+    "test": "NODE_PATH=./src:./public react-scripts test --env=jsdom --coverage",
     "eject": "react-scripts eject",
     "flow": "flow",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://hellowin.github.io/kanca/",
-  "jest": {
-    "coverageDirectory": "./coverage/",
-    "collectCoverage": true
-  }
+  "homepage": "https://hellowin.github.io/kanca/"
 }

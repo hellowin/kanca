@@ -12,7 +12,7 @@ class Footer extends Component {
         <div className="row align-self-center">
           <div className="col-md-8">
             <a href={homepage}>Kanca</a> &copy; 2017 Hellowin.&nbsp;|&nbsp;
-            <a href="https://hellowin.github.io/kanca/privacypolicy.html" target="_blank">Privacy Policy</a>
+            <a href="https://hellowin.github.io/kanca/privacypolicy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
             {version ? <span>&nbsp;|&nbsp;{version}</span> : ''}
             &nbsp;|&nbsp;
             <a
