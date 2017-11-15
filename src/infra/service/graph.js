@@ -157,7 +157,7 @@ const getGroup = (groupId: string): Promise<Group> => get(`/${groupId}?fields=id
   });
 
 const getGroupFeed = (groupId: string, pages: number): Promise<{}[]> => {
-  const url = `/${groupId}/feed?fields=created_time,id,message,updated_time,caption,story,description,from,link,name,picture,status_type,type,shares,permalink_url,likes.limit(100),comments.limit(100){id,from,message,created_time,likes.limit(100),comments.limit(100){id,from,message,created_time,likes.limit(100)}}&limit=100`;
+  const url = `/${groupId}/feed?fields=created_time,id,message,updated_time,caption,story,description,from,link,name,picture,status_type,type,shares,permalink_url,likes.limit(50),comments.limit(50){id,from,message,created_time,likes.limit(50),comments.limit(50){id,from,message,created_time,likes.limit(50)}}&limit=50`;
   const list = new GraphList();
   return list.fetchForward(url, pages)
     .catch(err => {
