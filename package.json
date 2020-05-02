@@ -36,7 +36,8 @@
     "reactstrap": "^4.6.1",
     "redux": "^3.6.0",
     "store": "^2.0.4",
-    "uuid": "^3.0.1"
+    "uuid": "^3.0.1",
+    "snyk": "^1.316.2"
   },
   "scripts": {
     "start": "NODE_PATH=./src:./public react-scripts start",
@@ -45,7 +46,10 @@
     "eject": "react-scripts eject",
     "flow": "flow",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
-  "homepage": "https://hellowin.github.io/kanca/"
+  "homepage": "https://hellowin.github.io/kanca/",
+  "snyk": true
 }
